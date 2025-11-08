@@ -1,7 +1,6 @@
 
   # Create Homepage Design
-
-  This is a code bundle for Create Homepage Design. The original project is available at https://www.figma.com/design/6P57A7Rx4HwuNCe9aSHoKL/Create-Homepage-Design.
+  designed with figma! :D 
 
   ## Running the code
 
