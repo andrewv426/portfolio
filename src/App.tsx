@@ -25,42 +25,13 @@ export default function App() {
 
       {/* Navigation Bar */}
       <div className="absolute bg-white/20 backdrop-blur-md h-[80px] left-1/2 -translate-x-1/2 rounded-[25px] top-[60px] w-[min(1000px,85vw)] max-w-[1000px] border border-white/30 shadow-lg z-50">
-        {/* Heart Icon */}
-        <div className="absolute h-[30px] left-[35px] top-[25px] w-[29px]">
-          <div className="absolute inset-[-3.33%_-3.45%]">
-            <svg
-              className="block size-full"
-              fill="none"
-              preserveAspectRatio="none"
-              viewBox="0 0 31 32"
-            >
-              <path
-                d={svgPaths.p59b5900}
-                id="Vector 1"
-                stroke="var(--stroke-0, white)"
-                strokeLinecap="round"
-                strokeWidth="2"
-              />
-            </svg>
-          </div>
-        </div>
-        <div className="absolute h-[38px] left-[57px] top-[17px] w-[21px]">
-          <div className="absolute inset-[-2.63%_-4.77%_-2.63%_-4.76%]">
-            <svg
-              className="block size-full"
-              fill="none"
-              preserveAspectRatio="none"
-              viewBox="0 0 23 40"
-            >
-              <path
-                d={svgPaths.p23268f0}
-                id="Vector 2"
-                stroke="var(--stroke-0, white)"
-                strokeLinecap="round"
-                strokeWidth="2"
-              />
-            </svg>
-          </div>
+        {/* Smiley Icon */}
+        <div className="absolute left-[35px] top-[17px]">
+          <img
+            src="/smiley.png"
+            alt="Smiley"
+            className="w-[45px] h-[45px] object-contain brightness-0 invert"
+          />
         </div>
 
         {/* Navigation Links */}
