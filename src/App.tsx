@@ -2,6 +2,8 @@ import { useCallback } from 'react';
 import PetalCanvas from "./components/PetalCanvas";
 import { MusicCarousel } from "./components/MusicCarousel";
 import { HackTXCarousel } from "./components/HackTXCarousel";
+import { DFGCarousel } from "./components/DFGCarousel";
+import { InterestIcon } from "./components/InterestIcon";
 import { NavDot } from "./components/NavDot";
 import { TechTag } from "./components/TechTag";
 
@@ -89,7 +91,7 @@ export default function App() {
         {/* Projects Container */}
         <div className="px-[40px] pt-[40px] pb-[80px] space-y-6 w-full relative z-20">
           {/* HackTX Project */}
-          <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-500 ease-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50">
+          <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50">
             <div className="p-8 md:p-12">
               {/* Project Title - Always Visible (left-aligned) */}
               <h3 className="font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
@@ -97,7 +99,7 @@ export default function App() {
               </h3>
 
               {/* Project Details - Revealed on Hover */}
-              <div className="overflow-hidden transition-all duration-500 ease-out max-h-0 group-hover:max-h-[700px] opacity-0 group-hover:opacity-100" style={{ transitionProperty: 'max-height, opacity' }}>
+              <div className="overflow-hidden transition-all duration-700 ease-in-out max-h-0 group-hover:max-h-[700px] opacity-0 group-hover:opacity-100" style={{ transitionProperty: 'max-height, opacity' }}>
                 <div className="pt-4">
                   {/* Responsive Grid Layout */}
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -137,7 +139,7 @@ export default function App() {
           </div>
 
           {/* JPMC DataForGood Project */}
-          <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-500 ease-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50">
+          <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50">
             <div className="p-8 md:p-12">
               {/* Project Title - Always Visible (left-aligned) */}
               <h3 className="font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
@@ -145,32 +147,43 @@ export default function App() {
               </h3>
 
               {/* Project Details - Revealed on Hover */}
-              <div className="overflow-hidden transition-all duration-500 ease-out max-h-0 group-hover:max-h-96 opacity-0 group-hover:opacity-100" style={{ transitionProperty: 'max-height, opacity' }}>
-                <div className="pt-4 space-y-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="px-3 py-1 bg-yellow-600/20 text-yellow-700 rounded-full text-[10px] md:text-xs font-semibold uppercase tracking-wider">
-                      Winner
-                    </span>
-                  </div>
+              <div className="overflow-hidden transition-all duration-700 ease-in-out max-h-0 group-hover:max-h-[700px] opacity-0 group-hover:opacity-100" style={{ transitionProperty: 'max-height, opacity' }}>
+                <div className="pt-4">
+                  {/* Responsive Grid Layout */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    {/* Left Column - Project Details */}
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="px-3 py-1 bg-yellow-600/20 text-yellow-700 rounded-full text-[10px] md:text-xs font-semibold uppercase tracking-wider">
+                          Winner
+                        </span>
+                      </div>
 
-                  <p className="text-gray-700 text-base md:text-lg leading-relaxed">
-                    Partnered with NGO to analyze domestic violence survivor program data, identifying a critical service gap affecting adolescent children (ages 12-18) excluded from both childcare and adult workforce programs.
-                  </p>
+                      <p className="text-gray-700 text-base md:text-lg leading-relaxed">
+                        Partnered with NGO to analyze domestic violence survivor program data, identifying a critical service gap affecting adolescent children (ages 12-18) excluded from both childcare and adult workforce programs.
+                      </p>
 
-                  <div className="pt-2">
-                    <p className="text-gray-600 text-xs md:text-sm uppercase tracking-wider mb-3">Technologies</p>
-                    <div className="flex flex-wrap gap-2">
-                      <TechTag>Python</TechTag>
-                      <TechTag>Pandas</TechTag>
-                      <TechTag>Logistic Regression</TechTag>
-                      <TechTag>Data Analysis</TechTag>
+                      <div className="pt-2">
+                        <p className="text-gray-600 text-xs md:text-sm uppercase tracking-wider mb-3">Technologies</p>
+                        <div className="flex flex-wrap gap-2">
+                          <TechTag>Python</TechTag>
+                          <TechTag>Pandas</TechTag>
+                          <TechTag>Logistic Regression</TechTag>
+                          <TechTag>Data Analysis</TechTag>
+                        </div>
+                      </div>
+
+                      <div className="pt-2 space-y-1.5 md:space-y-2">
+                        <p className="text-gray-600 text-sm">• Built logistic regression model to predict employment outcomes</p>
+                        <p className="text-gray-600 text-sm">• Delivered data-driven recommendations to expand career development services</p>
+                        <p className="text-gray-600 text-sm">• Helped break intergenerational cycles of poverty through early intervention</p>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="pt-2 space-y-1.5 md:space-y-2">
-                    <p className="text-gray-600 text-sm">• Built logistic regression model to predict employment outcomes</p>
-                    <p className="text-gray-600 text-sm">• Delivered data-driven recommendations to expand career development services</p>
-                    <p className="text-gray-600 text-sm">• Helped break intergenerational cycles of poverty through early intervention</p>
+                    {/* Right Column - DFG Carousel */}
+                    <div className="flex items-center justify-center lg:justify-end">
+                      <DFGCarousel />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -187,7 +200,7 @@ export default function App() {
 
         {/* Education Card */}
         <div className="px-[40px] pt-[40px] pb-[80px] space-y-6 w-full relative z-20">
-          <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-500 ease-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50">
+          <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50">
             <div className="p-8 md:p-12">
               {/* Education Title - Always Visible (left-aligned) */}
               <h3 className="font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
@@ -195,7 +208,7 @@ export default function App() {
               </h3>
 
               {/* Education Details - Revealed on Hover */}
-              <div className="overflow-hidden transition-all duration-500 ease-out max-h-0 group-hover:max-h-96 opacity-0 group-hover:opacity-100" style={{ transitionProperty: 'max-height, opacity' }}>
+              <div className="overflow-hidden transition-all duration-700 ease-in-out max-h-0 group-hover:max-h-96 opacity-0 group-hover:opacity-100" style={{ transitionProperty: 'max-height, opacity' }}>
                 <div className="pt-4 space-y-4">
                   <div>
                     <h4 className="font-['Comfortaa',sans-serif] text-gray-900 text-2xl md:text-3xl font-semibold mb-1">
@@ -226,7 +239,7 @@ export default function App() {
           </div>
 
           {/* Experience Card */}
-          <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-500 ease-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50">
+          <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50">
             <div className="p-8 md:p-12">
               {/* Experience Title - Always Visible (left-aligned) */}
               <h3 className="font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
@@ -234,7 +247,7 @@ export default function App() {
               </h3>
 
               {/* Experience Details - Revealed on Hover */}
-              <div className="overflow-hidden transition-all duration-500 ease-out max-h-0 group-hover:max-h-[600px] opacity-0 group-hover:opacity-100" style={{ transitionProperty: 'max-height, opacity' }}>
+              <div className="overflow-hidden transition-all duration-700 ease-in-out max-h-0 group-hover:max-h-[900px] opacity-0 group-hover:opacity-100" style={{ transitionProperty: 'max-height, opacity' }}>
                 <div className="pt-4 space-y-6">
                   {/* LegacAI */}
                   <div>
@@ -295,13 +308,41 @@ export default function App() {
                       <p className="text-gray-600 text-sm">• Established a testing framework using Jest with unit and integration tests in a CI/CD pipeline, decreasing post-deployment bugs by 40%</p>
                     </div>
                   </div>
+
+                  {/* Dau International */}
+                  <div className="pt-2 border-t border-gray-200">
+                    <div className="flex items-start justify-between mb-2">
+                      <div>
+                        <h4 className="font-['Comfortaa',sans-serif] text-gray-900 text-xl md:text-2xl font-semibold mb-1">
+                          Data Analyst Intern
+                        </h4>
+                        <p className="text-gray-700 text-base md:text-lg mb-1">
+                          Dau International <span className="text-gray-600">•</span> Austin, TX
+                        </p>
+                      </div>
+                      <p className="text-gray-600 text-sm md:text-base whitespace-nowrap ml-4">Dec 2024 - Mar 2025</p>
+                    </div>
+                    <div className="pt-2">
+                      <p className="text-gray-600 text-xs md:text-sm uppercase tracking-wider mb-2">Technologies</p>
+                      <div className="flex flex-wrap gap-2 mb-3">
+                        <TechTag>Python</TechTag>
+                        <TechTag>SQL</TechTag>
+                        <TechTag>Web Scraping</TechTag>
+                      </div>
+                    </div>
+                    <div className="pt-2 space-y-1.5 md:space-y-2">
+                      <p className="text-gray-600 text-sm">• Built a Python-based resume parser that extracted structured data from LinkedIn profiles, improving match accuracy by 27%</p>
+                      <p className="text-gray-600 text-sm">• Automated SQL pipelines for resume data validation, reducing import errors by 35% and streamlining recruiter workflows</p>
+                      <p className="text-gray-600 text-sm">• Developed sourcing tools to identify senior engineers for a pre-IPO $1B cybersecurity client, enhancing targeting precision and increasing qualified lead generation by 30%</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Awards Card */}
-          <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-500 ease-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50">
+          <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50">
             <div className="p-8 md:p-12">
               {/* Awards Title - Always Visible (left-aligned) */}
               <h3 className="font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
@@ -309,7 +350,7 @@ export default function App() {
               </h3>
 
               {/* Awards Details - Revealed on Hover */}
-              <div className="overflow-hidden transition-all duration-500 ease-out max-h-0 group-hover:max-h-96 opacity-0 group-hover:opacity-100" style={{ transitionProperty: 'max-height, opacity' }}>
+              <div className="overflow-hidden transition-all duration-700 ease-in-out max-h-0 group-hover:max-h-96 opacity-0 group-hover:opacity-100" style={{ transitionProperty: 'max-height, opacity' }}>
                 <div className="pt-4 space-y-3">
                   <div className="flex items-center gap-2">
                     <span className="px-3 py-1 bg-yellow-600/20 text-yellow-700 rounded-full text-[10px] md:text-xs font-semibold uppercase tracking-wider">
@@ -333,7 +374,7 @@ export default function App() {
           </div>
 
           {/* Interests Card */}
-          <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-500 ease-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50">
+          <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50">
             <div className="p-8 md:p-12">
               {/* Interests Title - Always Visible (left-aligned) */}
               <h3 className="font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
@@ -341,7 +382,7 @@ export default function App() {
               </h3>
 
               {/* Interests Details - Revealed on Hover */}
-              <div className="overflow-hidden transition-all duration-500 ease-out max-h-0 group-hover:max-h-[600px] opacity-0 group-hover:opacity-100" style={{ transitionProperty: 'max-height, opacity' }}>
+              <div className="overflow-hidden transition-all duration-700 ease-in-out max-h-0 group-hover:max-h-[600px] opacity-0 group-hover:opacity-100" style={{ transitionProperty: 'max-height, opacity' }}>
                 <div className="pt-4">
                   {/* Responsive Grid Layout */}
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -362,9 +403,18 @@ export default function App() {
                       <div className="pt-2">
                         <p className="text-gray-600 text-xs md:text-sm uppercase tracking-wider mb-3">Fun Interests</p>
                         <div className="space-y-2">
-                          <p className="text-gray-700 text-base md:text-lg">🏀 Basketball (Houston Rockets!)</p>
-                          <p className="text-gray-700 text-base md:text-lg">🎮 Video Games: Valorant, League of Legends, Counter-Strike</p>
-                          <p className="text-gray-700 text-base md:text-lg">🎵 Music: Daniel Caesar, Bryson Tiller, Drake</p>
+                          <div className="flex items-center gap-2 text-gray-700 text-base md:text-lg">
+                            <InterestIcon type="basketball" size={32} />
+                            <span>Basketball (Houston Rockets!)</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-gray-700 text-base md:text-lg">
+                            <InterestIcon type="videogames" size={32} />
+                            <span>Video Games: Valorant, League of Legends, Counter-Strike</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-gray-700 text-base md:text-lg">
+                            <InterestIcon type="music" size={32} />
+                            <span>Music: Daniel Caesar, keshi, Drake</span>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -394,11 +444,11 @@ export default function App() {
             href="https://www.linkedin.com/in/andrew-vong-codes/"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-500 ease-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50 block"
+            className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50 block"
           >
             <div className="p-8 md:p-12">
               <div className="flex items-center gap-4">
-                <svg className="w-12 h-12 md:w-16 md:h-16 text-[#0A66C2]" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-12 h-12 md:w-16 md:h-16 text-gray-900" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/>
                 </svg>
                 <div>
@@ -414,7 +464,7 @@ export default function App() {
           {/* Email Card */}
           <a
             href="mailto:andrewvong426@gmail.com"
-            className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-500 ease-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50 block"
+            className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50 block"
           >
             <div className="p-8 md:p-12">
               <div className="flex items-center gap-4">

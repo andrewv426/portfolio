@@ -28,5 +28,12 @@ export default defineConfig({
   server: {
     port: 3000,
     open: true,
+    watch: {
+      usePolling: true, // Enable polling for WSL2
+      interval: 100, // Check for changes every 100ms
+    },
+    hmr: {
+      overlay: true, // Show errors as overlay
+    },
   },
 });
