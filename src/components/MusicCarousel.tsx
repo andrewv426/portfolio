@@ -24,18 +24,21 @@ const albums: Album[] = [
   }
 ];
 
-export const MusicCarousel: React.FC = () => {
+interface MusicCarouselProps {
+  parentHovered?: boolean;
+}
+
+export const MusicCarousel: React.FC<MusicCarouselProps> = ({ parentHovered = false }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
-    if (!isHovered) {
+    if (parentHovered) {
       const interval = setInterval(() => {
         setCurrentIndex((prev) => (prev + 1) % albums.length);
-      }, 4000);
+      }, 3000);
       return () => clearInterval(interval);
     }
-  }, [isHovered]);
+  }, [parentHovered]);
 
   const goToPrevious = useCallback(() => {
     setCurrentIndex((prev) => (prev - 1 + albums.length) % albums.length);
@@ -49,9 +52,7 @@ export const MusicCarousel: React.FC = () => {
 
   return (
     <div
-      className="relative w-full max-w-sm mx-auto"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      className="group relative w-full max-w-sm mx-auto"
       role="region"
       aria-label="Music carousel"
     >
@@ -61,16 +62,18 @@ export const MusicCarousel: React.FC = () => {
           <div
             key={index}
             className={`absolute inset-0 transition-all duration-700 ease-in-out ${
-              index === currentIndex
-                ? 'opacity-100 scale-100'
-                : 'opacity-0 scale-95'
+              index === currentIndex ? 'opacity-100' : 'opacity-0'
             }`}
             aria-hidden={index !== currentIndex}
           >
             <img
               src={album.cover}
               alt={`${album.name} by ${album.artist}`}
-              className="w-full h-full object-cover"
+              className={`w-full h-full object-cover transition-transform duration-500 ${
+                index === currentIndex
+                  ? 'scale-100 group-hover:scale-[1.03]'
+                  : 'scale-95'
+              }`}
               loading={index === currentIndex ? "eager" : "lazy"}
             />
           </div>

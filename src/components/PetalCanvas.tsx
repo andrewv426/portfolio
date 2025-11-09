@@ -2,6 +2,30 @@ import { useEffect, useRef, useState } from "react";
 
 // Petal sprite image - served from public folder
 const PETAL_IMAGE_PATH = "/unnamed.webp";
+let cachedPetalImage: HTMLImageElement | null = null;
+let petalImagePromise: Promise<HTMLImageElement> | null = null;
+
+function loadPetalImage() {
+  if (cachedPetalImage) {
+    return Promise.resolve(cachedPetalImage);
+  }
+
+  if (!petalImagePromise) {
+    petalImagePromise = new Promise<HTMLImageElement>((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        cachedPetalImage = img;
+        resolve(img);
+      };
+      img.onerror = (err) => {
+        reject(err);
+      };
+      img.src = PETAL_IMAGE_PATH;
+    });
+  }
+
+  return petalImagePromise;
+}
 
 type Petal = {
   x: number;
@@ -36,17 +60,23 @@ export default function PetalCanvas({
   const lastTimeRef = useRef<number>(0);
   const [imageLoaded, setImageLoaded] = useState(false);
 
-  // Load image first
+  // Load image first (cached across mounts)
   useEffect(() => {
-    const img = new Image();
-    img.onload = () => {
-      imageRef.current = img;
-      setImageLoaded(true);
+    let isMounted = true;
+
+    loadPetalImage()
+      .then((img) => {
+        if (!isMounted) return;
+        imageRef.current = img;
+        setImageLoaded(true);
+      })
+      .catch((error) => {
+        console.error("Failed to load petal image from:", PETAL_IMAGE_PATH, error);
+      });
+
+    return () => {
+      isMounted = false;
     };
-    img.onerror = () => {
-      console.error("Failed to load petal image from:", PETAL_IMAGE_PATH);
-    };
-    img.src = PETAL_IMAGE_PATH;
   }, []);
 
   useEffect(() => {
@@ -166,7 +196,7 @@ export default function PetalCanvas({
   return (
     <canvas
       ref={canvasRef}
-      className="pointer-events-none fixed inset-0 z-[1]"
+      className="pointer-events-none fixed inset-0 z-[5]"
       aria-hidden="true"
     />
   );
@@ -208,11 +238,11 @@ function spawnPetal(viewW: number, viewH: number, initial = false): Petal {
   const scale = rand(0.1, 0.35);
   
   // Vertical speed in pixels per second
-  const vy = lerp(25, 70, scale);
+  const vy = lerp(55, 130, scale);
   
   // Horizontal speed for diagonal flow (top-left to bottom-right)
   // Vary the angle slightly for natural dispersion
-  const diagonalRatio = rand(0.3, 0.7); // How much horizontal vs vertical (0.3 = more vertical, 0.7 = more horizontal)
+  const diagonalRatio = rand(0.25, 0.55); // Slight diagonals without drifting too far sideways
   const vx = vy * diagonalRatio; // Horizontal speed proportional to vertical
   
   const rotation = rand(0, Math.PI * 2);
@@ -250,5 +280,3 @@ function rand(min: number, max: number) {
 function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t;
 }
-
-

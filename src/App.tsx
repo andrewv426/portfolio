@@ -1,4 +1,6 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import PetalCanvas from "./components/PetalCanvas";
 import { MusicCarousel } from "./components/MusicCarousel";
 import { HackTXCarousel } from "./components/HackTXCarousel";
@@ -7,7 +9,98 @@ import { InterestIcon } from "./components/InterestIcon";
 import { NavDot } from "./components/NavDot";
 import { TechTag } from "./components/TechTag";
 
+// Register GSAP plugins
+gsap.registerPlugin(ScrollTrigger);
+
 export default function App() {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const heroTextRef = useRef<HTMLParagraphElement>(null);
+  const navBarRef = useRef<HTMLDivElement>(null);
+  const workSectionRef = useRef<HTMLElement>(null);
+  const workContentRef = useRef<HTMLDivElement>(null);
+
+  // Hover states for carousel parent cards
+  const [hackTXHovered, setHackTXHovered] = useState(false);
+  const [dfgHovered, setDfgHovered] = useState(false);
+  const [interestsHovered, setInterestsHovered] = useState(false);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const hero = heroRef.current;
+      const heroText = heroTextRef.current;
+      const nav = navBarRef.current;
+      const workSection = workSectionRef.current;
+      const workContent = workContentRef.current;
+
+      if (hero) {
+        const heroScrollConfig = {
+          trigger: hero,
+          start: 'top top',
+          end: () => `+=${(hero.offsetHeight || window.innerHeight) * 0.85}`,
+          scrub: 0.85,
+          invalidateOnRefresh: true,
+        } as ScrollTrigger.Vars;
+
+        gsap.to(hero, {
+          scale: 0.9,
+          transformOrigin: 'center top',
+          ease: 'power1.out',
+          scrollTrigger: heroScrollConfig,
+        });
+
+        if (heroText) {
+          gsap.to(heroText, {
+            opacity: 0,
+            scale: 0.7,
+            ease: 'power1.out',
+            scrollTrigger: heroScrollConfig,
+          });
+        }
+
+        if (nav) {
+          gsap.to(nav, {
+            opacity: 0.15,
+            ease: 'power1.out',
+            scrollTrigger: heroScrollConfig,
+          });
+        }
+      }
+
+      if (workSection && workContent) {
+        gsap.set(workContent, {
+          willChange: 'transform, filter, opacity',
+          transformOrigin: 'center center'
+        });
+
+        gsap.fromTo(
+          workContent,
+          {
+            opacity: 0,
+            scale: 0.7,
+            filter: 'blur(18px)',
+            yPercent: 25
+          },
+          {
+            opacity: 1,
+            scale: 1,
+            filter: 'blur(0px)',
+            yPercent: 0,
+            ease: 'power1.out',
+            scrollTrigger: {
+              trigger: workSection,
+              start: 'top bottom',
+              end: 'top 25%',
+              scrub: 0.9,
+              invalidateOnRefresh: true,
+            },
+          }
+        );
+      }
+    });
+
+    return () => ctx.revert();
+  }, []);
+
   const scrollToSection = useCallback((section: string) => {
     const element = document.getElementById(section);
     if (element) {
@@ -23,14 +116,15 @@ export default function App() {
   }, []);
 
   return (
-    <div className="bg-white relative w-full">
+    <div className="relative w-full min-h-screen overflow-x-hidden bg-[#d9d9d9]">
       {/* Background */}
-      <div className="absolute bg-[#d9d9d9] min-h-screen left-0 top-0 w-full z-0" />
+      <div className="absolute inset-0 w-full min-h-screen bg-[#d9d9d9] z-0" />
       {/* Falling cherry blossom overlay (kept behind content) */}
       <PetalCanvas />
 
-      {/* Navigation Bar */}
-      <div className="absolute bg-white/20 backdrop-blur-md h-[80px] left-1/2 -translate-x-1/2 rounded-[25px] top-[60px] w-[min(1000px,85vw)] max-w-[1000px] border border-white/30 shadow-lg z-50">
+      <div className="relative z-20">
+        {/* Navigation Bar */}
+        <div ref={navBarRef} className="absolute bg-white/20 backdrop-blur-md h-[80px] left-1/2 -translate-x-1/2 rounded-[25px] top-[60px] w-[min(1000px,85vw)] max-w-[1000px] border border-white/30 shadow-lg z-50" style={{ willChange: 'opacity' }}>
         {/* Smiley Icon */}
         <div className="absolute left-[35px] top-[17px]">
           <img
@@ -71,118 +165,149 @@ export default function App() {
             connect
           </button>
         </div>
-      </div>
+        </div>
 
-      {/* Hero Section */}
-      <div id="hero" className="relative min-h-screen">
-        <p className="absolute leading-[normal] left-[40px] not-italic text-[clamp(80px,11.5vw,220px)] text-white top-[250px] tracking-[0.05em] z-20 font-medium" style={{ fontFamily: '"Font Awesome 6 Brands", sans-serif' }}>
+        {/* Hero Section */}
+        <div
+          ref={heroRef}
+          id="hero"
+          className="relative min-h-screen"
+          style={{ zIndex: 10, willChange: 'transform' }}
+        >
+        <p
+          ref={heroTextRef}
+          className="absolute leading-[normal] left-[40px] not-italic text-[clamp(80px,11.5vw,220px)] text-white top-[250px] tracking-[0.05em] z-20 font-medium"
+          style={{
+            fontFamily: '"Font Awesome 6 Brands", sans-serif',
+            willChange: 'transform, opacity'
+          }}
+        >
           ANDREW
           <br />
           VONG
         </p>
-      </div>
+        </div>
 
-      {/* Work/Projects Section */}
-      <section id="work" className="relative min-h-screen bg-[#d9d9d9]">
-        <h2 className="font-['Comfortaa',sans-serif] text-left pl-[40px] pt-[80px] font-bold text-white relative z-20" style={{ fontSize: 'clamp(25px, 5vw, 100px)' }}>
-          work
-        </h2>
+        {/* Work/Projects Section */}
+        <section
+          ref={workSectionRef}
+          id="work"
+          className="relative min-h-screen"
+        >
+        <div ref={workContentRef} className="relative z-20">
+          <h2
+            className="font-['Comfortaa',sans-serif] text-left pl-[40px] pt-[80px] font-bold text-white"
+            style={{ fontSize: 'clamp(25px, 5vw, 100px)' }}
+          >
+            work
+          </h2>
 
-        {/* Projects Container */}
-        <div className="px-[40px] pt-[40px] pb-[80px] space-y-6 w-full relative z-20">
-          {/* HackTX Project */}
-          <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50">
-            <div className="p-8 md:p-12">
-              {/* Project Title - Always Visible (left-aligned) */}
-              <h3 className="font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
-                HackTX
-              </h3>
+          {/* Projects Container */}
+          <div className="px-[40px] pt-[40px] pb-[80px] space-y-6 w-full">
+            {/* HackTX Project */}
+            <div
+              data-work-card="true"
+              className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50 origin-top"
+              onMouseEnter={() => setHackTXHovered(true)}
+              onMouseLeave={() => setHackTXHovered(false)}
+            >
+              <div className="p-8 md:p-12">
+                {/* Project Title - Always Visible (left-aligned) */}
+                <h3 className="font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
+                  HackTX
+                </h3>
 
-              {/* Project Details - Revealed on Hover */}
-              <div className="overflow-hidden transition-all duration-700 ease-in-out max-h-0 group-hover:max-h-[700px] opacity-0 group-hover:opacity-100" style={{ transitionProperty: 'max-height, opacity' }}>
-                <div className="pt-4">
-                  {/* Responsive Grid Layout */}
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    {/* Left Column - Project Details */}
-                    <div className="space-y-4">
-                      <p className="text-gray-700 text-base md:text-lg leading-relaxed">
-                        Built a real-time presentation platform with live voice transcription and AI-powered summaries, enabling synchronized slide navigation and interactive Q&A for multiple concurrent users.
-                      </p>
+                {/* Project Details - Revealed on Hover */}
+                <div className="overflow-hidden transition-all duration-700 ease-in-out max-h-0 group-hover:max-h-[700px] opacity-0 group-hover:opacity-100" style={{ transitionProperty: 'max-height, opacity' }}>
+                  <div className="pt-4">
+                    {/* Responsive Grid Layout */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                      {/* Left Column - Project Details */}
+                      <div className="space-y-4">
+                        <p className="text-gray-700 text-base md:text-lg leading-relaxed">
+                          Built a real-time presentation platform with live voice transcription and AI-powered summaries, enabling synchronized slide navigation and interactive Q&A for multiple concurrent users.
+                        </p>
 
-                      <div className="pt-2">
-                        <p className="text-gray-600 text-xs md:text-sm uppercase tracking-wider mb-3">Technologies</p>
-                        <div className="flex flex-wrap gap-2">
-                          <TechTag>Next.js</TechTag>
-                          <TechTag>Socket.IO</TechTag>
-                          <TechTag>Node.js</TechTag>
-                          <TechTag>Firebase</TechTag>
-                          <TechTag>AssemblyAI</TechTag>
-                          <TechTag>Gemini API</TechTag>
+                        <div className="pt-2">
+                          <p className="text-gray-600 text-xs md:text-sm uppercase tracking-wider mb-3">Technologies</p>
+                          <div className="flex flex-wrap gap-2">
+                            <TechTag>Next.js</TechTag>
+                            <TechTag>Socket.IO</TechTag>
+                            <TechTag>Node.js</TechTag>
+                            <TechTag>Firebase</TechTag>
+                            <TechTag>AssemblyAI</TechTag>
+                            <TechTag>Gemini API</TechTag>
+                          </div>
+                        </div>
+
+                        <div className="pt-2 space-y-1.5 md:space-y-2">
+                          <p className="text-gray-600 text-sm">• Architected Socket.IO infrastructure for real-time communication</p>
+                          <p className="text-gray-600 text-sm">• Integrated AssemblyAI for live speech-to-text transcription</p>
+                          <p className="text-gray-600 text-sm">• Implemented Google Gemini API for AI-generated slide summaries</p>
                         </div>
                       </div>
 
-                      <div className="pt-2 space-y-1.5 md:space-y-2">
-                        <p className="text-gray-600 text-sm">• Architected Socket.IO infrastructure for real-time communication</p>
-                        <p className="text-gray-600 text-sm">• Integrated AssemblyAI for live speech-to-text transcription</p>
-                        <p className="text-gray-600 text-sm">• Implemented Google Gemini API for AI-generated slide summaries</p>
+                      {/* Right Column - HackTX Carousel */}
+                      <div className="flex items-center justify-center lg:justify-end">
+                        <HackTXCarousel parentHovered={hackTXHovered} />
                       </div>
-                    </div>
-
-                    {/* Right Column - HackTX Carousel */}
-                    <div className="flex items-center justify-center lg:justify-end">
-                      <HackTXCarousel />
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* JPMC DataForGood Project */}
-          <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50">
-            <div className="p-8 md:p-12">
-              {/* Project Title - Always Visible (left-aligned) */}
-              <h3 className="font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
-                JPMC DataForGood
-              </h3>
+            {/* JPMC DataForGood Project */}
+            <div
+              data-work-card="true"
+              className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50 origin-top"
+              onMouseEnter={() => setDfgHovered(true)}
+              onMouseLeave={() => setDfgHovered(false)}
+            >
+              <div className="p-8 md:p-12">
+                {/* Project Title - Always Visible (left-aligned) */}
+                <h3 className="font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
+                  JPMC DataForGood
+                </h3>
 
-              {/* Project Details - Revealed on Hover */}
-              <div className="overflow-hidden transition-all duration-700 ease-in-out max-h-0 group-hover:max-h-[700px] opacity-0 group-hover:opacity-100" style={{ transitionProperty: 'max-height, opacity' }}>
-                <div className="pt-4">
-                  {/* Responsive Grid Layout */}
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    {/* Left Column - Project Details */}
-                    <div className="space-y-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="px-3 py-1 bg-yellow-600/20 text-yellow-700 rounded-full text-[10px] md:text-xs font-semibold uppercase tracking-wider">
-                          Winner
-                        </span>
-                      </div>
+                {/* Project Details - Revealed on Hover */}
+                <div className="overflow-hidden transition-all duration-700 ease-in-out max-h-0 group-hover:max-h-[700px] opacity-0 group-hover:opacity-100" style={{ transitionProperty: 'max-height, opacity' }}>
+                  <div className="pt-4">
+                    {/* Responsive Grid Layout */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                      {/* Left Column - Project Details */}
+                      <div className="space-y-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="px-3 py-1 bg-yellow-600/20 text-yellow-700 rounded-full text-[10px] md:text-xs font-semibold uppercase tracking-wider">
+                            Winner
+                          </span>
+                        </div>
 
-                      <p className="text-gray-700 text-base md:text-lg leading-relaxed">
-                        Partnered with NGO to analyze domestic violence survivor program data, identifying a critical service gap affecting adolescent children (ages 12-18) excluded from both childcare and adult workforce programs.
-                      </p>
+                        <p className="text-gray-700 text-base md:text-lg leading-relaxed">
+                          Partnered with NGO to analyze domestic violence survivor program data, identifying a critical service gap affecting adolescent children (ages 12-18) excluded from both childcare and adult workforce programs.
+                        </p>
 
-                      <div className="pt-2">
-                        <p className="text-gray-600 text-xs md:text-sm uppercase tracking-wider mb-3">Technologies</p>
-                        <div className="flex flex-wrap gap-2">
-                          <TechTag>Python</TechTag>
-                          <TechTag>Pandas</TechTag>
-                          <TechTag>Logistic Regression</TechTag>
-                          <TechTag>Data Analysis</TechTag>
+                        <div className="pt-2">
+                          <p className="text-gray-600 text-xs md:text-sm uppercase tracking-wider mb-3">Technologies</p>
+                          <div className="flex flex-wrap gap-2">
+                            <TechTag>Python</TechTag>
+                            <TechTag>Pandas</TechTag>
+                            <TechTag>Logistic Regression</TechTag>
+                            <TechTag>Data Analysis</TechTag>
+                          </div>
+                        </div>
+
+                        <div className="pt-2 space-y-1.5 md:space-y-2">
+                          <p className="text-gray-600 text-sm">• Built logistic regression model to predict employment outcomes</p>
+                          <p className="text-gray-600 text-sm">• Delivered data-driven recommendations to expand career development services</p>
+                          <p className="text-gray-600 text-sm">• Helped break intergenerational cycles of poverty through early intervention</p>
                         </div>
                       </div>
 
-                      <div className="pt-2 space-y-1.5 md:space-y-2">
-                        <p className="text-gray-600 text-sm">• Built logistic regression model to predict employment outcomes</p>
-                        <p className="text-gray-600 text-sm">• Delivered data-driven recommendations to expand career development services</p>
-                        <p className="text-gray-600 text-sm">• Helped break intergenerational cycles of poverty through early intervention</p>
+                      {/* Right Column - DFG Carousel */}
+                      <div className="flex items-center justify-center lg:justify-end">
+                        <DFGCarousel parentHovered={dfgHovered} />
                       </div>
-                    </div>
-
-                    {/* Right Column - DFG Carousel */}
-                    <div className="flex items-center justify-center lg:justify-end">
-                      <DFGCarousel />
                     </div>
                   </div>
                 </div>
@@ -190,17 +315,17 @@ export default function App() {
             </div>
           </div>
         </div>
-      </section>
+        </section>
 
-      {/* About Section */}
-      <section id="about" className="relative min-h-screen bg-[#d9d9d9]">
+        {/* About Section */}
+        <section id="about" className="relative min-h-screen">
         <h2 className="font-['Comfortaa',sans-serif] text-left pl-[40px] pt-[80px] font-bold text-white relative z-20" style={{ fontSize: 'clamp(25px, 5vw, 100px)' }}>
           about
         </h2>
 
         {/* Education Card */}
         <div className="px-[40px] pt-[40px] pb-[80px] space-y-6 w-full relative z-20">
-          <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50">
+          <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50 origin-top">
             <div className="p-8 md:p-12">
               {/* Education Title - Always Visible (left-aligned) */}
               <h3 className="font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
@@ -239,7 +364,7 @@ export default function App() {
           </div>
 
           {/* Experience Card */}
-          <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50">
+          <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50 origin-top">
             <div className="p-8 md:p-12">
               {/* Experience Title - Always Visible (left-aligned) */}
               <h3 className="font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
@@ -342,7 +467,7 @@ export default function App() {
           </div>
 
           {/* Awards Card */}
-          <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50">
+          <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50 origin-top">
             <div className="p-8 md:p-12">
               {/* Awards Title - Always Visible (left-aligned) */}
               <h3 className="font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
@@ -374,7 +499,11 @@ export default function App() {
           </div>
 
           {/* Interests Card */}
-          <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50">
+          <div
+            className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50 origin-top"
+            onMouseEnter={() => setInterestsHovered(true)}
+            onMouseLeave={() => setInterestsHovered(false)}
+          >
             <div className="p-8 md:p-12">
               {/* Interests Title - Always Visible (left-aligned) */}
               <h3 className="font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
@@ -421,7 +550,7 @@ export default function App() {
 
                     {/* Right Column - Music Carousel */}
                     <div className="flex items-center justify-center lg:justify-end">
-                      <MusicCarousel />
+                      <MusicCarousel parentHovered={interestsHovered} />
                     </div>
                   </div>
                 </div>
@@ -429,10 +558,10 @@ export default function App() {
             </div>
           </div>
         </div>
-      </section>
+        </section>
 
-      {/* Connect Section */}
-      <section id="connect" className="relative min-h-screen bg-[#d9d9d9]">
+        {/* Connect Section */}
+        <section id="connect" className="relative min-h-screen">
         <h2 className="font-['Comfortaa',sans-serif] text-left pl-[40px] pt-[80px] font-bold text-white relative z-20" style={{ fontSize: 'clamp(25px, 5vw, 100px)' }}>
           connect
         </h2>
@@ -444,7 +573,7 @@ export default function App() {
             href="https://www.linkedin.com/in/andrew-vong-codes/"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50 block"
+            className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50 block origin-top"
           >
             <div className="p-8 md:p-12">
               <div className="flex items-center gap-4">
@@ -464,7 +593,7 @@ export default function App() {
           {/* Email Card */}
           <a
             href="mailto:andrewvong426@gmail.com"
-            className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50 block"
+            className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50 block origin-top"
           >
             <div className="p-8 md:p-12">
               <div className="flex items-center gap-4">
@@ -481,7 +610,8 @@ export default function App() {
             </div>
           </a>
         </div>
-      </section>
+        </section>
+      </div>
     </div>
   );
 }

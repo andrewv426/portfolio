@@ -35,19 +35,21 @@ const projectImages: ProjectImage[] = [
   }
 ];
 
-export const HackTXCarousel: React.FC = () => {
+interface HackTXCarouselProps {
+  parentHovered?: boolean;
+}
+
+export const HackTXCarousel: React.FC<HackTXCarouselProps> = ({ parentHovered = false }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    if (!isHovered) {
+    if (parentHovered) {
       const interval = setInterval(() => {
         setCurrentIndex((prev) => (prev + 1) % projectImages.length);
-      }, 4000);
+      }, 3000);
       return () => clearInterval(interval);
     }
-  }, [isHovered]);
+  }, [parentHovered]);
 
   const goToPrevious = useCallback(() => {
     setCurrentIndex((prev) => (prev - 1 + projectImages.length) % projectImages.length);
@@ -59,41 +61,30 @@ export const HackTXCarousel: React.FC = () => {
 
   const currentProject = useMemo(() => projectImages[currentIndex], [currentIndex]);
 
-  // Close modal on escape key
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setIsModalOpen(false);
-    };
-    if (isModalOpen) {
-      document.addEventListener('keydown', handleEscape);
-      return () => document.removeEventListener('keydown', handleEscape);
-    }
-  }, [isModalOpen]);
-
   return (
     <div
       className="relative w-full max-w-sm mx-auto"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       role="region"
       aria-label="HackTX project carousel"
     >
       {/* Project Image Display */}
-      <div className="relative aspect-square overflow-hidden rounded-2xl bg-gray-100 cursor-pointer hover:shadow-lg transition-all duration-300" onClick={() => setIsModalOpen(true)}>
+      <div className="group relative aspect-square overflow-hidden rounded-2xl bg-gray-100 hover:shadow-lg transition-all duration-300">
         {projectImages.map((project, index) => (
           <div
             key={index}
             className={`absolute inset-0 transition-all duration-700 ease-in-out ${
-              index === currentIndex
-                ? 'opacity-100 scale-100'
-                : 'opacity-0 scale-95'
+              index === currentIndex ? 'opacity-100' : 'opacity-0'
             }`}
             aria-hidden={index !== currentIndex}
           >
             <img
               src={project.image}
               alt={project.label}
-              className="w-full h-full object-cover"
+              className={`w-full h-full object-cover transition-transform duration-500 ${
+                index === currentIndex
+                  ? 'scale-100 group-hover:scale-[1.03]'
+                  : 'scale-95'
+              }`}
               loading={index === currentIndex ? "eager" : "lazy"}
             />
           </div>
@@ -170,84 +161,6 @@ export const HackTXCarousel: React.FC = () => {
           />
         ))}
       </div>
-
-      {/* Expanded Image Modal */}
-      {isModalOpen && (
-        <div
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-          onClick={() => setIsModalOpen(false)}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Expanded image view"
-        >
-          <div
-            className="relative max-w-4xl w-full max-h-[90vh] bg-white/95 rounded-2xl overflow-hidden shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Close Button */}
-            <button
-              onClick={() => setIsModalOpen(false)}
-              className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/80 backdrop-blur-md border border-white/50 flex items-center justify-center transition-all duration-300 hover:bg-white z-10"
-              aria-label="Close expanded image"
-            >
-              <svg className="w-5 h-5 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-
-            {/* Image Container */}
-            <div className="relative w-full h-full bg-gray-100 rounded-t-2xl overflow-hidden">
-              <img
-                src={currentProject.image}
-                alt={currentProject.label}
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            {/* Label and Navigation */}
-            <div className="p-6 bg-white border-t border-gray-200">
-              <h3 className="text-gray-900 font-semibold text-xl mb-4 text-center">
-                {currentProject.label}
-              </h3>
-
-              {/* Navigation Controls */}
-              <div className="flex justify-between items-center">
-                <button
-                  onClick={goToPrevious}
-                  className="px-4 py-2 bg-gray-900/70 backdrop-blur-md border border-gray-700/70 text-white rounded-lg font-medium text-sm transition-all duration-300 hover:bg-gray-800/90 hover:border-gray-600/90"
-                  aria-label="Previous project"
-                >
-                  ← Previous
-                </button>
-
-                <div className="flex gap-2 justify-center">
-                  {projectImages.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentIndex(index)}
-                      className={`h-2 rounded-full transition-all duration-300 ${
-                        index === currentIndex
-                          ? 'w-6 bg-gray-900'
-                          : 'w-2 bg-gray-400 hover:bg-gray-600'
-                      }`}
-                      aria-label={`Go to project ${index + 1}`}
-                      aria-current={index === currentIndex}
-                    />
-                  ))}
-                </div>
-
-                <button
-                  onClick={goToNext}
-                  className="px-4 py-2 bg-gray-900/70 backdrop-blur-md border border-gray-700/70 text-white rounded-lg font-medium text-sm transition-all duration-300 hover:bg-gray-800/90 hover:border-gray-600/90"
-                  aria-label="Next project"
-                >
-                  Next →
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
