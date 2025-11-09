@@ -39,6 +39,23 @@ export default function App() {
   const [dfgHovered, setDfgHovered] = useState(false);
   const [interestsHovered, setInterestsHovered] = useState(false);
 
+  // Card expanded states for mobile tap functionality
+  const [cardStates, setCardStates] = useState({
+    hacktx: false,
+    dfg: false,
+    education: false,
+    experience: false,
+    awards: false,
+    interests: false,
+  });
+
+  const toggleCard = (cardName: keyof typeof cardStates) => {
+    setCardStates(prev => ({
+      ...prev,
+      [cardName]: !prev[cardName],
+    }));
+  };
+
   useEffect(() => {
     const ctx = gsap.context(() => {
       const hero = heroRef.current;
@@ -52,7 +69,7 @@ export default function App() {
           trigger: hero,
           start: 'top top',
           end: () => `+=${(hero.offsetHeight || window.innerHeight) * 0.85}`,
-          scrub: 0.85,
+          scrub: 0.3,
           invalidateOnRefresh: true,
         } as ScrollTrigger.Vars;
 
@@ -141,18 +158,18 @@ export default function App() {
         {/* Navigation Bar */}
         <div
           ref={navBarRef}
-          className="absolute bg-white/20 backdrop-blur-md h-[80px] left-1/2 -translate-x-1/2 rounded-[25px] w-[min(1000px,85vw)] max-w-[1000px] border border-white/30 shadow-lg z-50 flex items-center justify-center"
-          style={{ willChange: 'opacity', top: 'clamp(24px, 6vh, 60px)' }}
+          className="absolute bg-white/20 backdrop-blur-md h-[clamp(60px,10vh,80px)] left-1/2 -translate-x-1/2 rounded-[clamp(15px,2.5vw,25px)] w-[min(1000px,92vw)] max-w-[1000px] border border-white/30 shadow-lg z-50 flex items-center justify-center"
+          style={{ willChange: 'opacity, transform', top: 'max(clamp(24px, 6vh, 60px), env(safe-area-inset-top, 24px))', transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)' }}
         >
           {/* Smiley Icon */}
           <div
-            className="absolute"
-            style={{ left: 'clamp(12px,4vw,35px)', top: 'clamp(8px,2vh,17px)' }}
+            className="absolute flex items-center"
+            style={{ left: 'clamp(12px,3vw,32px)', top: '50%', transform: 'translateY(-50%)', transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)' }}
           >
             <img
               src="/smiley.png"
               alt="Smiley"
-              className="w-[45px] h-[45px] object-contain brightness-0 invert"
+              className="w-[clamp(36px,6vw,45px)] h-[clamp(36px,6vw,45px)] object-contain brightness-0 invert"
               loading="lazy"
             />
           </div>
@@ -160,14 +177,14 @@ export default function App() {
           {/* Navigation Links */}
           <div
             className="flex items-center"
-            style={{ gap: 'clamp(40px,10vw,160px)' }}
+            style={{ gap: 'clamp(20px,6vw,140px)', paddingLeft: 'clamp(0px,8vw,60px)', transition: 'gap 0.3s ease-out, padding 0.3s ease-out' }}
           >
             {navItems.map(({ label, target }) => (
               <div key={label} className="relative group">
                 <NavDot />
                 <button
                   onClick={() => scrollToSection(target)}
-                  className="font-['Inter:Regular',sans-serif] font-normal leading-[normal] not-italic text-[clamp(24px,4vw,40px)] text-white cursor-pointer group-hover:-translate-y-2 transition-transform duration-300 ease-out block font-[Comfortaa] pl-[42px]"
+                  className="font-['Inter:Regular',sans-serif] font-normal leading-[normal] not-italic text-[clamp(16px,4vw,38px)] text-white cursor-pointer group-hover:-translate-y-2 transition-all duration-300 ease-out hover:text-white/90 block font-[Comfortaa] pl-[clamp(28px,4.5vw,42px)]"
                 >
                   {label}
                 </button>
@@ -185,7 +202,7 @@ export default function App() {
         >
         <p
           ref={heroTextRef}
-          className="absolute leading-[normal] left-[40px] not-italic text-[clamp(80px,11.5vw,220px)] text-white top-[250px] tracking-[0.05em] z-20 font-medium"
+          className="absolute leading-[normal] left-[40px] not-italic text-[clamp(64px,11.8vw,220px)] text-white top-[250px] tracking-[0.05em] z-20 font-medium"
           style={{
             fontFamily: '"Font Awesome 6 Brands", sans-serif',
             willChange: 'transform, opacity'
@@ -219,6 +236,7 @@ export default function App() {
               className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50 origin-top"
               onMouseEnter={() => setHackTXHovered(true)}
               onMouseLeave={() => setHackTXHovered(false)}
+              onClick={() => toggleCard('hacktx')}
             >
               <div className="p-8 md:p-12">
                 {/* Project Title - Always Visible (left-aligned) */}
@@ -226,8 +244,8 @@ export default function App() {
                   HackTX
                 </h3>
 
-                {/* Project Details - Revealed on Hover */}
-                <div className="overflow-hidden transition-all duration-700 ease-in-out max-h-0 group-hover:max-h-[700px] opacity-0 group-hover:opacity-100" style={{ transitionProperty: 'max-height, opacity' }}>
+                {/* Project Details - Revealed on Hover/Tap */}
+                <div className={`transition-all duration-700 ease-in-out max-h-0 opacity-0 overflow-hidden ${cardStates.hacktx ? 'max-h-[85vh] md:max-h-[950px] lg:max-h-[850px] opacity-100 overflow-y-auto scrollbar-hide touch-pan-y' : 'group-hover:max-h-[85vh] group-hover:md:max-h-[950px] group-hover:lg:max-h-[850px] group-hover:opacity-100 group-hover:overflow-y-auto group-hover:scrollbar-hide group-hover:touch-pan-y'}`} style={{ transitionProperty: 'max-height, opacity' }}>
                   <div className="pt-4">
                     {/* Responsive Grid Layout */}
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -272,6 +290,7 @@ export default function App() {
               className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50 origin-top"
               onMouseEnter={() => setDfgHovered(true)}
               onMouseLeave={() => setDfgHovered(false)}
+              onClick={() => toggleCard('dfg')}
             >
               <div className="p-8 md:p-12">
                 {/* Project Title - Always Visible (left-aligned) */}
@@ -279,8 +298,8 @@ export default function App() {
                   JPMC DataForGood
                 </h3>
 
-                {/* Project Details - Revealed on Hover */}
-                <div className="overflow-hidden transition-all duration-700 ease-in-out max-h-0 group-hover:max-h-[700px] opacity-0 group-hover:opacity-100" style={{ transitionProperty: 'max-height, opacity' }}>
+                {/* Project Details - Revealed on Hover/Tap */}
+                <div className={`transition-all duration-700 ease-in-out max-h-0 opacity-0 overflow-hidden ${cardStates.dfg ? 'max-h-[85vh] md:max-h-[950px] lg:max-h-[850px] opacity-100 overflow-y-auto scrollbar-hide touch-pan-y' : 'group-hover:max-h-[85vh] group-hover:md:max-h-[950px] group-hover:lg:max-h-[850px] group-hover:opacity-100 group-hover:overflow-y-auto group-hover:scrollbar-hide group-hover:touch-pan-y'}`} style={{ transitionProperty: 'max-height, opacity' }}>
                   <div className="pt-4">
                     {/* Responsive Grid Layout */}
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -334,15 +353,15 @@ export default function App() {
 
         {/* Education Card */}
         <div className="px-[40px] pt-[40px] pb-[80px] space-y-6 w-full relative z-20">
-          <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50 origin-top">
+          <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50 origin-top" onClick={() => toggleCard('education')}>
             <div className="p-8 md:p-12">
               {/* Education Title - Always Visible (left-aligned) */}
               <h3 className="font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
                 Education
               </h3>
 
-              {/* Education Details - Revealed on Hover */}
-              <div className="overflow-hidden transition-all duration-700 ease-in-out max-h-0 group-hover:max-h-96 opacity-0 group-hover:opacity-100" style={{ transitionProperty: 'max-height, opacity' }}>
+              {/* Education Details - Revealed on Hover/Tap */}
+              <div className={`transition-all duration-700 ease-in-out max-h-0 opacity-0 overflow-hidden ${cardStates.education ? 'max-h-[70vh] md:max-h-[500px] lg:max-h-96 opacity-100 overflow-y-auto scrollbar-hide touch-pan-y' : 'group-hover:max-h-[70vh] group-hover:md:max-h-[500px] group-hover:lg:max-h-96 group-hover:opacity-100 group-hover:overflow-y-auto group-hover:scrollbar-hide group-hover:touch-pan-y'}`} style={{ transitionProperty: 'max-height, opacity' }}>
                 <div className="pt-4 space-y-4">
                   <div>
                     <h4 className="font-['Comfortaa',sans-serif] text-gray-900 text-2xl md:text-3xl font-semibold mb-1">
@@ -373,15 +392,15 @@ export default function App() {
           </div>
 
           {/* Experience Card */}
-          <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50 origin-top">
+          <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50 origin-top" onClick={() => toggleCard('experience')}>
             <div className="p-8 md:p-12">
               {/* Experience Title - Always Visible (left-aligned) */}
               <h3 className="font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
                 Experience
               </h3>
 
-              {/* Experience Details - Revealed on Hover */}
-              <div className="overflow-hidden transition-all duration-700 ease-in-out max-h-0 group-hover:max-h-[900px] opacity-0 group-hover:opacity-100" style={{ transitionProperty: 'max-height, opacity' }}>
+              {/* Experience Details - Revealed on Hover/Tap */}
+              <div className={`transition-all duration-700 ease-in-out max-h-0 opacity-0 overflow-hidden ${cardStates.experience ? 'max-h-[85vh] md:max-h-[1000px] lg:max-h-[900px] opacity-100 overflow-y-auto scrollbar-hide touch-pan-y' : 'group-hover:max-h-[85vh] group-hover:md:max-h-[1000px] group-hover:lg:max-h-[900px] group-hover:opacity-100 group-hover:overflow-y-auto group-hover:scrollbar-hide group-hover:touch-pan-y'}`} style={{ transitionProperty: 'max-height, opacity' }}>
                 <div className="pt-4 space-y-6">
                   {/* LegacAI */}
                   <div>
@@ -476,15 +495,15 @@ export default function App() {
           </div>
 
           {/* Awards Card */}
-          <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50 origin-top">
+          <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50 origin-top" onClick={() => toggleCard('awards')}>
             <div className="p-8 md:p-12">
               {/* Awards Title - Always Visible (left-aligned) */}
               <h3 className="font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
                 Awards
               </h3>
 
-              {/* Awards Details - Revealed on Hover */}
-              <div className="overflow-hidden transition-all duration-700 ease-in-out max-h-0 group-hover:max-h-96 opacity-0 group-hover:opacity-100" style={{ transitionProperty: 'max-height, opacity' }}>
+              {/* Awards Details - Revealed on Hover/Tap */}
+              <div className={`transition-all duration-700 ease-in-out max-h-0 opacity-0 overflow-hidden ${cardStates.awards ? 'max-h-[70vh] md:max-h-[500px] lg:max-h-96 opacity-100 overflow-y-auto scrollbar-hide touch-pan-y' : 'group-hover:max-h-[70vh] group-hover:md:max-h-[500px] group-hover:lg:max-h-96 group-hover:opacity-100 group-hover:overflow-y-auto group-hover:scrollbar-hide group-hover:touch-pan-y'}`} style={{ transitionProperty: 'max-height, opacity' }}>
                 <div className="pt-4 space-y-3">
                   <div className="flex items-center gap-2">
                     <span className="px-3 py-1 bg-yellow-600/20 text-yellow-700 rounded-full text-[10px] md:text-xs font-semibold uppercase tracking-wider">
@@ -512,6 +531,7 @@ export default function App() {
             className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50 origin-top"
             onMouseEnter={() => setInterestsHovered(true)}
             onMouseLeave={() => setInterestsHovered(false)}
+            onClick={() => toggleCard('interests')}
           >
             <div className="p-8 md:p-12">
               {/* Interests Title - Always Visible (left-aligned) */}
@@ -519,8 +539,8 @@ export default function App() {
                 Interests
               </h3>
 
-              {/* Interests Details - Revealed on Hover */}
-              <div className="overflow-hidden transition-all duration-700 ease-in-out max-h-0 group-hover:max-h-[600px] opacity-0 group-hover:opacity-100" style={{ transitionProperty: 'max-height, opacity' }}>
+              {/* Interests Details - Revealed on Hover/Tap */}
+              <div className={`transition-all duration-700 ease-in-out max-h-0 opacity-0 overflow-hidden ${cardStates.interests ? 'max-h-[85vh] md:max-h-[750px] lg:max-h-[650px] opacity-100 overflow-y-auto scrollbar-hide touch-pan-y' : 'group-hover:max-h-[85vh] group-hover:md:max-h-[750px] group-hover:lg:max-h-[650px] group-hover:opacity-100 group-hover:overflow-y-auto group-hover:scrollbar-hide group-hover:touch-pan-y'}`} style={{ transitionProperty: 'max-height, opacity' }}>
                 <div className="pt-4">
                   {/* Responsive Grid Layout */}
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
