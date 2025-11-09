@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface InterestIconProps {
-  type: 'basketball' | 'videogames' | 'music' | 'linkedin';
+  type: 'basketball' | 'videogames' | 'music';
   size?: number;
 }
 
@@ -58,16 +58,6 @@ export const InterestIcon: React.FC<InterestIconProps> = ({ type, size = 40 }) =
           <ellipse cx="70" cy="60" rx="6" ry="7" fill="#9B59B6"/>
           {/* Third stem */}
           <line x1="76" y1="60" x2="76" y2="30" stroke="#9B59B6" strokeWidth="2.5"/>
-        </svg>
-      );
-
-    case 'linkedin':
-      return (
-        <svg width={size} height={size} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          {/* LinkedIn rounded rectangle background - black */}
-          <rect x="10" y="10" width="80" height="80" rx="8" fill="#000000"/>
-          {/* LinkedIn "in" text in white */}
-          <text x="50" y="62" fontSize="40" fontWeight="bold" fill="white" textAnchor="middle" dominantBaseline="middle" fontFamily="Arial, sans-serif">in</text>
         </svg>
       );
 

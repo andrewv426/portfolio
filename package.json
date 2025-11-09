@@ -3,11 +3,12 @@
       "version": "0.1.0",
       "private": true,
       "dependencies": {
-            "clsx": "*",
+            "@playwright/test": "^1.56.1",
+            "clsx": "^2.1.1",
             "gsap": "^3.13.0",
             "react": "^18.3.1",
             "react-dom": "^18.3.1",
-            "tailwind-merge": "*"
+            "tailwind-merge": "^3.3.1"
       },
       "devDependencies": {
             "@tailwindcss/postcss": "^4.1.17",

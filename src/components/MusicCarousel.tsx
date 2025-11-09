@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
+import { useCarousel } from '../hooks/useCarousel';
 
 interface Album {
   cover: string;
@@ -29,24 +30,11 @@ interface MusicCarouselProps {
 }
 
 export const MusicCarousel: React.FC<MusicCarouselProps> = ({ parentHovered = false }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  useEffect(() => {
-    if (parentHovered) {
-      const interval = setInterval(() => {
-        setCurrentIndex((prev) => (prev + 1) % albums.length);
-      }, 3000);
-      return () => clearInterval(interval);
-    }
-  }, [parentHovered]);
-
-  const goToPrevious = useCallback(() => {
-    setCurrentIndex((prev) => (prev - 1 + albums.length) % albums.length);
-  }, []);
-
-  const goToNext = useCallback(() => {
-    setCurrentIndex((prev) => (prev + 1) % albums.length);
-  }, []);
+  const { currentIndex, goToPrevious, goToNext, goToIndex } = useCarousel({
+    itemCount: albums.length,
+    autoPlay: parentHovered,
+    autoPlayInterval: 3000,
+  });
 
   const currentAlbum = useMemo(() => albums[currentIndex], [currentIndex]);
 
@@ -116,7 +104,7 @@ export const MusicCarousel: React.FC<MusicCarouselProps> = ({ parentHovered = fa
         {albums.map((_, index) => (
           <button
             key={index}
-            onClick={() => setCurrentIndex(index)}
+            onClick={() => goToIndex(index)}
             className={`h-1.5 rounded-full transition-all duration-300 ${
               index === currentIndex
                 ? 'w-6 bg-gray-900'
