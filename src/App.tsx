@@ -25,6 +25,7 @@ export default function App() {
     { label: 'connect', target: 'connect' },
   ];
 
+
   // Hover states for carousel parent cards
   const [hackTXHovered, setHackTXHovered] = useState(false);
   const [dfgHovered, setDfgHovered] = useState(false);
@@ -176,12 +177,10 @@ export default function App() {
         >
         <p
           ref={heroTextRef}
-          className="absolute leading-[normal] not-italic text-[clamp(80px,11.5vw,220px)] text-white tracking-[0.05em] z-20 font-medium"
+          className="absolute leading-[normal] left-[40px] not-italic text-[clamp(80px,11.5vw,220px)] text-white top-[250px] tracking-[0.05em] z-20 font-medium"
           style={{
             fontFamily: '"Font Awesome 6 Brands", sans-serif',
-            willChange: 'transform, opacity',
-            left: 'clamp(16px, 4vw, 40px)',
-            top: 'clamp(140px, 18vh, 260px)'
+            willChange: 'transform, opacity'
           }}
         >
           ANDREW
@@ -198,25 +197,14 @@ export default function App() {
         >
         <div ref={workContentRef} className="relative z-20">
           <h2
-            className="font-['Comfortaa',sans-serif] text-left pt-[80px] font-bold text-white"
-            style={{
-              fontSize: 'clamp(25px, 5vw, 100px)',
-              paddingLeft: 'clamp(20px, 5vw, 40px)'
-            }}
+            className="font-['Comfortaa',sans-serif] text-left pl-[40px] pt-[80px] font-bold text-white"
+            style={{ fontSize: 'clamp(25px, 5vw, 100px)' }}
           >
             work
           </h2>
 
           {/* Projects Container */}
-          <div
-            className="space-y-6 w-full"
-            style={{
-              paddingLeft: 'clamp(20px, 5vw, 40px)',
-              paddingRight: 'clamp(20px, 5vw, 40px)',
-              paddingTop: 'clamp(30px, 6vw, 40px)',
-              paddingBottom: 'clamp(60px, 10vw, 80px)'
-            }}
-          >
+          <div className="px-[40px] pt-[40px] pb-[80px] space-y-6 w-full">
             {/* HackTX Project */}
             <div
               data-work-card="true"
@@ -332,20 +320,12 @@ export default function App() {
 
         {/* About Section */}
         <section id="about" className="relative min-h-screen">
-        <h2 className="font-['Comfortaa',sans-serif] text-left pt-[80px] font-bold text-white relative z-20" style={{ fontSize: 'clamp(25px, 5vw, 100px)', paddingLeft: 'clamp(20px,5vw,40px)' }}>
+        <h2 className="font-['Comfortaa',sans-serif] text-left pl-[40px] pt-[80px] font-bold text-white relative z-20" style={{ fontSize: 'clamp(25px, 5vw, 100px)' }}>
           about
         </h2>
 
         {/* Education Card */}
-        <div
-          className="space-y-6 w-full relative z-20"
-          style={{
-            paddingLeft: 'clamp(20px,5vw,40px)',
-            paddingRight: 'clamp(20px,5vw,40px)',
-            paddingTop: 'clamp(30px,6vw,40px)',
-            paddingBottom: 'clamp(60px,10vw,80px)'
-          }}
-        >
+        <div className="px-[40px] pt-[40px] pb-[80px] space-y-6 w-full relative z-20">
           <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50 origin-top">
             <div className="p-8 md:p-12">
               {/* Education Title - Always Visible (left-aligned) */}
@@ -583,20 +563,12 @@ export default function App() {
 
         {/* Connect Section */}
         <section id="connect" className="relative min-h-screen">
-        <h2 className="font-['Comfortaa',sans-serif] text-left pt-[80px] font-bold text-white relative z-20" style={{ fontSize: 'clamp(25px, 5vw, 100px)', paddingLeft: 'clamp(20px,5vw,40px)' }}>
+        <h2 className="font-['Comfortaa',sans-serif] text-left pl-[40px] pt-[80px] font-bold text-white relative z-20" style={{ fontSize: 'clamp(25px, 5vw, 100px)' }}>
           connect
         </h2>
 
         {/* Contact Links Container */}
-        <div
-          className="space-y-6 w-full relative z-20"
-          style={{
-            paddingLeft: 'clamp(20px,5vw,40px)',
-            paddingRight: 'clamp(20px,5vw,40px)',
-            paddingTop: 'clamp(30px,6vw,40px)',
-            paddingBottom: 'clamp(60px,10vw,80px)'
-          }}
-        >
+        <div className="px-[40px] pt-[40px] pb-[80px] space-y-6 w-full relative z-20">
           {/* LinkedIn Card */}
           <a
             href="https://www.linkedin.com/in/andrew-vong-codes/"
