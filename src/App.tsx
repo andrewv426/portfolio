@@ -19,6 +19,12 @@ export default function App() {
   const workSectionRef = useRef<HTMLElement>(null);
   const workContentRef = useRef<HTMLDivElement>(null);
 
+  const navItems = [
+    { label: 'work', target: 'work' },
+    { label: 'about', target: 'about' },
+    { label: 'connect', target: 'connect' },
+  ];
+
   // Hover states for carousel parent cards
   const [hackTXHovered, setHackTXHovered] = useState(false);
   const [dfgHovered, setDfgHovered] = useState(false);
@@ -124,47 +130,41 @@ export default function App() {
 
       <div className="relative z-20">
         {/* Navigation Bar */}
-        <div ref={navBarRef} className="absolute bg-white/20 backdrop-blur-md h-[80px] left-1/2 -translate-x-1/2 rounded-[25px] top-[60px] w-[min(1000px,85vw)] max-w-[1000px] border border-white/30 shadow-lg z-50" style={{ willChange: 'opacity' }}>
-        {/* Smiley Icon */}
-        <div className="absolute left-[35px] top-[17px]">
-          <img
-            src="/smiley.png"
-            alt="Smiley"
-            className="w-[45px] h-[45px] object-contain brightness-0 invert"
-            loading="lazy"
-          />
-        </div>
-
-        {/* Navigation Links */}
-        <div className="absolute left-[138px] top-[17px] group z-10">
-          <NavDot />
-          <button
-            onClick={() => scrollToSection("work")}
-            className="font-['Inter:Regular',sans-serif] font-normal h-[45px] leading-[normal] ml-[42px] not-italic text-[40px] text-white cursor-pointer group-hover:-translate-y-2 transition-transform duration-300 ease-out block font-[Comfortaa]"
+        <div
+          ref={navBarRef}
+          className="absolute bg-white/20 backdrop-blur-md h-[80px] left-1/2 -translate-x-1/2 rounded-[25px] w-[min(1000px,85vw)] max-w-[1000px] border border-white/30 shadow-lg z-50 flex items-center justify-center"
+          style={{ willChange: 'opacity', top: 'clamp(24px, 6vh, 60px)' }}
+        >
+          {/* Smiley Icon */}
+          <div
+            className="absolute"
+            style={{ left: 'clamp(12px,4vw,35px)', top: 'clamp(8px,2vh,17px)' }}
           >
-            work
-          </button>
-        </div>
+            <img
+              src="/smiley.png"
+              alt="Smiley"
+              className="w-[45px] h-[45px] object-contain brightness-0 invert"
+              loading="lazy"
+            />
+          </div>
 
-        <div className="absolute left-[388px] top-[17px] group z-10">
-          <NavDot />
-          <button
-            onClick={() => scrollToSection("about")}
-            className="font-['Inter:Regular',sans-serif] font-normal h-[45px] leading-[normal] ml-[42px] not-italic text-[40px] text-white cursor-pointer group-hover:-translate-y-2 transition-transform duration-300 ease-out block font-[Comfortaa]"
+          {/* Navigation Links */}
+          <div
+            className="flex items-center"
+            style={{ gap: 'clamp(40px,10vw,160px)' }}
           >
-            about
-          </button>
-        </div>
-
-        <div className="absolute left-[668px] top-[17px] group z-10">
-          <NavDot />
-          <button
-            onClick={() => scrollToSection("connect")}
-            className="font-['Inter:Regular',sans-serif] font-normal h-[45px] leading-[normal] ml-[41px] not-italic text-[40px] text-white cursor-pointer group-hover:-translate-y-2 transition-transform duration-300 ease-out block font-[Comfortaa]"
-          >
-            connect
-          </button>
-        </div>
+            {navItems.map(({ label, target }) => (
+              <div key={label} className="relative group">
+                <NavDot />
+                <button
+                  onClick={() => scrollToSection(target)}
+                  className="font-['Inter:Regular',sans-serif] font-normal leading-[normal] not-italic text-[clamp(24px,4vw,40px)] text-white cursor-pointer group-hover:-translate-y-2 transition-transform duration-300 ease-out block font-[Comfortaa] pl-[42px]"
+                >
+                  {label}
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Hero Section */}
@@ -176,10 +176,12 @@ export default function App() {
         >
         <p
           ref={heroTextRef}
-          className="absolute leading-[normal] left-[40px] not-italic text-[clamp(80px,11.5vw,220px)] text-white top-[250px] tracking-[0.05em] z-20 font-medium"
+          className="absolute leading-[normal] not-italic text-[clamp(80px,11.5vw,220px)] text-white tracking-[0.05em] z-20 font-medium"
           style={{
             fontFamily: '"Font Awesome 6 Brands", sans-serif',
-            willChange: 'transform, opacity'
+            willChange: 'transform, opacity',
+            left: 'clamp(16px, 4vw, 40px)',
+            top: 'clamp(140px, 18vh, 260px)'
           }}
         >
           ANDREW
@@ -196,14 +198,25 @@ export default function App() {
         >
         <div ref={workContentRef} className="relative z-20">
           <h2
-            className="font-['Comfortaa',sans-serif] text-left pl-[40px] pt-[80px] font-bold text-white"
-            style={{ fontSize: 'clamp(25px, 5vw, 100px)' }}
+            className="font-['Comfortaa',sans-serif] text-left pt-[80px] font-bold text-white"
+            style={{
+              fontSize: 'clamp(25px, 5vw, 100px)',
+              paddingLeft: 'clamp(20px, 5vw, 40px)'
+            }}
           >
             work
           </h2>
 
           {/* Projects Container */}
-          <div className="px-[40px] pt-[40px] pb-[80px] space-y-6 w-full">
+          <div
+            className="space-y-6 w-full"
+            style={{
+              paddingLeft: 'clamp(20px, 5vw, 40px)',
+              paddingRight: 'clamp(20px, 5vw, 40px)',
+              paddingTop: 'clamp(30px, 6vw, 40px)',
+              paddingBottom: 'clamp(60px, 10vw, 80px)'
+            }}
+          >
             {/* HackTX Project */}
             <div
               data-work-card="true"
@@ -319,12 +332,20 @@ export default function App() {
 
         {/* About Section */}
         <section id="about" className="relative min-h-screen">
-        <h2 className="font-['Comfortaa',sans-serif] text-left pl-[40px] pt-[80px] font-bold text-white relative z-20" style={{ fontSize: 'clamp(25px, 5vw, 100px)' }}>
+        <h2 className="font-['Comfortaa',sans-serif] text-left pt-[80px] font-bold text-white relative z-20" style={{ fontSize: 'clamp(25px, 5vw, 100px)', paddingLeft: 'clamp(20px,5vw,40px)' }}>
           about
         </h2>
 
         {/* Education Card */}
-        <div className="px-[40px] pt-[40px] pb-[80px] space-y-6 w-full relative z-20">
+        <div
+          className="space-y-6 w-full relative z-20"
+          style={{
+            paddingLeft: 'clamp(20px,5vw,40px)',
+            paddingRight: 'clamp(20px,5vw,40px)',
+            paddingTop: 'clamp(30px,6vw,40px)',
+            paddingBottom: 'clamp(60px,10vw,80px)'
+          }}
+        >
           <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50 origin-top">
             <div className="p-8 md:p-12">
               {/* Education Title - Always Visible (left-aligned) */}
@@ -562,12 +583,20 @@ export default function App() {
 
         {/* Connect Section */}
         <section id="connect" className="relative min-h-screen">
-        <h2 className="font-['Comfortaa',sans-serif] text-left pl-[40px] pt-[80px] font-bold text-white relative z-20" style={{ fontSize: 'clamp(25px, 5vw, 100px)' }}>
+        <h2 className="font-['Comfortaa',sans-serif] text-left pt-[80px] font-bold text-white relative z-20" style={{ fontSize: 'clamp(25px, 5vw, 100px)', paddingLeft: 'clamp(20px,5vw,40px)' }}>
           connect
         </h2>
 
         {/* Contact Links Container */}
-        <div className="px-[40px] pt-[40px] pb-[80px] space-y-6 w-full relative z-20">
+        <div
+          className="space-y-6 w-full relative z-20"
+          style={{
+            paddingLeft: 'clamp(20px,5vw,40px)',
+            paddingRight: 'clamp(20px,5vw,40px)',
+            paddingTop: 'clamp(30px,6vw,40px)',
+            paddingBottom: 'clamp(60px,10vw,80px)'
+          }}
+        >
           {/* LinkedIn Card */}
           <a
             href="https://www.linkedin.com/in/andrew-vong-codes/"
