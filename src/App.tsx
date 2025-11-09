@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import PetalCanvas from "./components/PetalCanvas";
 import { MusicCarousel } from "./components/MusicCarousel";
+import { HackTXCarousel } from "./components/HackTXCarousel";
 import { NavDot } from "./components/NavDot";
 import { TechTag } from "./components/TechTag";
 
@@ -96,28 +97,39 @@ export default function App() {
               </h3>
 
               {/* Project Details - Revealed on Hover */}
-              <div className="overflow-hidden transition-all duration-500 ease-out max-h-0 group-hover:max-h-96 opacity-0 group-hover:opacity-100" style={{ transitionProperty: 'max-height, opacity' }}>
-                <div className="pt-4 space-y-4">
-                  <p className="text-gray-700 text-base md:text-lg leading-relaxed">
-                    Built a real-time presentation platform with live voice transcription and AI-powered summaries, enabling synchronized slide navigation and interactive Q&A for multiple concurrent users.
-                  </p>
+              <div className="overflow-hidden transition-all duration-500 ease-out max-h-0 group-hover:max-h-[700px] opacity-0 group-hover:opacity-100" style={{ transitionProperty: 'max-height, opacity' }}>
+                <div className="pt-4">
+                  {/* Responsive Grid Layout */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    {/* Left Column - Project Details */}
+                    <div className="space-y-4">
+                      <p className="text-gray-700 text-base md:text-lg leading-relaxed">
+                        Built a real-time presentation platform with live voice transcription and AI-powered summaries, enabling synchronized slide navigation and interactive Q&A for multiple concurrent users.
+                      </p>
 
-                  <div className="pt-2">
-                    <p className="text-gray-600 text-xs md:text-sm uppercase tracking-wider mb-3">Technologies</p>
-                    <div className="flex flex-wrap gap-2">
-                      <TechTag>Next.js</TechTag>
-                      <TechTag>Socket.IO</TechTag>
-                      <TechTag>Node.js</TechTag>
-                      <TechTag>Firebase</TechTag>
-                      <TechTag>AssemblyAI</TechTag>
-                      <TechTag>Gemini API</TechTag>
+                      <div className="pt-2">
+                        <p className="text-gray-600 text-xs md:text-sm uppercase tracking-wider mb-3">Technologies</p>
+                        <div className="flex flex-wrap gap-2">
+                          <TechTag>Next.js</TechTag>
+                          <TechTag>Socket.IO</TechTag>
+                          <TechTag>Node.js</TechTag>
+                          <TechTag>Firebase</TechTag>
+                          <TechTag>AssemblyAI</TechTag>
+                          <TechTag>Gemini API</TechTag>
+                        </div>
+                      </div>
+
+                      <div className="pt-2 space-y-1.5 md:space-y-2">
+                        <p className="text-gray-600 text-sm">• Architected Socket.IO infrastructure for real-time communication</p>
+                        <p className="text-gray-600 text-sm">• Integrated AssemblyAI for live speech-to-text transcription</p>
+                        <p className="text-gray-600 text-sm">• Implemented Google Gemini API for AI-generated slide summaries</p>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="pt-2 space-y-1.5 md:space-y-2">
-                    <p className="text-gray-600 text-sm">• Architected Socket.IO infrastructure for real-time communication</p>
-                    <p className="text-gray-600 text-sm">• Integrated AssemblyAI for live speech-to-text transcription</p>
-                    <p className="text-gray-600 text-sm">• Implemented Google Gemini API for AI-generated slide summaries</p>
+                    {/* Right Column - HackTX Carousel */}
+                    <div className="flex items-center justify-center lg:justify-end">
+                      <HackTXCarousel />
+                    </div>
                   </div>
                 </div>
               </div>
