@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import PetalCanvas from "./components/PetalCanvas";
@@ -12,6 +12,8 @@ import { TechTag } from "./components/TechTag";
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
 
+const PAGE_SCALE = 0.8;
+
 export default function App() {
   const heroRef = useRef<HTMLDivElement>(null);
   const heroTextRef = useRef<HTMLParagraphElement>(null);
@@ -24,6 +26,12 @@ export default function App() {
     { label: 'about', target: 'about' },
     { label: 'connect', target: 'connect' },
   ];
+
+  const scaledWrapperStyle = useMemo(() => ({
+    transform: `scale(${PAGE_SCALE})`,
+    transformOrigin: 'top left',
+    width: `${(1 / PAGE_SCALE) * 100}%`
+  }), []);
 
 
   // Hover states for carousel parent cards
@@ -129,7 +137,7 @@ export default function App() {
       {/* Falling cherry blossom overlay (kept behind content) */}
       <PetalCanvas />
 
-      <div className="relative z-20">
+      <div className="relative z-20" style={scaledWrapperStyle}>
         {/* Navigation Bar */}
         <div
           ref={navBarRef}
