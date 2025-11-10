@@ -241,9 +241,11 @@ export default function App() {
             >
               <div className="p-8 md:p-12">
                 {/* Project Title - Animates to center on hover when closed */}
-                <h3 className="card-title font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
-                  HackTX
-                </h3>
+                <div className="card-title-wrapper">
+                  <h3 className="card-title font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
+                    HackTX
+                  </h3>
+                </div>
 
                 {/* Project Details - Revealed on Click */}
                 <div className={`card-expanded-content transition-all duration-700 ease-in-out max-h-0 opacity-0 overflow-hidden ${cardStates.hacktx ? 'max-h-[85vh] md:max-h-[950px] lg:max-h-[850px] opacity-100 overflow-y-auto scrollbar-hide touch-pan-y' : ''}`} style={{ transitionProperty: 'max-height, opacity' }}>
@@ -296,9 +298,11 @@ export default function App() {
             >
               <div className="p-8 md:p-12">
                 {/* Project Title - Animates to center on hover when closed */}
-                <h3 className="card-title font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
-                  JPMC DataForGood
-                </h3>
+                <div className="card-title-wrapper">
+                  <h3 className="card-title font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
+                    JPMC DataForGood
+                  </h3>
+                </div>
 
                 {/* Project Details - Revealed on Click */}
                 <div className={`card-expanded-content transition-all duration-700 ease-in-out max-h-0 opacity-0 overflow-hidden ${cardStates.dfg ? 'max-h-[85vh] md:max-h-[950px] lg:max-h-[850px] opacity-100 overflow-y-auto scrollbar-hide touch-pan-y' : ''}`} style={{ transitionProperty: 'max-height, opacity' }}>
@@ -358,9 +362,11 @@ export default function App() {
           <div className={`card-container group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out cursor-pointer border border-white/50 origin-top ${cardStates.education ? 'card-expanded' : ''}`} onClick={() => toggleCard('education')}>
             <div className="p-8 md:p-12">
               {/* Education Title - Animates to center on hover when closed */}
-              <h3 className="card-title font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
-                Education
-              </h3>
+              <div className="card-title-wrapper">
+                <h3 className="card-title font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
+                  Education
+                </h3>
+              </div>
 
               {/* Education Details - Revealed on Click */}
               <div className={`card-expanded-content transition-all duration-700 ease-in-out max-h-0 opacity-0 overflow-hidden ${cardStates.education ? 'max-h-[70vh] md:max-h-[500px] lg:max-h-96 opacity-100 overflow-y-auto scrollbar-hide touch-pan-y' : ''}`} style={{ transitionProperty: 'max-height, opacity' }}>
@@ -397,9 +403,11 @@ export default function App() {
           <div className={`card-container group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out cursor-pointer border border-white/50 origin-top ${cardStates.experience ? 'card-expanded' : ''}`} onClick={() => toggleCard('experience')}>
             <div className="p-8 md:p-12">
               {/* Experience Title - Animates to center on hover when closed */}
-              <h3 className="card-title font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
-                Experience
-              </h3>
+              <div className="card-title-wrapper">
+                <h3 className="card-title font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
+                  Experience
+                </h3>
+              </div>
 
               {/* Experience Details - Revealed on Click */}
               <div className={`card-expanded-content transition-all duration-700 ease-in-out max-h-0 opacity-0 overflow-hidden ${cardStates.experience ? 'max-h-[85vh] md:max-h-[1000px] lg:max-h-[900px] opacity-100 overflow-y-auto scrollbar-hide touch-pan-y' : ''}`} style={{ transitionProperty: 'max-height, opacity' }}>
@@ -500,9 +508,11 @@ export default function App() {
           <div className={`card-container group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out cursor-pointer border border-white/50 origin-top ${cardStates.awards ? 'card-expanded' : ''}`} onClick={() => toggleCard('awards')}>
             <div className="p-8 md:p-12">
               {/* Awards Title - Animates to center on hover when closed */}
-              <h3 className="card-title font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
-                Awards
-              </h3>
+              <div className="card-title-wrapper">
+                <h3 className="card-title font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
+                  Awards
+                </h3>
+              </div>
 
               {/* Awards Details - Revealed on Click */}
               <div className={`card-expanded-content transition-all duration-700 ease-in-out max-h-0 opacity-0 overflow-hidden ${cardStates.awards ? 'max-h-[70vh] md:max-h-[500px] lg:max-h-96 opacity-100 overflow-y-auto scrollbar-hide touch-pan-y' : ''}`} style={{ transitionProperty: 'max-height, opacity' }}>
@@ -538,9 +548,11 @@ export default function App() {
           >
             <div className="p-8 md:p-12">
               {/* Interests Title - Animates to center on hover when closed */}
-              <h3 className="card-title font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
-                Interests
-              </h3>
+              <div className="card-title-wrapper">
+                <h3 className="card-title font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
+                  Interests
+                </h3>
+              </div>
 
               {/* Interests Details - Revealed on Click */}
               <div className={`card-expanded-content transition-all duration-700 ease-in-out max-h-0 opacity-0 overflow-hidden ${cardStates.interests ? 'max-h-[85vh] md:max-h-[750px] lg:max-h-[650px] opacity-100 overflow-y-auto scrollbar-hide touch-pan-y' : ''}`} style={{ transitionProperty: 'max-height, opacity' }}>

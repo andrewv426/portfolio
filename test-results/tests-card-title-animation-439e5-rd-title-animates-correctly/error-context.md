@@ -1,0 +1,264 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e5]:
+  - generic [ref=e6]:
+    - img "Smiley" [ref=e8]
+    - generic [ref=e9]:
+      - generic [ref=e10]:
+        - img [ref=e12]
+        - button "work" [ref=e14] [cursor=pointer]
+      - generic [ref=e15]:
+        - img [ref=e17]
+        - button "about" [ref=e19] [cursor=pointer]
+      - generic [ref=e20]:
+        - img [ref=e22]
+        - button "connect" [ref=e24] [cursor=pointer]
+  - paragraph [ref=e26]:
+    - text: ANDREW
+    - text: VONG
+  - generic [ref=e28]:
+    - heading "work" [level=2] [ref=e29]
+    - generic [ref=e30]:
+      - generic [ref=e32] [cursor=pointer]:
+        - heading "HackTX" [level=3] [ref=e34]
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - paragraph: Built a real-time presentation platform with live voice transcription and AI-powered summaries, enabling synchronized slide navigation and interactive Q&A for multiple concurrent users.
+                - generic:
+                  - paragraph: Technologies
+                  - generic:
+                    - generic: Next.js
+                    - generic: Socket.IO
+                    - generic: Node.js
+                    - generic: Firebase
+                    - generic: AssemblyAI
+                    - generic: Gemini API
+                - generic:
+                  - paragraph: • Architected Socket.IO infrastructure for real-time communication
+                  - paragraph: • Integrated AssemblyAI for live speech-to-text transcription
+                  - paragraph: • Implemented Google Gemini API for AI-generated slide summaries
+              - generic:
+                - region "HackTX project carousel":
+                  - generic:
+                    - generic:
+                      - img "Homepage!"
+                    - generic:
+                      - img
+                    - generic:
+                      - img
+                    - generic:
+                      - img
+                    - generic:
+                      - img
+                    - button "Previous project":
+                      - img
+                    - button "Next project":
+                      - img
+                  - generic:
+                    - heading "Homepage!" [level=4]
+                  - generic:
+                    - link "Demo Link":
+                      - /url: https://hacktx25-production.up.railway.app/
+                    - link "Devpost Link":
+                      - /url: https://devpost.com/software/project-ishaan?ref_content=my-projects-tab&ref_feature=my_projects
+                  - generic:
+                    - button "Go to project 1"
+                    - button "Go to project 2"
+                    - button "Go to project 3"
+                    - button "Go to project 4"
+                    - button "Go to project 5"
+      - generic [ref=e36] [cursor=pointer]:
+        - heading "JPMC DataForGood" [level=3] [ref=e38]
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic: Winner
+                - paragraph: Partnered with NGO to analyze domestic violence survivor program data, identifying a critical service gap affecting adolescent children (ages 12-18) excluded from both childcare and adult workforce programs.
+                - generic:
+                  - paragraph: Technologies
+                  - generic:
+                    - generic: Python
+                    - generic: Pandas
+                    - generic: Logistic Regression
+                    - generic: Data Analysis
+                - generic:
+                  - paragraph: • Built logistic regression model to predict employment outcomes
+                  - paragraph: • Delivered data-driven recommendations to expand career development services
+                  - paragraph: • Helped break intergenerational cycles of poverty through early intervention
+              - generic:
+                - region "JPMC DataForGood carousel":
+                  - generic:
+                    - generic:
+                      - img "1st Place Winner"
+                    - generic:
+                      - img
+                    - button "Previous project":
+                      - img
+                    - button "Next project":
+                      - img
+                  - generic:
+                    - heading "1st Place Winner" [level=4]
+                  - generic:
+                    - link "LinkedIn Post":
+                      - /url: https://www.linkedin.com/feed/update/urn:li:activity:7380602336026595328/
+                  - generic:
+                    - button "Go to image 1"
+                    - button "Go to image 2"
+  - generic [ref=e39]:
+    - heading "about" [level=2] [ref=e40]
+    - generic [ref=e41]:
+      - generic [ref=e43] [cursor=pointer]:
+        - heading "Education" [level=3] [ref=e45]
+        - generic:
+          - generic:
+            - generic:
+              - heading "Texas A&M University" [level=4]
+              - paragraph: College Station, TX
+              - paragraph: B.S. in Computer Science, Minor in Mathematics
+              - paragraph: May 2027
+            - generic:
+              - paragraph: Relevant Coursework
+              - generic:
+                - generic: Analysis of Algorithms
+                - generic: Data Structures & Algorithms
+                - generic: Computer Architecture
+                - generic: Probability & Statistics
+                - generic: Discrete Math
+                - generic: Linear Algebra
+                - generic: Multivariable Calculus
+      - generic [ref=e47] [cursor=pointer]:
+        - heading "Experience" [level=3] [ref=e49]
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - heading "Software Engineer Intern" [level=4]
+                  - paragraph: LegacAI • Remote
+                - paragraph: June 2025 - September 2025
+              - generic:
+                - paragraph: Technologies
+                - generic:
+                  - generic: JavaScript
+                  - generic: TypeScript
+                  - generic: React
+                  - generic: Node.js
+                  - generic: AWS
+                  - generic: Whisper
+              - generic:
+                - paragraph: • Engineered and deployed a full-stack AI note-taking platform using React, Node.js, and OpenAI Whisper, reducing meeting documentation time by 30% and increasing beta user engagement by 25%
+                - paragraph: • Architected secure authentication with Google OAuth and AWS Cognito, designing a DynamoDB schema for role-based access control that achieved 99.99% uptime
+                - paragraph: • Accelerated feature delivery by optimizing UI workflows and implementing CI/CD pipelines, enabling early launch of 3 major features within an agile, cross-functional team
+            - generic:
+              - generic:
+                - generic:
+                  - heading "App Development Intern" [level=4]
+                  - paragraph: medEaze • Remote
+                - paragraph: Aug 2024 - Oct 2024
+              - generic:
+                - paragraph: Technologies
+                - generic:
+                  - generic: Swift
+                  - generic: React Native
+                  - generic: Figma
+                  - generic: Jest
+              - generic:
+                - paragraph: • Refactored Swift components to resolve UI lag and reduce mobile load times by 20% across core app modules
+                - paragraph: • Integrated Gemini AI to create a prescription reminder chatbot, increasing daily user engagement by 15%
+                - paragraph: • Established a testing framework using Jest with unit and integration tests in a CI/CD pipeline, decreasing post-deployment bugs by 40%
+            - generic:
+              - generic:
+                - generic:
+                  - heading "Data Analyst Intern" [level=4]
+                  - paragraph: Dau International • Austin, TX
+                - paragraph: Dec 2024 - Mar 2025
+              - generic:
+                - paragraph: Technologies
+                - generic:
+                  - generic: Python
+                  - generic: SQL
+                  - generic: Web Scraping
+              - generic:
+                - paragraph: • Built a Python-based resume parser that extracted structured data from LinkedIn profiles, improving match accuracy by 27%
+                - paragraph: • Automated SQL pipelines for resume data validation, reducing import errors by 35% and streamlining recruiter workflows
+                - paragraph: • Developed sourcing tools to identify senior engineers for a pre-IPO $1B cybersecurity client, enhancing targeting precision and increasing qualified lead generation by 30%
+      - generic [ref=e51] [cursor=pointer]:
+        - heading "Awards" [level=3] [ref=e53]
+        - generic:
+          - generic:
+            - generic:
+              - generic: Winner
+              - paragraph: Winner of JPMC DataForGood Hackathon
+            - paragraph: 1st Place NorthMark Quantitative Trading Competition
+            - paragraph: Craig and Galen Brown Engineering Honors Program
+            - paragraph: National Merit Commended Scholar
+            - paragraph: The George Foundation Higher Education Scholarship
+            - paragraph: Youth In Philanthropy Scholarship
+      - generic [ref=e55] [cursor=pointer]:
+        - heading "Interests" [level=3] [ref=e57]
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - paragraph: Technical Interests
+                  - generic:
+                    - generic: UI Design & Animations
+                    - generic: Web Development
+                    - generic: Machine Learning
+                    - generic: Embedded Systems
+                - generic:
+                  - paragraph: Fun Interests
+                  - generic:
+                    - generic:
+                      - img
+                      - generic: Basketball (Houston Rockets!)
+                    - generic:
+                      - img
+                      - generic: "Video Games: Valorant, League of Legends, Counter-Strike"
+                    - generic:
+                      - img
+                      - generic: "Music: Daniel Caesar, keshi, Drake"
+              - generic:
+                - region "Music carousel":
+                  - generic:
+                    - generic:
+                      - img "NEVER ENOUGH by Daniel Caesar"
+                    - generic:
+                      - img
+                    - generic:
+                      - img
+                    - button "Previous album":
+                      - img
+                    - button "Next album":
+                      - img
+                  - generic:
+                    - heading "NEVER ENOUGH" [level=4]
+                    - paragraph: Daniel Caesar
+                  - generic:
+                    - button "Go to album 1"
+                    - button "Go to album 2"
+                    - button "Go to album 3"
+  - generic [ref=e58]:
+    - heading "connect" [level=2] [ref=e59]
+    - generic [ref=e60]:
+      - link "LinkedIn andrew-vong-codes" [ref=e61] [cursor=pointer]:
+        - /url: https://www.linkedin.com/in/andrew-vong-codes/
+        - generic [ref=e63]:
+          - img [ref=e64]
+          - generic [ref=e66]:
+            - heading "LinkedIn" [level=3] [ref=e67]
+            - paragraph [ref=e68]: andrew-vong-codes
+      - link "Email andrewvong426@gmail.com" [ref=e69] [cursor=pointer]:
+        - /url: mailto:andrewvong426@gmail.com
+        - generic [ref=e71]:
+          - img [ref=e72]
+          - generic [ref=e74]:
+            - heading "Email" [level=3] [ref=e75]
+            - paragraph [ref=e76]: andrewvong426@gmail.com
+```

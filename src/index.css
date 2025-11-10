@@ -55,22 +55,37 @@
     --card-wind-scale: 1.02;
   }
 
-  /* Card Title Animation - Moves to center on hover (only when card is closed) */
-  .card-title {
-    @apply transition-all duration-500 ease-in-out;
+  /* Card Title Wrapper - Handles fluid transform animation */
+  .card-title-wrapper {
+    position: relative;
+    left: 0;
+    translate: 0 0;
+    transition: left 1.2s cubic-bezier(0.16, 1, 0.3, 1), translate 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: left, translate;
+    display: inline-block;
+    width: fit-content;
   }
 
   /* Only animate title to center when card is NOT expanded */
-  .card-container:not(.card-expanded):hover .card-title {
-    @apply text-center;
+  .card-container:not(.card-expanded):hover .card-title-wrapper {
+    /* Move title toward center using left positioning for fluid animation */
+    /* Centers the title by moving it 50% of the parent width minus half its own width */
+    left: 50%;
+    translate: -50% 0;
   }
 
-  /* Hide expanded content on hover (only when card is closed) */
-  .card-container:not(.card-expanded):hover .card-expanded-content {
-    @apply opacity-0 pointer-events-none;
-  }
-
-  .card-expanded-content {
+  /* Card Title - Keep minimal styling */
+  .card-title {
     @apply transition-opacity duration-500 ease-in-out;
+  }
+
+  /* Expanded content - disable pointer events when collapsed to allow hover on card */
+  .card-expanded-content {
+    @apply transition-opacity duration-500 ease-in-out pointer-events-none;
+  }
+
+  /* Enable pointer events when card is expanded */
+  .card-container.card-expanded .card-expanded-content {
+    @apply pointer-events-auto;
   }
 }
