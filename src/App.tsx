@@ -1,6 +1,8 @@
+import clsx from 'clsx';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import CardPetalOverlay from "./components/CardPetalOverlay";
 import PetalCanvas from "./components/PetalCanvas";
 import { MusicCarousel } from "./components/MusicCarousel";
 import { HackTXCarousel } from "./components/HackTXCarousel";
@@ -20,6 +22,12 @@ export default function App() {
   const navBarRef = useRef<HTMLDivElement>(null);
   const workSectionRef = useRef<HTMLElement>(null);
   const workContentRef = useRef<HTMLDivElement>(null);
+  const hacktxCardRef = useRef<HTMLDivElement>(null);
+  const dfgCardRef = useRef<HTMLDivElement>(null);
+  const educationCardRef = useRef<HTMLDivElement>(null);
+  const experienceCardRef = useRef<HTMLDivElement>(null);
+  const awardsCardRef = useRef<HTMLDivElement>(null);
+  const interestsCardRef = useRef<HTMLDivElement>(null);
 
   const navItems = [
     { label: 'work', target: 'work' },
@@ -37,6 +45,9 @@ export default function App() {
   // Hover states for carousel parent cards
   const [hackTXHovered, setHackTXHovered] = useState(false);
   const [dfgHovered, setDfgHovered] = useState(false);
+  const [educationHovered, setEducationHovered] = useState(false);
+  const [experienceHovered, setExperienceHovered] = useState(false);
+  const [awardsHovered, setAwardsHovered] = useState(false);
   const [interestsHovered, setInterestsHovered] = useState(false);
 
   // Card expanded states for mobile tap functionality
@@ -147,6 +158,21 @@ export default function App() {
     }
   }, []);
 
+  const hacktxCardActive = hackTXHovered || cardStates.hacktx;
+  const dfgCardActive = dfgHovered || cardStates.dfg;
+  const educationCardActive = educationHovered || cardStates.education;
+  const experienceCardActive = experienceHovered || cardStates.experience;
+  const awardsCardActive = awardsHovered || cardStates.awards;
+  const interestsCardActive = interestsHovered || cardStates.interests;
+
+  const cardSurfaceClasses = (active: boolean) =>
+    clsx(
+      active
+        ? "bg-white/95 border-white/80 shadow-[0_30px_80px_-40px_rgba(15,23,42,0.65)]"
+        : "bg-white/55 border-white/35 hover:bg-white/75 focus-visible:bg-white/75",
+      "transition-colors duration-700",
+    );
+
   return (
     <div className="relative w-full min-h-screen overflow-x-hidden bg-[#d9d9d9]">
       {/* Background */}
@@ -232,14 +258,27 @@ export default function App() {
           <div className="px-[40px] pt-[40px] pb-[80px] space-y-6 w-full">
             {/* HackTX Project */}
             <div
+              ref={hacktxCardRef}
               data-work-card="true"
-              className={`card-container group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out cursor-pointer border border-white/50 origin-top ${cardStates.hacktx ? 'card-expanded' : ''}`}
+              className={clsx(
+                "card-container group relative backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out cursor-pointer border origin-top",
+                cardSurfaceClasses(hacktxCardActive),
+                { 'card-expanded': cardStates.hacktx },
+              )}
+              onMouseEnter={() => setHackTXHovered(true)}
+              onMouseLeave={() => setHackTXHovered(false)}
+              onFocus={() => setHackTXHovered(true)}
+              onBlur={() => setHackTXHovered(false)}
               onClick={() => {
                 toggleCard('hacktx');
-                setHackTXHovered(!cardStates.hacktx);
               }}
             >
-              <div className="p-8 md:p-12">
+              <CardPetalOverlay
+                active={hacktxCardActive}
+                parentRef={hacktxCardRef}
+                className={`z-[1] transition-opacity duration-500 ${hacktxCardActive ? 'opacity-80' : 'opacity-0'}`}
+              />
+              <div className="relative z-10 p-8 md:p-12">
                 {/* Project Title - Animates to center on hover when closed */}
                 <div className="card-title-wrapper">
                   <h3 className="card-title font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
@@ -279,7 +318,7 @@ export default function App() {
 
                       {/* Right Column - HackTX Carousel */}
                       <div className="flex items-center justify-center lg:justify-end">
-                        <HackTXCarousel parentHovered={hackTXHovered} />
+                        <HackTXCarousel parentHovered={hacktxCardActive} />
                       </div>
                     </div>
                   </div>
@@ -289,14 +328,27 @@ export default function App() {
 
             {/* JPMC DataForGood Project */}
             <div
+              ref={dfgCardRef}
               data-work-card="true"
-              className={`card-container group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out cursor-pointer border border-white/50 origin-top ${cardStates.dfg ? 'card-expanded' : ''}`}
+              className={clsx(
+                "card-container group relative backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out cursor-pointer border origin-top",
+                cardSurfaceClasses(dfgCardActive),
+                { 'card-expanded': cardStates.dfg },
+              )}
+              onMouseEnter={() => setDfgHovered(true)}
+              onMouseLeave={() => setDfgHovered(false)}
+              onFocus={() => setDfgHovered(true)}
+              onBlur={() => setDfgHovered(false)}
               onClick={() => {
                 toggleCard('dfg');
-                setDfgHovered(!cardStates.dfg);
               }}
             >
-              <div className="p-8 md:p-12">
+              <CardPetalOverlay
+                active={dfgCardActive}
+                parentRef={dfgCardRef}
+                className={`z-[1] transition-opacity duration-500 ${dfgCardActive ? 'opacity-80' : 'opacity-0'}`}
+              />
+              <div className="relative z-10 p-8 md:p-12">
                 {/* Project Title - Animates to center on hover when closed */}
                 <div className="card-title-wrapper">
                   <h3 className="card-title font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
@@ -340,7 +392,7 @@ export default function App() {
 
                       {/* Right Column - DFG Carousel */}
                       <div className="flex items-center justify-center lg:justify-end">
-                        <DFGCarousel parentHovered={dfgHovered} />
+                        <DFGCarousel parentHovered={dfgCardActive} />
                       </div>
                     </div>
                   </div>
@@ -359,8 +411,27 @@ export default function App() {
 
         {/* Education Card */}
         <div className="px-[40px] pt-[40px] pb-[80px] space-y-6 w-full relative z-20">
-          <div className={`card-container group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out cursor-pointer border border-white/50 origin-top ${cardStates.education ? 'card-expanded' : ''}`} onClick={() => toggleCard('education')}>
-            <div className="p-8 md:p-12">
+          <div
+            ref={educationCardRef}
+            className={clsx(
+              "card-container group relative backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out cursor-pointer border origin-top",
+              cardSurfaceClasses(educationCardActive),
+              { 'card-expanded': cardStates.education },
+            )}
+            onMouseEnter={() => setEducationHovered(true)}
+            onMouseLeave={() => setEducationHovered(false)}
+            onFocus={() => setEducationHovered(true)}
+            onBlur={() => setEducationHovered(false)}
+            onClick={() => toggleCard('education')}
+          >
+            <CardPetalOverlay
+              active={educationCardActive}
+              parentRef={educationCardRef}
+              density={22}
+              speed={1.5}
+              className={`z-[1] transition-opacity duration-500 ${educationCardActive ? 'opacity-90' : 'opacity-0'}`}
+            />
+            <div className="relative z-10 p-8 md:p-12">
               {/* Education Title - Animates to center on hover when closed */}
               <div className="card-title-wrapper">
                 <h3 className="card-title font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
@@ -400,8 +471,27 @@ export default function App() {
           </div>
 
           {/* Experience Card */}
-          <div className={`card-container group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out cursor-pointer border border-white/50 origin-top ${cardStates.experience ? 'card-expanded' : ''}`} onClick={() => toggleCard('experience')}>
-            <div className="p-8 md:p-12">
+          <div
+            ref={experienceCardRef}
+            className={clsx(
+              "card-container group relative backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out cursor-pointer border origin-top",
+              cardSurfaceClasses(experienceCardActive),
+              { 'card-expanded': cardStates.experience },
+            )}
+            onMouseEnter={() => setExperienceHovered(true)}
+            onMouseLeave={() => setExperienceHovered(false)}
+            onFocus={() => setExperienceHovered(true)}
+            onBlur={() => setExperienceHovered(false)}
+            onClick={() => toggleCard('experience')}
+          >
+            <CardPetalOverlay
+              active={experienceCardActive}
+              parentRef={experienceCardRef}
+              density={24}
+              speed={1.55}
+              className={`z-[1] transition-opacity duration-500 ${experienceCardActive ? 'opacity-90' : 'opacity-0'}`}
+            />
+            <div className="relative z-10 p-8 md:p-12">
               {/* Experience Title - Animates to center on hover when closed */}
               <div className="card-title-wrapper">
                 <h3 className="card-title font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
@@ -505,8 +595,27 @@ export default function App() {
           </div>
 
           {/* Awards Card */}
-          <div className={`card-container group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out cursor-pointer border border-white/50 origin-top ${cardStates.awards ? 'card-expanded' : ''}`} onClick={() => toggleCard('awards')}>
-            <div className="p-8 md:p-12">
+          <div
+            ref={awardsCardRef}
+            className={clsx(
+              "card-container group relative backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out cursor-pointer border origin-top",
+              cardSurfaceClasses(awardsCardActive),
+              { 'card-expanded': cardStates.awards },
+            )}
+            onMouseEnter={() => setAwardsHovered(true)}
+            onMouseLeave={() => setAwardsHovered(false)}
+            onFocus={() => setAwardsHovered(true)}
+            onBlur={() => setAwardsHovered(false)}
+            onClick={() => toggleCard('awards')}
+          >
+            <CardPetalOverlay
+              active={awardsCardActive}
+              parentRef={awardsCardRef}
+              density={20}
+              speed={1.45}
+              className={`z-[1] transition-opacity duration-500 ${awardsCardActive ? 'opacity-80' : 'opacity-0'}`}
+            />
+            <div className="relative z-10 p-8 md:p-12">
               {/* Awards Title - Animates to center on hover when closed */}
               <div className="card-title-wrapper">
                 <h3 className="card-title font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
@@ -540,13 +649,28 @@ export default function App() {
 
           {/* Interests Card */}
           <div
-            className={`card-container group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out cursor-pointer border border-white/50 origin-top ${cardStates.interests ? 'card-expanded' : ''}`}
+            ref={interestsCardRef}
+            className={clsx(
+              "card-container group relative backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out cursor-pointer border origin-top",
+              cardSurfaceClasses(interestsCardActive),
+              { 'card-expanded': cardStates.interests },
+            )}
+            onMouseEnter={() => setInterestsHovered(true)}
+            onMouseLeave={() => setInterestsHovered(false)}
+            onFocus={() => setInterestsHovered(true)}
+            onBlur={() => setInterestsHovered(false)}
             onClick={() => {
               toggleCard('interests');
-              setInterestsHovered(!cardStates.interests);
             }}
           >
-            <div className="p-8 md:p-12">
+            <CardPetalOverlay
+              active={interestsCardActive}
+              parentRef={interestsCardRef}
+              density={20}
+              speed={1.5}
+              className={`z-[1] transition-opacity duration-500 ${interestsCardActive ? 'opacity-80' : 'opacity-0'}`}
+            />
+            <div className="relative z-10 p-8 md:p-12">
               {/* Interests Title - Animates to center on hover when closed */}
               <div className="card-title-wrapper">
                 <h3 className="card-title font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
@@ -594,7 +718,7 @@ export default function App() {
 
                     {/* Right Column - Music Carousel */}
                     <div className="flex items-center justify-center lg:justify-end">
-                      <MusicCarousel parentHovered={interestsHovered} />
+                      <MusicCarousel parentHovered={interestsCardActive} />
                     </div>
                   </div>
                 </div>

@@ -5,6 +5,7 @@ node_modules/
 
 # Testing
 /coverage
+/test-results
 
 # Production builds
 /build
@@ -135,4 +136,3 @@ TESTING_CHECKLIST.md
 
 # Playwright MCP test artifacts
 .playwright-mcp/
-
