@@ -28,3 +28,49 @@
     touch-action: pan-y;
   }
 }
+
+@layer components {
+  /* Base card drift simulating wind pushing it away from center */
+  .card-container {
+    --card-wind-shift-x: clamp(8px, 1.5vw, 18px);
+    --card-wind-shift-y: clamp(6px, 1vw, 16px);
+    --card-wind-scale: 1;
+    transform: translate3d(var(--card-wind-shift-x), var(--card-wind-shift-y), 0) scale(var(--card-wind-scale));
+    transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease-out;
+    will-change: transform;
+  }
+
+  /* Hover/focus drift back toward center when not expanded */
+  .card-container:not(.card-expanded):hover,
+  .card-container:not(.card-expanded):focus-visible {
+    --card-wind-shift-x: 0px;
+    --card-wind-shift-y: 0px;
+    --card-wind-scale: 1.01;
+  }
+
+  /* Expanded state settles slightly higher with same easing */
+  .card-container.card-expanded {
+    --card-wind-shift-x: 0px;
+    --card-wind-shift-y: -6px;
+    --card-wind-scale: 1.02;
+  }
+
+  /* Card Title Animation - Moves to center on hover (only when card is closed) */
+  .card-title {
+    @apply transition-all duration-500 ease-in-out;
+  }
+
+  /* Only animate title to center when card is NOT expanded */
+  .card-container:not(.card-expanded):hover .card-title {
+    @apply text-center;
+  }
+
+  /* Hide expanded content on hover (only when card is closed) */
+  .card-container:not(.card-expanded):hover .card-expanded-content {
+    @apply opacity-0 pointer-events-none;
+  }
+
+  .card-expanded-content {
+    @apply transition-opacity duration-500 ease-in-out;
+  }
+}

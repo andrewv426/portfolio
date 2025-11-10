@@ -233,19 +233,20 @@ export default function App() {
             {/* HackTX Project */}
             <div
               data-work-card="true"
-              className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50 origin-top"
-              onMouseEnter={() => setHackTXHovered(true)}
-              onMouseLeave={() => setHackTXHovered(false)}
-              onClick={() => toggleCard('hacktx')}
+              className={`card-container group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out cursor-pointer border border-white/50 origin-top ${cardStates.hacktx ? 'card-expanded' : ''}`}
+              onClick={() => {
+                toggleCard('hacktx');
+                setHackTXHovered(!cardStates.hacktx);
+              }}
             >
               <div className="p-8 md:p-12">
-                {/* Project Title - Always Visible (left-aligned) */}
-                <h3 className="font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
+                {/* Project Title - Animates to center on hover when closed */}
+                <h3 className="card-title font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
                   HackTX
                 </h3>
 
-                {/* Project Details - Revealed on Hover/Tap */}
-                <div className={`transition-all duration-700 ease-in-out max-h-0 opacity-0 overflow-hidden ${cardStates.hacktx ? 'max-h-[85vh] md:max-h-[950px] lg:max-h-[850px] opacity-100 overflow-y-auto scrollbar-hide touch-pan-y' : 'group-hover:max-h-[85vh] group-hover:md:max-h-[950px] group-hover:lg:max-h-[850px] group-hover:opacity-100 group-hover:overflow-y-auto group-hover:scrollbar-hide group-hover:touch-pan-y'}`} style={{ transitionProperty: 'max-height, opacity' }}>
+                {/* Project Details - Revealed on Click */}
+                <div className={`card-expanded-content transition-all duration-700 ease-in-out max-h-0 opacity-0 overflow-hidden ${cardStates.hacktx ? 'max-h-[85vh] md:max-h-[950px] lg:max-h-[850px] opacity-100 overflow-y-auto scrollbar-hide touch-pan-y' : ''}`} style={{ transitionProperty: 'max-height, opacity' }}>
                   <div className="pt-4">
                     {/* Responsive Grid Layout */}
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -287,19 +288,20 @@ export default function App() {
             {/* JPMC DataForGood Project */}
             <div
               data-work-card="true"
-              className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50 origin-top"
-              onMouseEnter={() => setDfgHovered(true)}
-              onMouseLeave={() => setDfgHovered(false)}
-              onClick={() => toggleCard('dfg')}
+              className={`card-container group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out cursor-pointer border border-white/50 origin-top ${cardStates.dfg ? 'card-expanded' : ''}`}
+              onClick={() => {
+                toggleCard('dfg');
+                setDfgHovered(!cardStates.dfg);
+              }}
             >
               <div className="p-8 md:p-12">
-                {/* Project Title - Always Visible (left-aligned) */}
-                <h3 className="font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
+                {/* Project Title - Animates to center on hover when closed */}
+                <h3 className="card-title font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
                   JPMC DataForGood
                 </h3>
 
-                {/* Project Details - Revealed on Hover/Tap */}
-                <div className={`transition-all duration-700 ease-in-out max-h-0 opacity-0 overflow-hidden ${cardStates.dfg ? 'max-h-[85vh] md:max-h-[950px] lg:max-h-[850px] opacity-100 overflow-y-auto scrollbar-hide touch-pan-y' : 'group-hover:max-h-[85vh] group-hover:md:max-h-[950px] group-hover:lg:max-h-[850px] group-hover:opacity-100 group-hover:overflow-y-auto group-hover:scrollbar-hide group-hover:touch-pan-y'}`} style={{ transitionProperty: 'max-height, opacity' }}>
+                {/* Project Details - Revealed on Click */}
+                <div className={`card-expanded-content transition-all duration-700 ease-in-out max-h-0 opacity-0 overflow-hidden ${cardStates.dfg ? 'max-h-[85vh] md:max-h-[950px] lg:max-h-[850px] opacity-100 overflow-y-auto scrollbar-hide touch-pan-y' : ''}`} style={{ transitionProperty: 'max-height, opacity' }}>
                   <div className="pt-4">
                     {/* Responsive Grid Layout */}
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -353,15 +355,15 @@ export default function App() {
 
         {/* Education Card */}
         <div className="px-[40px] pt-[40px] pb-[80px] space-y-6 w-full relative z-20">
-          <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50 origin-top" onClick={() => toggleCard('education')}>
+          <div className={`card-container group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out cursor-pointer border border-white/50 origin-top ${cardStates.education ? 'card-expanded' : ''}`} onClick={() => toggleCard('education')}>
             <div className="p-8 md:p-12">
-              {/* Education Title - Always Visible (left-aligned) */}
-              <h3 className="font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
+              {/* Education Title - Animates to center on hover when closed */}
+              <h3 className="card-title font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
                 Education
               </h3>
 
-              {/* Education Details - Revealed on Hover/Tap */}
-              <div className={`transition-all duration-700 ease-in-out max-h-0 opacity-0 overflow-hidden ${cardStates.education ? 'max-h-[70vh] md:max-h-[500px] lg:max-h-96 opacity-100 overflow-y-auto scrollbar-hide touch-pan-y' : 'group-hover:max-h-[70vh] group-hover:md:max-h-[500px] group-hover:lg:max-h-96 group-hover:opacity-100 group-hover:overflow-y-auto group-hover:scrollbar-hide group-hover:touch-pan-y'}`} style={{ transitionProperty: 'max-height, opacity' }}>
+              {/* Education Details - Revealed on Click */}
+              <div className={`card-expanded-content transition-all duration-700 ease-in-out max-h-0 opacity-0 overflow-hidden ${cardStates.education ? 'max-h-[70vh] md:max-h-[500px] lg:max-h-96 opacity-100 overflow-y-auto scrollbar-hide touch-pan-y' : ''}`} style={{ transitionProperty: 'max-height, opacity' }}>
                 <div className="pt-4 space-y-4">
                   <div>
                     <h4 className="font-['Comfortaa',sans-serif] text-gray-900 text-2xl md:text-3xl font-semibold mb-1">
@@ -392,15 +394,15 @@ export default function App() {
           </div>
 
           {/* Experience Card */}
-          <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50 origin-top" onClick={() => toggleCard('experience')}>
+          <div className={`card-container group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out cursor-pointer border border-white/50 origin-top ${cardStates.experience ? 'card-expanded' : ''}`} onClick={() => toggleCard('experience')}>
             <div className="p-8 md:p-12">
-              {/* Experience Title - Always Visible (left-aligned) */}
-              <h3 className="font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
+              {/* Experience Title - Animates to center on hover when closed */}
+              <h3 className="card-title font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
                 Experience
               </h3>
 
-              {/* Experience Details - Revealed on Hover/Tap */}
-              <div className={`transition-all duration-700 ease-in-out max-h-0 opacity-0 overflow-hidden ${cardStates.experience ? 'max-h-[85vh] md:max-h-[1000px] lg:max-h-[900px] opacity-100 overflow-y-auto scrollbar-hide touch-pan-y' : 'group-hover:max-h-[85vh] group-hover:md:max-h-[1000px] group-hover:lg:max-h-[900px] group-hover:opacity-100 group-hover:overflow-y-auto group-hover:scrollbar-hide group-hover:touch-pan-y'}`} style={{ transitionProperty: 'max-height, opacity' }}>
+              {/* Experience Details - Revealed on Click */}
+              <div className={`card-expanded-content transition-all duration-700 ease-in-out max-h-0 opacity-0 overflow-hidden ${cardStates.experience ? 'max-h-[85vh] md:max-h-[1000px] lg:max-h-[900px] opacity-100 overflow-y-auto scrollbar-hide touch-pan-y' : ''}`} style={{ transitionProperty: 'max-height, opacity' }}>
                 <div className="pt-4 space-y-6">
                   {/* LegacAI */}
                   <div>
@@ -495,15 +497,15 @@ export default function App() {
           </div>
 
           {/* Awards Card */}
-          <div className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50 origin-top" onClick={() => toggleCard('awards')}>
+          <div className={`card-container group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out cursor-pointer border border-white/50 origin-top ${cardStates.awards ? 'card-expanded' : ''}`} onClick={() => toggleCard('awards')}>
             <div className="p-8 md:p-12">
-              {/* Awards Title - Always Visible (left-aligned) */}
-              <h3 className="font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
+              {/* Awards Title - Animates to center on hover when closed */}
+              <h3 className="card-title font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
                 Awards
               </h3>
 
-              {/* Awards Details - Revealed on Hover/Tap */}
-              <div className={`transition-all duration-700 ease-in-out max-h-0 opacity-0 overflow-hidden ${cardStates.awards ? 'max-h-[70vh] md:max-h-[500px] lg:max-h-96 opacity-100 overflow-y-auto scrollbar-hide touch-pan-y' : 'group-hover:max-h-[70vh] group-hover:md:max-h-[500px] group-hover:lg:max-h-96 group-hover:opacity-100 group-hover:overflow-y-auto group-hover:scrollbar-hide group-hover:touch-pan-y'}`} style={{ transitionProperty: 'max-height, opacity' }}>
+              {/* Awards Details - Revealed on Click */}
+              <div className={`card-expanded-content transition-all duration-700 ease-in-out max-h-0 opacity-0 overflow-hidden ${cardStates.awards ? 'max-h-[70vh] md:max-h-[500px] lg:max-h-96 opacity-100 overflow-y-auto scrollbar-hide touch-pan-y' : ''}`} style={{ transitionProperty: 'max-height, opacity' }}>
                 <div className="pt-4 space-y-3">
                   <div className="flex items-center gap-2">
                     <span className="px-3 py-1 bg-yellow-600/20 text-yellow-700 rounded-full text-[10px] md:text-xs font-semibold uppercase tracking-wider">
@@ -528,19 +530,20 @@ export default function App() {
 
           {/* Interests Card */}
           <div
-            className="group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out hover:scale-[1.02] hover:shadow-2xl cursor-pointer border border-white/50 origin-top"
-            onMouseEnter={() => setInterestsHovered(true)}
-            onMouseLeave={() => setInterestsHovered(false)}
-            onClick={() => toggleCard('interests')}
+            className={`card-container group relative bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-700 ease-in-out cursor-pointer border border-white/50 origin-top ${cardStates.interests ? 'card-expanded' : ''}`}
+            onClick={() => {
+              toggleCard('interests');
+              setInterestsHovered(!cardStates.interests);
+            }}
           >
             <div className="p-8 md:p-12">
-              {/* Interests Title - Always Visible (left-aligned) */}
-              <h3 className="font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
+              {/* Interests Title - Animates to center on hover when closed */}
+              <h3 className="card-title font-['Comfortaa',sans-serif] text-gray-900 text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
                 Interests
               </h3>
 
-              {/* Interests Details - Revealed on Hover/Tap */}
-              <div className={`transition-all duration-700 ease-in-out max-h-0 opacity-0 overflow-hidden ${cardStates.interests ? 'max-h-[85vh] md:max-h-[750px] lg:max-h-[650px] opacity-100 overflow-y-auto scrollbar-hide touch-pan-y' : 'group-hover:max-h-[85vh] group-hover:md:max-h-[750px] group-hover:lg:max-h-[650px] group-hover:opacity-100 group-hover:overflow-y-auto group-hover:scrollbar-hide group-hover:touch-pan-y'}`} style={{ transitionProperty: 'max-height, opacity' }}>
+              {/* Interests Details - Revealed on Click */}
+              <div className={`card-expanded-content transition-all duration-700 ease-in-out max-h-0 opacity-0 overflow-hidden ${cardStates.interests ? 'max-h-[85vh] md:max-h-[750px] lg:max-h-[650px] opacity-100 overflow-y-auto scrollbar-hide touch-pan-y' : ''}`} style={{ transitionProperty: 'max-height, opacity' }}>
                 <div className="pt-4">
                   {/* Responsive Grid Layout */}
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
