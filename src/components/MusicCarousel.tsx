@@ -69,7 +69,10 @@ export const MusicCarousel: React.FC<MusicCarouselProps> = ({ parentHovered = fa
 
         {/* Navigation Buttons */}
         <button
-          onClick={goToPrevious}
+          onClick={(e) => {
+            e.stopPropagation();
+            goToPrevious();
+          }}
           className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 backdrop-blur-md border border-white/50 flex items-center justify-center transition-all duration-300 hover:bg-white hover:scale-110 z-10"
           aria-label="Previous album"
         >
@@ -79,7 +82,10 @@ export const MusicCarousel: React.FC<MusicCarouselProps> = ({ parentHovered = fa
         </button>
 
         <button
-          onClick={goToNext}
+          onClick={(e) => {
+            e.stopPropagation();
+            goToNext();
+          }}
           className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 backdrop-blur-md border border-white/50 flex items-center justify-center transition-all duration-300 hover:bg-white hover:scale-110 z-10"
           aria-label="Next album"
         >
@@ -104,7 +110,10 @@ export const MusicCarousel: React.FC<MusicCarouselProps> = ({ parentHovered = fa
         {albums.map((_, index) => (
           <button
             key={index}
-            onClick={() => goToIndex(index)}
+            onClick={(e) => {
+              e.stopPropagation();
+              goToIndex(index);
+            }}
             className={`h-1.5 rounded-full transition-all duration-300 ${
               index === currentIndex
                 ? 'w-6 bg-gray-900'
