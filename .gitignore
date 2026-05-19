@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Claude Code session state (keep settings.json checked in; ignore everything else under .claude/)
+.claude/*
+!.claude/settings.json
+CLAUDE.md
+
+
