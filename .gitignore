@@ -23,9 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 
-# Claude Code session state (keep settings.json checked in; ignore everything else under .claude/)
-.claude/*
-!.claude/settings.json
+# Claude Code state — never tracked. Keep files locally; just don't commit them.
+.claude/
 CLAUDE.md
 
 
