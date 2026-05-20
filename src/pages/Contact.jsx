@@ -21,6 +21,17 @@ function Contact() {
             in/andrew-vong-codes
           </a>
         </li>
+        <li>
+          resume ·{" "}
+          <a
+            className="link-accent"
+            href="/andrew_vong_resume.pdf"
+            target="_blank"
+            rel="noreferrer"
+          >
+            andrew_vong_resume
+          </a>
+        </li>
       </ul>
     </section>
   );
