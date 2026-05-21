@@ -14,27 +14,6 @@ function Experience() {
         <p className="tech">react native, node.js, aws, python</p>
       </article>
 
-      <article className="job">
-        <div className="job-header">
-          <span className="company-name">texas a&amp;m university</span>
-          <span className="job-date">may 2026</span>
-        </div>
-        <p className="job-desc">
-          researching nlp models to synthesize unstructured medical data
-        </p>
-        <p className="tech">pytorch, nlp, python</p>
-      </article>
-
-      <article className="job">
-        <div className="job-header">
-          <span className="company-name">texas a&amp;m university</span>
-          <span className="job-date">feb 2026</span>
-        </div>
-        <p className="job-desc">
-          training deep learning time-series models for ecg forecasting
-        </p>
-        <p className="tech">pytorch, python</p>
-      </article>
 
       <article className="job">
         <div className="job-header">
