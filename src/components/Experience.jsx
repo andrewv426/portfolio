@@ -13,7 +13,17 @@ function Experience() {
         </p>
         <p className="tech">react native, node.js, aws, python</p>
       </article>
-
+    
+      <article className="job">
+        <div className="job-header">
+          <span className="company-name">texas a&m university (ml researcher)</span>
+          <span className="job-date">march 2026</span>
+        </div>
+        <p className="job-desc">
+          deep learning for wearable physiological signals
+        </p>
+        <p className="tech">python, pytorch, wfdb</p>
+      </article>
 
       <article className="job">
         <div className="job-header">
