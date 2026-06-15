@@ -175,6 +175,13 @@ html.theme-transitioning *:not(.theme-toggle):not(.theme-toggle *) {
   font-size: 0.85rem;
   color: var(--text-muted);
 }
+.project-repo-row {
+  margin: 0.25rem 0 0;
+  font-size: 0.85rem;
+}
+.project-repo-missing {
+  color: var(--text-muted);
+}
 
 section {
   margin-bottom: var(--space-2xl);

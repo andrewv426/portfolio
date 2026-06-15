@@ -11,6 +11,17 @@ function Contact() {
           </a>
         </li>
         <li>
+          github ·{" "}
+          <a
+            className="link-accent"
+            href="https://github.com/andrewv426"
+            target="_blank"
+            rel="noreferrer"
+          >
+            github.com/andrewv426
+          </a>
+        </li>
+        <li>
           linkedin ·{" "}
           <a
             className="link-accent"
@@ -19,17 +30,6 @@ function Contact() {
             rel="noreferrer"
           >
             in/andrew-vong-codes
-          </a>
-        </li>
-        <li>
-          resume ·{" "}
-          <a
-            className="link-accent"
-            href="/andrew_vong_resume.pdf"
-            target="_blank"
-            rel="noreferrer"
-          >
-            andrew_vong_resume
           </a>
         </li>
       </ul>
