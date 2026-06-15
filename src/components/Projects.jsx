@@ -53,7 +53,7 @@ function Projects() {
                 target="_blank"
                 rel="noreferrer"
               >
-                github repo
+                [link]
               </a>
             ) : (
               <span className="project-repo-missing">repo not public on github</span>
