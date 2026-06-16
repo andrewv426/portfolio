@@ -1,5 +1,13 @@
 const projects = [
   {
+    name: "kolor",
+    date: "2026",
+    description:
+      "daily photo-editing game — edit one photo a day, then unlock a gallery of how everyone else and ai models edited the same shot",
+    tech: "next.js, typescript, react, supabase, upng",
+    repoUrl: "https://github.com/andrewv426/Kolor",
+  },
+  {
     name: "poro",
     date: "2026",
     description:
