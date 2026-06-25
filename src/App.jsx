@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
 import Navbar from "./components/Navbar.jsx";
 import "./App.css";
 
@@ -9,6 +10,7 @@ function App() {
       <main>
         <Outlet />
       </main>
+      <Analytics />
     </>
   );
 }
