@@ -27,7 +27,7 @@ function Experience() {
 
       <article className="job">
         <div className="job-header">
-          <span className="company-name">legacai (swe intern)</span>
+          <span className="company-name">startup</span>
           <span className="job-date">june 2025</span>
         </div>
         <p className="job-desc">
