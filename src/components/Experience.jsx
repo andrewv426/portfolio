@@ -9,9 +9,9 @@ function Experience() {
           <span className="job-date">may 2026</span>
         </div>
         <p className="job-desc">
-          shipping full-stack ai learning tools and llm apps publicly
+          built a django/postgresql learning platform turning assessment data into personalized skill reports
         </p>
-        <p className="tech">react native, node.js, aws, python</p>
+        <p className="tech">django, postgresql, aws, okta oidc, htmx</p>
       </article>
     
       <article className="job">
@@ -20,20 +20,20 @@ function Experience() {
           <span className="job-date">march 2026</span>
         </div>
         <p className="job-desc">
-          deep learning for wearable physiological signals
+          deep-learning time-series models forecasting cardiovascular waveforms from wearable sensors
         </p>
-        <p className="tech">python, pytorch, wfdb</p>
+        <p className="tech">python, pytorch</p>
       </article>
 
       <article className="job">
         <div className="job-header">
-          <span className="company-name">startup</span>
+          <span className="company-name">legacai (swe intern)</span>
           <span className="job-date">june 2025</span>
         </div>
         <p className="job-desc">
-          shipped ai notetaking tool using whisper
+          shipped a full-stack ai note-taking platform using whisper
         </p>
-        <p className="tech">react, typescript, node.js, aws, whisper</p>
+        <p className="tech">javascript, typescript, react, node.js, aws, whisper</p>
       </article>
     </section>
   );

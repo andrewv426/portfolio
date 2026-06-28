@@ -26,7 +26,8 @@ const projects = [
   {
     name: "voxpath",
     date: "2025",
-    description: "high-performance c++ inference runtime for vocal biomarker detection",
+    description:
+      "high-performance c++ inference runtime detecting vocal biomarkers for early parkinson's screening",
     tech: "c++17, onnx runtime, fftw, avx2, react, webassembly",
     repoUrl: "https://github.com/andrewv426/voxpath",
   },
