@@ -165,9 +165,6 @@ html.theme-transitioning *:not(.theme-toggle):not(.theme-toggle *) {
 }
 .project-desc {
   margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .tech {
