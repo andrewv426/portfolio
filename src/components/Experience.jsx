@@ -9,9 +9,9 @@ function Experience() {
           <span className="job-date">may 2026</span>
         </div>
         <p className="job-desc">
-          built a django/postgresql learning platform turning assessment data into personalized skill reports
+          engineered django/postgresql backend services and automated aws deployment pipelines for an internal platform serving 500+ engineers
         </p>
-        <p className="tech">django, postgresql, aws, okta oidc, htmx</p>
+        <p className="tech">django, postgresql, aws, okta oidc, ci/cd</p>
       </article>
     
       <article className="job">
