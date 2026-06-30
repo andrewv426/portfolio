@@ -38,6 +38,7 @@ function Navbar() {
 
       <ul className="nav-links">
         <li><NavLink to="/">experience</NavLink></li>
+        <li><NavLink to="/blog">blog</NavLink></li>
         <li><NavLink to="/about">about</NavLink></li>
         <li><NavLink to="/contact">contact</NavLink></li>
         <li>
