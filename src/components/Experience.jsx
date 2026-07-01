@@ -9,7 +9,7 @@ function Experience() {
           <span className="job-date">may 2026</span>
         </div>
         <p className="job-desc">
-          engineered django/postgresql backend services and automated aws deployment pipelines for an internal platform serving 500+ engineers
+          built a production django/postgresql platform serving 500+ engineers, spanning backend services, data pipelines, and automated aws deploys
         </p>
         <p className="tech">django, postgresql, aws, okta oidc, ci/cd</p>
       </article>
