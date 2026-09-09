@@ -14,13 +14,18 @@ export const jobs = [
     ],
   },
   {
-    name: "texas a&m — stmi lab (ml researcher)",
-    date: "mar – aug 2026",
-    description: "forecast ecg/ppg waveforms with cnn and transformer models",
-  },
-  {
-    name: "texas a&m (teaching assistant)",
-    date: "aug 2026 – present",
+    name: "texas a&m university",
+    initiatives: [
+      {
+        name: "ml researcher",
+        description: "stmi lab: ecg/ppg waveform forecasting",
+        date: "mar – aug 2026",
+      },
+      {
+        name: "teaching assistant",
+        date: "aug 2026 – present",
+      },
+    ],
   },
   {
     name: "legacai (swe intern)",

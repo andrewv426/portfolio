@@ -20,9 +20,10 @@ function Entry({ entry }) {
       {initiatives.length > 0 && (
         <dl className="entry-initiatives">
           {initiatives.map((initiative) => (
-            <div className="initiative" key={initiative.name}>
+            <div className={`initiative${initiative.date ? " initiative-dated" : ""}`} key={initiative.name}>
               <dt className="initiative-name">{initiative.name}</dt>
-              <dd className="entry-desc">{initiative.description}</dd>
+              {initiative.description && <dd className="entry-desc">{initiative.description}</dd>}
+              {initiative.date && <dd className="initiative-date">{initiative.date}</dd>}
             </div>
           ))}
         </dl>

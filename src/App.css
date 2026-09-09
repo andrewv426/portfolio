@@ -139,11 +139,17 @@ html.theme-transitioning *:not(.theme-toggle):not(.theme-toggle *) {
   position: absolute;
   inset: auto 0 -2px;
   height: 1px;
-  background: var(--accent-link);
+  background: linear-gradient(90deg, var(--accent-link) 35%, var(--text) 50%, var(--accent-link) 65%);
+  background-size: 240% 100%;
+  background-position: 100% 0;
   opacity: 0;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: opacity 320ms ease-in-out, transform 320ms ease-in-out;
+  clip-path: inset(0 100% 0 0);
+  transition: opacity 320ms ease-in-out, clip-path 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes underline-shimmer {
+  0%, 15% { background-position: 100% 0; }
+  85%, 100% { background-position: 0% 0; }
 }
 
 @media (hover: hover) {
@@ -154,7 +160,8 @@ html.theme-transitioning *:not(.theme-toggle):not(.theme-toggle *) {
   .entry-name:hover::after,
   .initiative:hover .initiative-name::after {
     opacity: 1;
-    transform: scaleX(1);
+    clip-path: inset(0);
+    animation: underline-shimmer 2.4s ease-in-out 420ms infinite;
   }
 }
 
@@ -175,9 +182,9 @@ html.theme-transitioning *:not(.theme-toggle):not(.theme-toggle *) {
   position: relative;
   isolation: isolate;
   display: grid;
-  grid-template-columns: 10.5rem minmax(0, 1fr);
+  grid-template-columns: 9.25rem minmax(0, 1fr);
   align-items: baseline;
-  gap: 1rem;
+  gap: 0.5rem;
   padding: 0.4rem 0 0.4rem 1rem;
   margin-left: -1px;
   border-left: 1px solid transparent;
@@ -192,6 +199,16 @@ html.theme-transitioning *:not(.theme-toggle):not(.theme-toggle *) {
   background: linear-gradient(90deg, color-mix(in srgb, var(--accent-link) 7%, transparent), transparent);
   opacity: 0;
   transition: opacity 320ms ease-in-out;
+}
+.initiative-dated {
+  grid-template-columns: 9.25rem minmax(0, 1fr) auto;
+}
+.initiative-date {
+  grid-column: 3;
+  margin: 0;
+  color: var(--text-muted);
+  white-space: nowrap;
+  font-size: 0.875rem;
 }
 .initiative-name {
   position: relative;
@@ -217,6 +234,18 @@ html.theme-transitioning *:not(.theme-toggle):not(.theme-toggle *) {
     gap: 0.15rem;
     padding-block: 0.55rem;
   }
+  .initiative-dated {
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 0.75rem;
+  }
+  .initiative-dated .entry-desc {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+  .initiative-date {
+    grid-column: 2;
+    grid-row: 1;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .entry-name,
@@ -226,11 +255,6 @@ html.theme-transitioning *:not(.theme-toggle):not(.theme-toggle *) {
   .initiative:hover .initiative-name {
     transition: color 320ms ease-in-out;
     transform: none;
-  }
-  .entry-name::after,
-  .initiative-name::after {
-    transform: none;
-    transition: opacity 320ms ease-in-out;
   }
 }
 
