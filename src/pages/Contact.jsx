@@ -25,11 +25,11 @@ function Contact() {
           linkedin ·{" "}
           <a
             className="link-accent"
-            href="https://linkedin.com/in/andrew-vong-codes"
+            href="https://linkedin.com/in/andrewvong06"
             target="_blank"
             rel="noreferrer"
           >
-            in/andrew-vong-codes
+            in/andrewvong06
           </a>
         </li>
       </ul>

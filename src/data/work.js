@@ -1,69 +1,44 @@
 export const jobs = [
   {
-    slug: null,
     name: "dropbox (swe intern)",
     date: "may – aug 2026",
-    description: null,
-    tech: "python, django, postgresql, aws ecs, llm agents",
-    tags: [],
-    repoUrl: null,
-    entries: [
+    bullets: [
       {
-        slug: "dropbox-learning-platform",
-        name: "learning platform",
-        date: null,
-        description:
-          "django/postgresql platform that turns internal assessment data into personalized skill reports and learning modules for 1500+ dropbox employees",
-        tech: null,
-        tags: ["shipped · aws ecs"],
-        repoUrl: null,
-        entries: [],
+        label: "ai support triage",
+        text: "built agents that reproduce support issues and file jira tickets, cutting triage from 3 days to 30 minutes",
       },
       {
-        slug: "dropbox-signal-router",
-        name: "customer signal router",
-        date: null,
-        description:
-          "agentic router that ingests support-forum posts from 5 sources, classifies owning team and severity, and reproduces reported issues with a playwright agent — ~400 reports/week, report to triaged ticket down from ~3 days to under 30 minutes",
-        tech: null,
-        tags: ["best tech execution", "most likely to ship"],
-        repoUrl: null,
-        entries: [],
+        label: "learning platform",
+        text: "made assessment callbacks safe to retry and built reliable slack/email delivery for a company-wide learning platform",
       },
     ],
   },
   {
-    slug: null,
-    name: "texas a&m university (ml researcher)",
-    date: "mar 2026 – present",
-    description:
-      "deep time-series models (1d cnn + transformer) forecasting ecg/ppg waveforms from wearable sensor streams — pearson r = 0.91 on held-out patients, over a preprocessing pipeline spanning 10k+ patient records",
-    tech: "python, pytorch, numpy, scipy",
-    tags: [],
-    repoUrl: null,
-    entries: [],
+    name: "texas a&m · stmi lab (ml researcher)",
+    date: "mar – aug 2026",
+    bullets: [
+      {
+        text: "trained cnn/transformer models to forecast ecg/ppg waveforms, achieving r = 0.91 on held-out patients",
+      },
+    ],
   },
   {
-    slug: null,
-    name: "texas a&m university (teaching assistant)",
-    date: "may 2026 – present",
-    description:
-      "lead lab sections and office hours for 120 students in data structures & algorithms; review 600+ programming assignments per term with line-level feedback on correctness and complexity",
-    tech: "c++",
-    tags: [],
-    repoUrl: null,
-    entries: [],
+    name: "texas a&m (teaching assistant)",
+    date: "aug 2026 – present",
+    bullets: [
+      {
+        text: "lead c++ and algorithms labs for 120 students and review 600+ assignments per term",
+      },
+    ],
   },
   {
-    slug: null,
-    name: "startup (swe intern)",
+    name: "legacai (swe intern)",
     date: "jun – sep 2025",
-    description:
-      "shipped a full-stack ai note-taking platform on whisper, with google oauth and aws cognito auth over a dynamodb schema for role-based access control",
-    tech: "javascript, typescript, react, node.js, aws, whisper",
-    tags: [],
-    repoUrl: null,
-    entries: [],
+    bullets: [
+      {
+        text: "built an ai note-taking platform with streaming whisper transcription and role-based access",
+      },
+    ],
   },
 ];
 

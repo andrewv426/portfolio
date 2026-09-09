@@ -1,27 +1,10 @@
-import { Link } from "react-router-dom";
-
-function Entry({ entry, sub = false }) {
-  const {
-    slug,
-    name,
-    date,
-    description,
-    tech,
-    tags = [],
-    repoUrl,
-    entries = [],
-  } = entry;
+function Entry({ entry }) {
+  const { name, date, description, bullets = [], tech, tags = [], repoUrl } = entry;
 
   return (
-    <article className={sub ? "entry entry-sub" : "entry"}>
+    <article className="entry">
       <div className="entry-header">
-        {slug ? (
-          <Link className="entry-name" to={`/work/${slug}`}>
-            {name}
-          </Link>
-        ) : (
-          <span className="entry-name">{name}</span>
-        )}
+        <span className="entry-name">{name}</span>
         {date && <span className="entry-date">{date}</span>}
       </div>
 
@@ -34,6 +17,16 @@ function Entry({ entry, sub = false }) {
       )}
 
       {description && <p className="entry-desc">{description}</p>}
+      {bullets.length > 0 && (
+        <ul className="entry-bullets">
+          {bullets.map(({ label, text }) => (
+            <li key={label || text}>
+              {label && <strong>{label} · </strong>}
+              {text}
+            </li>
+          ))}
+        </ul>
+      )}
       {tech && <p className="tech">{tech}</p>}
 
       {repoUrl && (
@@ -47,14 +40,6 @@ function Entry({ entry, sub = false }) {
             [link]
           </a>
         </p>
-      )}
-
-      {entries.length > 0 && (
-        <div className="entry-children">
-          {entries.map((child) => (
-            <Entry entry={child} sub key={child.name} />
-          ))}
-        </div>
       )}
     </article>
   );
