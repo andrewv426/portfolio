@@ -9,7 +9,7 @@ export const jobs = [
       },
       {
         name: "learning platform",
-        description: "assessment workflows, conflict-safe content editing, and sso",
+        description: "assessment workflows, content editor, Okta SSO, slack integration",
       },
     ],
   },
