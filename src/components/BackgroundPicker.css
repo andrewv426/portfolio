@@ -1,0 +1,129 @@
+:root {
+  --pattern-ink: color-mix(in srgb, var(--text) 6%, transparent);
+  --glow-ink: color-mix(in srgb, var(--accent-link) 10%, transparent);
+  --background-image: radial-gradient(ellipse at 8% 12%, var(--glow-ink), transparent 52%), radial-gradient(ellipse at 95% 80%, var(--glow-ink), transparent 48%);
+  --background-size: 100% 100%;
+}
+
+[data-background="glow"] {
+  --background-image: radial-gradient(ellipse at 8% 12%, var(--glow-ink), transparent 52%), radial-gradient(ellipse at 95% 80%, var(--glow-ink), transparent 48%);
+  --background-size: 100% 100%;
+}
+[data-background="plain"] {
+  --background-image: none;
+  --background-size: auto;
+}
+[data-background="grid"] {
+  --background-image: linear-gradient(var(--pattern-ink) 1px, transparent 1px), linear-gradient(90deg, var(--pattern-ink) 1px, transparent 1px);
+  --background-size: 36px 36px;
+}
+[data-background="dots"] {
+  --background-image: radial-gradient(var(--pattern-ink) 1px, transparent 1px);
+  --background-size: 24px 24px;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: var(--background-image);
+  background-size: var(--background-size);
+}
+#root {
+  position: relative;
+  z-index: 1;
+}
+.navbar {
+  position: relative;
+  z-index: 2;
+}
+.appearance-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+.background-picker {
+  position: relative;
+}
+.background-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.3rem 0;
+  border: 0;
+  background: none;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: color 180ms ease;
+}
+.background-trigger:hover,
+.background-trigger[aria-expanded="true"] {
+  color: var(--accent-link);
+}
+.background-panel {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  right: 0;
+  width: min(264px, calc(100vw - 48px));
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+  box-shadow: 0 12px 36px rgb(0 0 0 / 12%);
+  text-align: left;
+}
+.background-panel-title {
+  margin-bottom: 0.85rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.background-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+}
+.background-option {
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  font: inherit;
+  background: var(--bg);
+  color: var(--text-muted);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 180ms ease, color 180ms ease;
+}
+.background-option:hover,
+.background-option[aria-pressed="true"] {
+  border-color: var(--accent-link);
+  color: var(--text);
+}
+.background-swatch {
+  --pattern-ink: color-mix(in srgb, var(--text) 14%, transparent);
+  --glow-ink: color-mix(in srgb, var(--accent-link) 30%, transparent);
+  display: block;
+  height: 54px;
+  background-color: var(--bg);
+  background-image: var(--background-image);
+  background-size: var(--background-size);
+}
+.background-option-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.35rem 0.5rem;
+  font-size: 0.75rem;
+}
+.background-option-label > span {
+  color: var(--accent-link);
+}
+.background-trigger:focus-visible,
+.background-option:focus-visible {
+  outline: 2px solid var(--accent-link);
+  outline-offset: 3px;
+}

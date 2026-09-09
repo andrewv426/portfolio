@@ -20,6 +20,14 @@
           document.documentElement.setAttribute("data-theme", "dark");
         }
       })();
+      (function () {
+        var background = "glow";
+        try {
+          var saved = localStorage.getItem("background");
+          if (["plain", "grid", "dots", "glow"].indexOf(saved) !== -1) background = saved;
+        } catch (e) {}
+        document.documentElement.setAttribute("data-background", background);
+      })();
     </script>
   </head>
   <body>

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import BackgroundPicker from "./BackgroundPicker.jsx";
 
 function otherTheme(t) {
   if (t === "dark") return "light";
@@ -40,7 +41,7 @@ function Navbar() {
         <li><NavLink to="/">experience</NavLink></li>
         <li><NavLink to="/about">about</NavLink></li>
         <li><NavLink to="/contact">contact</NavLink></li>
-        <li>
+        <li className="appearance-controls">
           <button
             type="button"
             className="theme-toggle"
@@ -70,6 +71,7 @@ function Navbar() {
               </g>
             </svg>
           </button>
+          <BackgroundPicker />
         </li>
       </ul>
     </nav>
