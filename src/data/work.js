@@ -83,8 +83,23 @@ export const projects = [
 
 export const hackathons = [
   {
-    name: "Dropbox Emerging Talent Hackathon",
+    name: "dropbox emerging talent hackathon",
     date: "2026",
+    tags: ["1st place"],
+  },
+  {
+    slug: null,
+    name: "jpmc dataforgood hackathon",
+    date: "2025",
+    description:
+      "built a logistic regression model with an ngo to improve employment outcomes for domestic violence survivors and identify gaps in adolescent services",
+    tech: "python, pandas, scikit-learn, logistic regression",
+    tags: ["1st place"],
+    repoUrl: null,
+    entries: [],
+  },
+  {
+    name: "northmark strategies quant trading competition",
     tags: ["1st place"],
   },
   {
@@ -106,20 +121,5 @@ export const hackathons = [
     tech: "next.js, node.js, firebase, assemblyai",
     devpostUrl: "https://devpost.com/software/project-ishaan",
     repoUrl: "https://github.com/isaacchacko/hacktx25",
-  },
-  {
-    slug: null,
-    name: "JPMC DataForGood Hackathon",
-    date: "2025",
-    description:
-      "built a logistic regression model with an ngo to improve employment outcomes for domestic violence survivors and identify gaps in adolescent services",
-    tech: "python, pandas, scikit-learn, logistic regression",
-    tags: ["1st place"],
-    repoUrl: null,
-    entries: [],
-  },
-  {
-    name: "NorthMark Strategies Quant Trading Competition",
-    tags: ["1st place"],
   },
 ];
