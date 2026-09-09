@@ -2,43 +2,30 @@ export const jobs = [
   {
     name: "dropbox (swe intern)",
     date: "may – aug 2026",
-    summaries: [
+    initiatives: [
       {
-        label: "ai support triage",
-        text: "cut report-to-ticket from 3 days to 30 min with llm agents",
+        name: "ai support triage",
+        description: "agents that triage, reproduce, and route support issues",
       },
       {
-        label: "learning platform",
-        text: "built reliable assessment callbacks and slack/email delivery",
+        name: "learning platform",
+        description: "assessment workflows and reliable notifications",
       },
     ],
   },
   {
-    name: "texas a&m · stmi lab (ml researcher)",
+    name: "texas a&m — stmi lab (ml researcher)",
     date: "mar – aug 2026",
-    summaries: [
-      {
-        text: "forecast ecg/ppg waveforms with cnn/transformer models (r = 0.91)",
-      },
-    ],
+    description: "forecast ecg/ppg waveforms with cnn and transformer models",
   },
   {
     name: "texas a&m (teaching assistant)",
     date: "aug 2026 – present",
-    summaries: [
-      {
-        text: "lead c++ and algorithms labs for 120 students and review 600+ assignments per term",
-      },
-    ],
   },
   {
     name: "legacai (swe intern)",
     date: "jun – sep 2025",
-    summaries: [
-      {
-        text: "built an ai note-taking app with streaming whisper transcription",
-      },
-    ],
+    description: "built an ai note-taking app with streaming whisper transcription",
   },
 ];
 
@@ -48,7 +35,7 @@ export const projects = [
     name: "parallel wikipedia word indexer",
     date: "2026",
     description:
-      "counted 4.5b wikipedia words at 880 mb/s on 12 cores using c++, per-thread hash tables, and a 2 gb virtual memory reservation",
+      "multithreaded c++ word indexer for wikipedia, using per-thread hash tables and virtual memory to count words efficiently",
     tech: "c++, win32, virtual memory, multithreading, cache optimization",
     tags: [],
     repoUrl: null,
@@ -59,7 +46,7 @@ export const projects = [
     name: "voxpath",
     date: "2025",
     description:
-      "c++17 runtime for parkinson's voice screening — 0.94 auroc, with p50 inference cut from 47 ms to 8 ms using embedded onnx runtime",
+      "c++ inference runtime that detects vocal biomarkers for parkinson's screening, with onnx models running directly in the audio path",
     tech: "c++17, pytorch, onnx runtime, fftw, avx2, webassembly",
     tags: [],
     repoUrl: "https://github.com/andrewv426/voxpath",
@@ -70,7 +57,7 @@ export const projects = [
     name: "nagi — tamuhack",
     date: "2026",
     description:
-      "agentic pipeline of 12+ tools orchestrated by nvidia nemotron, compiling natural language and uploaded files into runnable python programs and slurm job specs for hpc clusters",
+      "agentic pipeline that turns natural language and uploaded files into python programs and slurm jobs for hpc clusters",
     tech: "next.js, typescript, tailwind, nemotron api, react, figma",
     tags: [],
     repoUrl: "https://github.com/isaacchacko/tamuhack26",

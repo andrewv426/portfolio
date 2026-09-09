@@ -1,5 +1,5 @@
 function Entry({ entry }) {
-  const { name, date, description, summaries = [], tech, tags = [], repoUrl } = entry;
+  const { name, date, description, initiatives = [], tech, tags = [], repoUrl } = entry;
 
   return (
     <article className="entry">
@@ -17,15 +17,15 @@ function Entry({ entry }) {
       )}
 
       {description && <p className="entry-desc">{description}</p>}
-      {summaries.length > 0 && (
-        <div className="entry-summaries">
-          {summaries.map(({ label, text }) => (
-            <p className="entry-desc" key={label || text}>
-              {label && <><strong className="entry-label">{label}</strong>: </>}
-              {text}
-            </p>
+      {initiatives.length > 0 && (
+        <dl className="entry-initiatives">
+          {initiatives.map((initiative) => (
+            <div className="initiative" key={initiative.name}>
+              <dt className="initiative-name">{initiative.name}</dt>
+              <dd className="entry-desc">{initiative.description}</dd>
+            </div>
           ))}
-        </div>
+        </dl>
       )}
       {tech && <p className="tech">{tech}</p>}
 
