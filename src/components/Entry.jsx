@@ -1,5 +1,5 @@
 function Entry({ entry }) {
-  const { name, date, description, bullets = [], tech, tags = [], repoUrl } = entry;
+  const { name, date, description, summaries = [], tech, tags = [], repoUrl } = entry;
 
   return (
     <article className="entry">
@@ -17,15 +17,15 @@ function Entry({ entry }) {
       )}
 
       {description && <p className="entry-desc">{description}</p>}
-      {bullets.length > 0 && (
-        <ul className="entry-bullets">
-          {bullets.map(({ label, text }) => (
-            <li key={label || text}>
-              {label && <strong>{label} · </strong>}
+      {summaries.length > 0 && (
+        <div className="entry-summaries">
+          {summaries.map(({ label, text }) => (
+            <p className="entry-desc" key={label || text}>
+              {label && <><strong className="entry-label">{label}</strong>: </>}
               {text}
-            </li>
+            </p>
           ))}
-        </ul>
+        </div>
       )}
       {tech && <p className="tech">{tech}</p>}
 

@@ -2,7 +2,7 @@ export const jobs = [
   {
     name: "dropbox (swe intern)",
     date: "may – aug 2026",
-    bullets: [
+    summaries: [
       {
         label: "ai support triage",
         text: "built agents that reproduce support issues and file jira tickets, cutting triage from 3 days to 30 minutes",
@@ -16,7 +16,7 @@ export const jobs = [
   {
     name: "texas a&m · stmi lab (ml researcher)",
     date: "mar – aug 2026",
-    bullets: [
+    summaries: [
       {
         text: "trained cnn/transformer models to forecast ecg/ppg waveforms, achieving r = 0.91 on held-out patients",
       },
@@ -25,7 +25,7 @@ export const jobs = [
   {
     name: "texas a&m (teaching assistant)",
     date: "aug 2026 – present",
-    bullets: [
+    summaries: [
       {
         text: "lead c++ and algorithms labs for 120 students and review 600+ assignments per term",
       },
@@ -34,7 +34,7 @@ export const jobs = [
   {
     name: "legacai (swe intern)",
     date: "jun – sep 2025",
-    bullets: [
+    summaries: [
       {
         text: "built an ai note-taking platform with streaming whisper transcription and role-based access",
       },
