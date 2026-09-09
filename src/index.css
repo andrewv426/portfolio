@@ -12,13 +12,15 @@ body {
 
 /* Design tokens — change here, everything updates */
 :root {
-  /* Colors — dark is the default; [data-theme="light"] below overrides */
+  color-scheme: dark;
+  /* Fixed dark palette. */
   --bg: #111111;
   --text: #ededed;
   --text-muted: #999999;
   --border: #2a2a2a;
   --accent: #ffffff;
   --accent-link: #a8e6c9;
+  --pattern-ink: color-mix(in srgb, var(--text) 6%, transparent);
 
   /* Spacing scale */
   --space-xs: 4px;
@@ -41,15 +43,6 @@ body {
   --max-width: 720px;
 }
 
-[data-theme="light"] {
-  --bg: #ffffff;
-  --text: #1a1a1a;
-  --text-muted: #6b6b6b;
-  --border: #e5e5e5;
-  --accent: #0a0a0a;
-  --accent-link: #6ec9a8;
-}
-
 /* Base typography */
 body {
   font-family: var(--font-sans);
@@ -58,6 +51,17 @@ body {
   color: var(--text);
   background-color: var(--bg);
   -webkit-font-smoothing: antialiased;
+}
+
+/* A fixed, subtle grid stays behind the content as the page scrolls. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: linear-gradient(var(--pattern-ink) 1px, transparent 1px), linear-gradient(90deg, var(--pattern-ink) 1px, transparent 1px);
+  background-size: 36px 36px;
 }
 
 h1, h2, h3 {
@@ -83,6 +87,8 @@ a:hover {
 
 /* Centered max-width column for resume-style content. */
 #root {
+  position: relative;
+  z-index: 1;
   max-width: var(--max-width);
   margin: 0 auto;
   padding: var(--space-lg);

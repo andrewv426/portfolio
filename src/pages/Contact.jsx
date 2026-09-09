@@ -5,13 +5,13 @@ function Contact() {
       <p>the best way to reach me —</p>
       <ul className="link-list">
         <li>
-          email ·{" "}
+          email:{" "}
           <a className="link-accent" href="mailto:andrewvong426@gmail.com">
             andrewvong426@gmail.com
           </a>
         </li>
         <li>
-          github ·{" "}
+          github:{" "}
           <a
             className="link-accent"
             href="https://github.com/andrewv426"
@@ -22,14 +22,14 @@ function Contact() {
           </a>
         </li>
         <li>
-          linkedin ·{" "}
+          linkedin:{" "}
           <a
             className="link-accent"
-            href="https://linkedin.com/in/andrew-vong-codes"
+            href="https://linkedin.com/in/andrewvong06"
             target="_blank"
             rel="noreferrer"
           >
-            in/andrew-vong-codes
+            in/andrewvong06
           </a>
         </li>
       </ul>
