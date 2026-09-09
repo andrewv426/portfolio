@@ -10,11 +10,11 @@ if (!existsSync(resolve(root, "dist/index.html"))) {
   fail("dist/index.html missing — did the build run?");
 }
 
-const indexHtml = readFileSync(resolve(root, "index.html"), "utf8");
-if (!/setAttribute\(["']data-theme["']/.test(indexHtml)) {
-  fail("inline theme boot script missing from index.html");
+const indexHtml = readFileSync(resolve(root, "dist/index.html"), "utf8");
+if (!/<meta\s+name=["']color-scheme["']\s+content=["']dark["']/.test(indexHtml)) {
+  fail("dark color-scheme metadata missing from built HTML");
 }
-ok("inline theme boot script present");
+ok("dark color-scheme metadata present");
 
 const assetsDir = resolve(root, "dist", "assets");
 const cssFile = readdirSync(assetsDir).find((f) => f.endsWith(".css"));
@@ -28,9 +28,9 @@ for (const token of requiredTokens) {
 }
 ok(`design tokens present (${requiredTokens.length})`);
 
-if (!/\[data-theme=["']?light["']?\]/.test(builtCss)) {
-  fail("[data-theme='light'] block missing from built CSS — toggle would be broken");
+if (!builtCss.includes("color-scheme:dark") || !builtCss.includes("background-size:36px 36px")) {
+  fail("fixed dark theme or fine-grid background missing from built CSS");
 }
-ok("light-theme override present");
+ok("fixed dark theme and fine-grid background present");
 
 console.log("✓ verify-build passed");
