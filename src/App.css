@@ -126,19 +126,35 @@ html.theme-transitioning *:not(.theme-toggle):not(.theme-toggle *) {
 }
 
 .entry-name {
+  position: relative;
   font-weight: bold;
   color: var(--text);
   text-decoration: none;
   min-width: 0;
-  background: linear-gradient(var(--accent-link), var(--accent-link)) left bottom / 0 1px no-repeat;
-  transition: background-size 320ms ease-in-out, color 320ms ease-in-out, transform 320ms ease-in-out;
+  transition: color 320ms ease-in-out, transform 320ms ease-in-out;
+}
+.entry-name::after,
+.initiative-name::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 -2px;
+  height: 1px;
+  background: var(--accent-link);
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: opacity 320ms ease-in-out, transform 320ms ease-in-out;
 }
 
 @media (hover: hover) {
   .entry-name:hover {
     color: var(--accent-link);
-    background-size: 100% 1px;
     transform: translateX(3px);
+  }
+  .entry-name:hover::after,
+  .initiative:hover .initiative-name::after {
+    opacity: 1;
+    transform: scaleX(1);
   }
 }
 
@@ -178,6 +194,9 @@ html.theme-transitioning *:not(.theme-toggle):not(.theme-toggle *) {
   transition: opacity 320ms ease-in-out;
 }
 .initiative-name {
+  position: relative;
+  width: fit-content;
+  max-width: 100%;
   font-size: 0.875rem;
   font-weight: 500;
   color: var(--text-muted);
@@ -208,8 +227,10 @@ html.theme-transitioning *:not(.theme-toggle):not(.theme-toggle *) {
     transition: color 320ms ease-in-out;
     transform: none;
   }
-  .entry-name {
-    background: none;
+  .entry-name::after,
+  .initiative-name::after {
+    transform: none;
+    transition: opacity 320ms ease-in-out;
   }
 }
 
