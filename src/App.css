@@ -130,10 +130,8 @@ html.theme-transitioning *:not(.theme-toggle):not(.theme-toggle *) {
   color: var(--text);
   text-decoration: none;
   min-width: 0;
-}
-.entry-name {
   background: linear-gradient(var(--accent-link), var(--accent-link)) left bottom / 0 1px no-repeat;
-  transition: background-size 280ms ease, color 280ms ease, transform 280ms ease;
+  transition: background-size 320ms ease-in-out, color 320ms ease-in-out, transform 320ms ease-in-out;
 }
 
 @media (hover: hover) {
@@ -158,26 +156,36 @@ html.theme-transitioning *:not(.theme-toggle):not(.theme-toggle *) {
   border-left: 1px solid var(--border);
 }
 .initiative {
+  position: relative;
+  isolation: isolate;
   display: grid;
-  grid-template-columns: 9rem minmax(0, 1fr);
+  grid-template-columns: 10.5rem minmax(0, 1fr);
   align-items: baseline;
   gap: 1rem;
   padding: 0.4rem 0 0.4rem 1rem;
   margin-left: -1px;
   border-left: 1px solid transparent;
-  background: linear-gradient(90deg, color-mix(in srgb, var(--accent-link) 7%, transparent), transparent) left / 0 100% no-repeat;
-  transition: background-size 320ms ease, border-color 320ms ease;
+}
+.initiative::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 0 -1px;
+  z-index: -1;
+  pointer-events: none;
+  border-left: 1px solid var(--accent-link);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--accent-link) 7%, transparent), transparent);
+  opacity: 0;
+  transition: opacity 320ms ease-in-out;
 }
 .initiative-name {
   font-size: 0.875rem;
   font-weight: 500;
   color: var(--text-muted);
-  transition: color 280ms ease, transform 280ms ease;
+  transition: color 320ms ease-in-out, transform 320ms ease-in-out;
 }
 @media (hover: hover) {
-  .initiative:hover {
-    border-left-color: var(--accent-link);
-    background-size: 100% 100%;
+  .initiative:hover::before {
+    opacity: 1;
   }
   .initiative:hover .initiative-name {
     color: var(--accent-link);
@@ -197,8 +205,11 @@ html.theme-transitioning *:not(.theme-toggle):not(.theme-toggle *) {
   .initiative-name,
   .entry-name:hover,
   .initiative:hover .initiative-name {
-    transition: none;
+    transition: color 320ms ease-in-out;
     transform: none;
+  }
+  .entry-name {
+    background: none;
   }
 }
 

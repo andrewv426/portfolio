@@ -4,12 +4,12 @@ export const jobs = [
     date: "may – aug 2026",
     initiatives: [
       {
-        name: "ai support triage",
-        description: "agents that triage, reproduce, and route support issues",
+        name: "agentic triage pipeline",
+        description: "llm agents that triage, reproduce, and route support issues",
       },
       {
         name: "learning platform",
-        description: "assessment workflows and reliable notifications",
+        description: "assessment workflows, conflict-safe content editing, and sso",
       },
     ],
   },
