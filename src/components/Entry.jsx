@@ -1,5 +1,5 @@
 function Entry({ entry }) {
-  const { name, date, description, initiatives = [], tech, tags = [], repoUrl } = entry;
+  const { name, date, description, initiatives = [], tech, tags = [], repoUrl, devpostUrl } = entry;
 
   return (
     <article className="entry">
@@ -30,16 +30,23 @@ function Entry({ entry }) {
       )}
       {tech && <p className="tech">{tech}</p>}
 
-      {repoUrl && (
+      {(repoUrl || devpostUrl) && (
         <p className="entry-repo-row">
-          <a
-            className="link-accent"
-            href={repoUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
-            [link]
-          </a>
+          {devpostUrl && (
+            <a className="link-accent" href={devpostUrl} target="_blank" rel="noreferrer">
+              [devpost]
+            </a>
+          )}
+          {repoUrl && (
+            <a
+              className="link-accent"
+              href={repoUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {devpostUrl ? "[github]" : "[link]"}
+            </a>
+          )}
         </p>
       )}
     </article>

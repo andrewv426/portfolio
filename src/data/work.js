@@ -59,17 +59,6 @@ export const projects = [
   },
   {
     slug: null,
-    name: "nagi — tamuhack",
-    date: "2026",
-    description:
-      "agentic pipeline that turns natural language and uploaded files into python programs and slurm jobs for hpc clusters",
-    tech: "next.js, typescript, tailwind, nemotron api, react, figma",
-    tags: [],
-    repoUrl: "https://github.com/isaacchacko/tamuhack26",
-    entries: [],
-  },
-  {
-    slug: null,
     name: "kolor",
     date: "2026",
     description:
@@ -90,15 +79,47 @@ export const projects = [
     repoUrl: "https://github.com/andrewv426/Poro",
     entries: [],
   },
+];
+
+export const hackathons = [
+  {
+    name: "Dropbox Emerging Talent Hackathon",
+    date: "2026",
+    tags: ["1st place"],
+  },
   {
     slug: null,
-    name: "jp morgan dataforgood",
+    name: "nagi — tamuhack",
+    date: "2026",
+    description:
+      "agentic pipeline that turns natural language and uploaded files into python programs and slurm job specs for simulated hpc workflows",
+    tech: "next.js, typescript, tailwind, nemotron api, react, figma",
+    tags: [],
+    devpostUrl: "https://devpost.com/software/askjd-eop639",
+    repoUrl: "https://github.com/isaacchacko/tamuhack26",
+    entries: [],
+  },
+  {
+    name: "power presenter — hacktx",
+    date: "2025",
+    description: "collaborative presentations with live audience questions, transcription, and ai-generated slide annotations",
+    tech: "next.js, node.js, firebase, assemblyai",
+    devpostUrl: "https://devpost.com/software/project-ishaan",
+    repoUrl: "https://github.com/isaacchacko/hacktx25",
+  },
+  {
+    slug: null,
+    name: "JPMC DataForGood Hackathon",
     date: "2025",
     description:
       "built a logistic regression model with an ngo to improve employment outcomes for domestic violence survivors and identify gaps in adolescent services",
     tech: "python, pandas, scikit-learn, logistic regression",
-    tags: ["winner"],
+    tags: ["1st place"],
     repoUrl: null,
     entries: [],
+  },
+  {
+    name: "NorthMark Strategies Quant Trading Competition",
+    tags: ["1st place"],
   },
 ];

@@ -96,17 +96,17 @@ html.theme-transitioning *:not(.theme-toggle):not(.theme-toggle *) {
   font-weight: 500;
 }
 
-.awards h2,
+.hackathons h2,
 .experience h2,
 .projects h2 {
   color: var(--accent-link);
   font-size: 1rem;
   margin-bottom: 1.5rem;
 }
-.awards,
+.hackathons,
 .experience,
 .projects {
-  padding-top: 2rem;
+  padding-top: 1rem;
 }
 
 .entry {
@@ -259,12 +259,15 @@ html.theme-transitioning *:not(.theme-toggle):not(.theme-toggle *) {
   color: var(--text-muted);
 }
 .entry-repo-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
   margin: 0.25rem 0 0;
   font-size: 0.85rem;
 }
 
 section {
-  margin-bottom: var(--space-2xl);
+  margin-bottom: var(--space-xl);
 }
 .page h1, .page p {
   margin-bottom: 1.5rem;
