@@ -133,8 +133,7 @@ html.theme-transitioning *:not(.theme-toggle):not(.theme-toggle *) {
   min-width: 0;
   transition: color 320ms ease-in-out, transform 320ms ease-in-out;
 }
-.entry-name::after,
-.initiative-name::after {
+.entry-name::after {
   content: "";
   position: absolute;
   inset: auto 0 -2px;
@@ -157,8 +156,7 @@ html.theme-transitioning *:not(.theme-toggle):not(.theme-toggle *) {
     color: var(--accent-link);
     transform: translateX(3px);
   }
-  .entry-name:hover::after,
-  .initiative:hover .initiative-name::after {
+  .entry-name:hover::after {
     opacity: 1;
     clip-path: inset(0);
     animation: underline-shimmer 2.4s ease-in-out 420ms infinite;
@@ -179,8 +177,6 @@ html.theme-transitioning *:not(.theme-toggle):not(.theme-toggle *) {
   border-left: 1px solid var(--border);
 }
 .initiative {
-  position: relative;
-  isolation: isolate;
   display: grid;
   grid-template-columns: 9.25rem minmax(0, 1fr);
   align-items: baseline;
@@ -188,17 +184,6 @@ html.theme-transitioning *:not(.theme-toggle):not(.theme-toggle *) {
   padding: 0.4rem 0 0.4rem 1rem;
   margin-left: -1px;
   border-left: 1px solid transparent;
-}
-.initiative::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 0 -1px;
-  z-index: -1;
-  pointer-events: none;
-  border-left: 1px solid var(--accent-link);
-  background: linear-gradient(90deg, color-mix(in srgb, var(--accent-link) 7%, transparent), transparent);
-  opacity: 0;
-  transition: opacity 320ms ease-in-out;
 }
 .initiative-dated {
   grid-template-columns: 9.25rem minmax(0, 1fr) auto;
@@ -211,22 +196,11 @@ html.theme-transitioning *:not(.theme-toggle):not(.theme-toggle *) {
   font-size: 0.875rem;
 }
 .initiative-name {
-  position: relative;
   width: fit-content;
   max-width: 100%;
   font-size: 0.875rem;
   font-weight: 500;
   color: var(--text-muted);
-  transition: color 320ms ease-in-out, transform 320ms ease-in-out;
-}
-@media (hover: hover) {
-  .initiative:hover::before {
-    opacity: 1;
-  }
-  .initiative:hover .initiative-name {
-    color: var(--accent-link);
-    transform: translateX(3px);
-  }
 }
 @media (max-width: 600px) {
   .initiative {
@@ -249,10 +223,7 @@ html.theme-transitioning *:not(.theme-toggle):not(.theme-toggle *) {
 }
 @media (prefers-reduced-motion: reduce) {
   .entry-name,
-  .initiative,
-  .initiative-name,
-  .entry-name:hover,
-  .initiative:hover .initiative-name {
+  .entry-name:hover {
     transition: color 320ms ease-in-out;
     transform: none;
   }
