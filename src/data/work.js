@@ -5,11 +5,11 @@ export const jobs = [
     summaries: [
       {
         label: "ai support triage",
-        text: "built agents that reproduce support issues and file jira tickets, cutting triage from 3 days to 30 minutes",
+        text: "cut report-to-ticket from 3 days to 30 min with llm agents",
       },
       {
         label: "learning platform",
-        text: "made assessment callbacks safe to retry and built reliable slack/email delivery for a company-wide learning platform",
+        text: "built reliable assessment callbacks and slack/email delivery",
       },
     ],
   },
@@ -18,7 +18,7 @@ export const jobs = [
     date: "mar – aug 2026",
     summaries: [
       {
-        text: "trained cnn/transformer models to forecast ecg/ppg waveforms, achieving r = 0.91 on held-out patients",
+        text: "forecast ecg/ppg waveforms with cnn/transformer models (r = 0.91)",
       },
     ],
   },
@@ -36,7 +36,7 @@ export const jobs = [
     date: "jun – sep 2025",
     summaries: [
       {
-        text: "built an ai note-taking platform with streaming whisper transcription and role-based access",
+        text: "built an ai note-taking app with streaming whisper transcription",
       },
     ],
   },
@@ -48,7 +48,7 @@ export const projects = [
     name: "parallel wikipedia word indexer",
     date: "2026",
     description:
-      "multithreaded c++ indexer that tokenizes, hashes, and counts 4.5b words of wikipedia text — 880 mb/s on 12 cores against 95 mb/s single-threaded, over a custom hash table packed into a 2 gb virtualalloc reservation",
+      "counted 4.5b wikipedia words at 880 mb/s on 12 cores using c++, per-thread hash tables, and a 2 gb virtual memory reservation",
     tech: "c++, win32, virtual memory, multithreading, cache optimization",
     tags: [],
     repoUrl: null,
@@ -59,7 +59,7 @@ export const projects = [
     name: "voxpath",
     date: "2025",
     description:
-      "c++17 inference runtime detecting vocal biomarkers for early parkinson's screening — 0.94 auroc on held-out speakers, p50 latency 47 ms → 8 ms by embedding onnx runtime and removing python from the hot path",
+      "c++17 runtime for parkinson's voice screening — 0.94 auroc, with p50 inference cut from 47 ms to 8 ms using embedded onnx runtime",
     tech: "c++17, pytorch, onnx runtime, fftw, avx2, webassembly",
     tags: [],
     repoUrl: "https://github.com/andrewv426/voxpath",
@@ -103,7 +103,7 @@ export const projects = [
     name: "jp morgan dataforgood",
     date: "2025",
     description:
-      "logistic regression model to improve employment outcomes for domestic violence survivors, built with an ngo to identify a service gap affecting adolescents excluded from both childcare and adult workforce programs",
+      "built a logistic regression model with an ngo to improve employment outcomes for domestic violence survivors and identify gaps in adolescent services",
     tech: "python, pandas, scikit-learn, logistic regression",
     tags: ["winner"],
     repoUrl: null,
