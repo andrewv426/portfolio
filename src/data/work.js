@@ -73,7 +73,7 @@ export const projects = [
     name: "poro",
     date: "2026",
     description:
-      "built a macos floating assistant that nudges you back on task during focus sessions",
+      "built a macOS floating assistant that nudges you back on task during focus sessions",
     tech: "swift, swiftui, appkit, cerebras, applescript",
     tags: [],
     repoUrl: "https://github.com/andrewv426/Poro",
