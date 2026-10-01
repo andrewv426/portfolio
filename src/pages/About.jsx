@@ -3,8 +3,10 @@ function About() {
     <section className="page">
       <h1>hi,</h1>
       <p>
-        i'm studying computer science at texas a&amp;m university, with minors in
-        mathematics and statistics. graduating may 2028.
+        I'm studying computer science at texas a&amp;m university, with minors in
+        mathematics and statistics. I'm currently set to graduate may 2028! 
+
+        I'm currently looking for infra/backend/systems/ML roles, and I'm also interested in algorithms and mech. interp research! 
       </p>
     </section>
   );
