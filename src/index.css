@@ -32,6 +32,7 @@ body {
 
   /* Type scale */
   --font-sans: "Radio Canada", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-handwritten: "Caveat", cursive;
   --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
   --text-sm: 0.875rem;
   --text-base: 1rem;

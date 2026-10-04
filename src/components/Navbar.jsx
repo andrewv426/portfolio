@@ -3,8 +3,8 @@ import { NavLink } from "react-router-dom";
 function Navbar() {
   return (
     <nav className="navbar">
-      <NavLink to="/" className="brand">
-        andrew vong
+      <NavLink to="/" className="brand" aria-label="andrew vong">
+        av
       </NavLink>
       <ul className="nav-links">
         <li><NavLink to="/" end>about</NavLink></li>
