@@ -14,6 +14,7 @@ function About() {
       <p>
         view my work <Link className="link-accent" to="/experience">here</Link>
       </p>
+      <p>- andrew vong</p>
     </section>
   );
 }
