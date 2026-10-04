@@ -28,7 +28,7 @@ export const jobs = [
     ],
   },
   {
-    name: "legacai (swe intern)",
+    name: "startup",
     date: "jun – sep 2025",
     description: "built an ai note-taking app with streaming whisper transcription",
   },
