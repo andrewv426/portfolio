@@ -12,7 +12,7 @@ function About() {
         I'm currently looking for infra/backend/systems/ML roles, and I'm also interested in algorithms and mech. interp research!
       </p>
       <p>
-        view my work <Link className="link-accent" to="/experience">here</Link>
+        {"-> "}view my work <Link className="link-accent" to="/experience">here</Link>
       </p>
       <p>- andrew vong</p>
     </section>
