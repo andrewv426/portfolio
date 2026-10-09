@@ -5,7 +5,14 @@ function About() {
     <section className="page">
       <h1>hi,</h1>
       <p>
-        i'm andrew, prev swe @ dropbox, and previously researched ppg/ecg
+        i'm andrew, prev swe @{" "}
+        <strong className="company-name">
+          <svg className="company-icon" aria-hidden="true" focusable="false">
+            <use href="/icons.svg#dropbox-icon" />
+          </svg>
+          dropbox
+        </strong>
+        , and previously researched ppg/ecg
         wearable signals at texas a&amp;m.
       </p>
       <p>
