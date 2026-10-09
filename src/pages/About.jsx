@@ -16,15 +16,16 @@ function About() {
         predicting electrolyte levels from ecgs.
       </p>
       <p>
-        i'm a computer science student at texas a&amp;m, graduating in may 2028
-        with minors in mathematics and statistics. i'm looking for
-        infrastructure, backend, systems, or machine learning roles, with
-        research interests in algorithms and mechanistic interpretability.
+        i'm looking for infra/backend/sys/ml roles, and currently doing
+        mechanistic interpretability research on llms.
       </p>
       <p>
         → view my work <Link className="link-accent" to="/experience">here</Link>
       </p>
-      <p>- andrew vong</p>
+      <p>
+        - andrew vong (cs @ texas a&amp;m, minors: math &amp; stats, graduating
+        may '28)
+      </p>
       <ul className="link-list" aria-label="contact links">
         <li>
           email:{" "}
