@@ -24,6 +24,10 @@ function About() {
           <a className="link-accent" href="mailto:andrewvong426@gmail.com">
             andrewvong426@gmail.com
           </a>
+          {" // "}
+          <a className="link-accent" href="mailto:andrewvong@tamu.edu">
+            andrewvong@tamu.edu
+          </a>
         </li>
         <li>
           github:{" "}
