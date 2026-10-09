@@ -250,6 +250,34 @@ section {
   font-size: 2.5rem;
 }
 
+.company-name {
+  position: relative;
+  white-space: nowrap;
+}
+.company-name::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 1px;
+  background: var(--text);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 250ms ease;
+}
+.company-name:hover::after {
+  transform: scaleX(1);
+}
+.company-icon {
+  display: inline-block;
+  width: 0.875em;
+  height: 0.875em;
+  margin-right: 0.25em;
+  vertical-align: -0.125em;
+  fill: currentColor;
+}
+
 .link-list {
   list-style: none;
   padding: 0;
