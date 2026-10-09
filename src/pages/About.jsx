@@ -12,12 +12,12 @@ function About() {
           </svg>
           dropbox
         </strong>
-        . at texas a&amp;m, i researched reconstructing ecgs from ppg signals and
-        predicting electrolyte levels from ecgs.
+        . at texas a&amp;m, i researched reconstructing ECGs from PPG signals and
+        predicting electrolyte levels from ECGs.
       </p>
       <p>
         i'm looking for infra/backend/sys/ml roles and currently researching
-        mechanistic interpretability in llms.
+        mechanistic interpretability in LLMs.
       </p>
       <p>
         → view my work <Link className="link-accent" to="/experience">here</Link>
