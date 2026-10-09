@@ -5,8 +5,8 @@ function About() {
     <section className="page">
       <h1>hi,</h1>
       <p>
-        i'm andrew vong — prev swe @ dropbox, building across infrastructure,
-        backend systems, and machine learning.
+        i'm andrew, prev swe @ dropbox, and previously researched ppg/ecg
+        wearable signals at texas a&amp;m.
       </p>
       <p>
         i'm studying computer science at texas a&amp;m university, with minors in
