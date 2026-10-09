@@ -5,26 +5,27 @@ function About() {
     <section className="page">
       <h1>hi,</h1>
       <p>
-        i'm andrew, prev swe @{" "}
-        <strong className="company-name">
+        i'm <strong className="text-highlight">andrew</strong>, previously a swe at{" "}
+        <strong className="text-highlight">
           <svg className="company-icon" aria-hidden="true" focusable="false">
             <use href="/icons.svg#dropbox-icon" />
           </svg>
           dropbox
         </strong>
-        , and previously researched ppg/ecg
-        wearable signals at texas a&amp;m.
+        . at texas a&amp;m, i researched reconstructing ecgs from ppg signals and
+        predicting electrolyte levels from ecgs.
       </p>
       <p>
-        i'm studying computer science at texas a&amp;m university, with minors in
-        mathematics and statistics, graduating may 2028. i'm looking for
-        infra/backend/systems/ml roles and interested in algorithms and
-        mechanistic interpretability research.
+        i'm looking for infra/backend/sys/ml roles and currently researching
+        mechanistic interpretability in llms.
       </p>
       <p>
         → view my work <Link className="link-accent" to="/experience">here</Link>
       </p>
-      <p>- andrew vong</p>
+      <p>
+        - andrew vong (cs @ texas a&amp;m, math &amp; stats minors, graduating
+        may '28)
+      </p>
       <ul className="link-list" aria-label="contact links">
         <li>
           email:{" "}
