@@ -6,7 +6,6 @@ import "./index.css";
 import App from "./App.jsx";
 import Home from "./pages/Home.jsx";
 import About from "./pages/About.jsx";
-import Contact from "./pages/Contact.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -17,7 +16,7 @@ createRoot(document.getElementById("root")).render(
           <Route path="blog" element={<Navigate to="/" replace />} />
           <Route path="about" element={<Navigate to="/" replace />} />
           <Route path="experience" element={<Home />} />
-          <Route path="contact" element={<Contact />} />
+          <Route path="contact" element={<Navigate to="/" replace />} />
           <Route path="work/:slug" element={<Navigate to="/experience" replace />} />
         </Route>
       </Routes>
