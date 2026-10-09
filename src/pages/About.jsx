@@ -5,8 +5,8 @@ function About() {
     <section className="page">
       <h1>hi,</h1>
       <p>
-        i'm andrew, previously a swe at{" "}
-        <strong className="company-name">
+        i'm <strong className="text-highlight">andrew</strong>, previously a swe at{" "}
+        <strong className="text-highlight">
           <svg className="company-icon" aria-hidden="true" focusable="false">
             <use href="/icons.svg#dropbox-icon" />
           </svg>
@@ -16,14 +16,14 @@ function About() {
         predicting electrolyte levels from ecgs.
       </p>
       <p>
-        i'm looking for infra/backend/sys/ml roles, and currently doing
-        mechanistic interpretability research on llms.
+        i'm looking for infra/backend/sys/ml roles and currently researching
+        mechanistic interpretability in llms.
       </p>
       <p>
         → view my work <Link className="link-accent" to="/experience">here</Link>
       </p>
       <p>
-        - andrew vong (cs @ texas a&amp;m, minors: math &amp; stats, graduating
+        - andrew vong (cs @ texas a&amp;m, math &amp; stats minors, graduating
         may '28)
       </p>
       <ul className="link-list" aria-label="contact links">
