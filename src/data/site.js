@@ -34,9 +34,18 @@ export const jobs = [
   },
 ];
 
+// Personal projects, listed on the Work page. A project whose name matches a
+// post's `project` field links to that write-up.
 export const projects = [
   {
-    slug: "wikipedia-indexer",
+    name: "Flotion",
+    date: "2026",
+    description:
+      "A minimal, native notes app for macOS in the style of Notion, built so that LLMs can read and edit it.",
+    tech: "Swift, SwiftUI, AppKit, SQLite, MCP",
+    links: [{ label: "GitHub", href: "https://github.com/andrewv426/Flotion" }],
+  },
+  {
     name: "Parallel Wikipedia word indexer",
     date: "2026",
     description:
@@ -45,7 +54,6 @@ export const projects = [
     links: [],
   },
   {
-    slug: "kolor",
     name: "Kolor",
     date: "2026",
     description:
@@ -54,7 +62,6 @@ export const projects = [
     links: [{ label: "GitHub", href: "https://github.com/andrewv426/Kolor" }],
   },
   {
-    slug: "poro",
     name: "Poro",
     date: "2026",
     description:
@@ -63,13 +70,33 @@ export const projects = [
     links: [{ label: "GitHub", href: "https://github.com/andrewv426/Poro" }],
   },
   {
-    slug: "voxpath",
     name: "Voxpath",
     date: "2025",
     description:
       "C++ inference runtime that detects vocal biomarkers for Parkinson's screening, with ONNX models running directly in the audio path.",
     tech: "C++17, PyTorch, ONNX Runtime, FFTW, AVX2, WebAssembly",
     links: [{ label: "GitHub", href: "https://github.com/andrewv426/voxpath" }],
+  },
+];
+
+export const typeLabels ={ project: "Project", post: "Post" };
+
+// Blog posts. `type` is "project" for a write-up of something you built, or
+// "post" for a normal blog post. Posts render in the order listed here.
+//
+// Fields: slug, type, title, date, summary, and optionally body (an array of
+// paragraphs), links, and for project posts: project (the project's name,
+// shown as a label) and tech.
+export const posts = [
+  {
+    slug: "flotion",
+    type: "project",
+    title: "Designing a macOS-native Notion",
+    project: "Flotion",
+    date: "2026",
+    summary: "",
+    body: [],
+    links: [],
   },
 ];
 

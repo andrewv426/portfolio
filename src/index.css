@@ -61,8 +61,19 @@ h1, h2 {
   text-wrap: balance;
 }
 
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin-bottom: 2rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--line);
+}
+
 .site-title {
-  margin: 0 0 0.95em;
+  margin: 0;
   font-size: clamp(2.2rem, 3.5vw, 2.65rem);
   line-height: 1.15;
 }
@@ -98,13 +109,65 @@ a:hover {
   text-decoration-color: currentColor;
 }
 
-/* Small sans labels: dates, the bio toggle, tech lines, row links. */
+/* Small sans labels: dates, nav tabs, filters, tech lines, row links. */
 .ui {
   color: var(--muted);
   font-family: var(--font-ui);
   font-size: 14px;
   font-variant-numeric: lining-nums tabular-nums;
   line-height: 1.4;
+}
+
+/* Header tabs and blog filters share one look: muted text, underline when active. */
+.tabs,
+.filters {
+  display: flex;
+  gap: 1rem;
+}
+.tabs a,
+.filters button {
+  padding: 0.2rem 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.16s;
+}
+.tabs a:hover,
+.filters button:hover,
+.tabs a.active,
+.filters button[aria-pressed="true"] {
+  color: var(--text);
+}
+.tabs a.active,
+.filters button[aria-pressed="true"] {
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+  text-underline-offset: 0.35em;
+}
+
+/* The first heading on a page sits right under the header rule. */
+.site-header + section > h2:first-child {
+  margin-top: 0;
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin: 3.1rem 0 1.2rem;
+}
+.section-head h2 {
+  margin: 0;
+}
+
+.empty {
+  padding: 0.9em 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 
 .rows {
@@ -140,15 +203,31 @@ a:hover {
   margin-top: 0.15rem;
 }
 
+/* A row whose title links to a post: the title's click area covers the
+   whole row, and the row's own links (GitHub, etc.) sit on top of it. */
+.row-linked {
+  position: relative;
+}
+.row-link {
+  color: inherit;
+  text-decoration: none;
+}
+.row-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.row-linked .row-links {
+  position: relative;
+  z-index: 1;
+}
+
 @media (hover: hover) and (pointer: fine) {
-  a.row {
+  .row-linked {
     transition: opacity 0.3s ease-in-out;
   }
-  .rows:hover a.row {
+  .rows:has(.row-linked:hover) .row-linked:not(:hover) {
     opacity: 0.6;
-  }
-  .rows:hover a.row:hover {
-    opacity: 1;
   }
 }
 

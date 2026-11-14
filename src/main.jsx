@@ -5,7 +5,8 @@ import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom"
 import "./index.css";
 import App from "./App.jsx";
 import Home from "./pages/Home.jsx";
-import Project from "./pages/Project.jsx";
+import Post, { ProjectRedirect } from "./pages/Post.jsx";
+import Work from "./pages/Work.jsx";
 
 const router = createBrowserRouter([
   {
@@ -13,7 +14,9 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { index: true, element: <Home /> },
-      { path: "projects/:slug", element: <Project /> },
+      { path: "work", element: <Work /> },
+      { path: "blog/:slug", element: <Post /> },
+      { path: "projects/:slug", element: <ProjectRedirect /> },
       { path: "*", element: <Navigate to="/" replace /> },
     ],
   },

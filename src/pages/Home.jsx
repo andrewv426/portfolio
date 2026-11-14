@@ -1,97 +1,74 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { handle, hackathons, jobs, links, projects } from "../data/site.js";
+import RowLinks from "../components/RowLinks.jsx";
+import { links, posts, typeLabels } from "../data/site.js";
 
-function RowLinks({ items }) {
-  if (items.length === 0) return null;
-
-  return (
-    <span className="row-links ui">
-      {items.map((item) => (
-        <a href={item.href} target="_blank" rel="noreferrer" key={item.label}>
-          {item.label}
-        </a>
-      ))}
-    </span>
-  );
-}
+const filters = [
+  { value: "all", label: "All" },
+  { value: "project", label: "Projects" },
+  { value: "post", label: "Posts" },
+];
 
 function Home() {
+  const [filter, setFilter] = useState("all");
+  const shown = filter === "all" ? posts : posts.filter((post) => post.type === filter);
+
   return (
     <>
-      <h1 className="site-title">
-        <Link to="/">@{handle}</Link>
-      </h1>
-
       <section>
         <p>
-          I'm Andrew, previously a software engineer at{" "}
-          <a href="https://www.dropbox.com" target="_blank" rel="noreferrer">Dropbox</a>. At{" "}
-          <a href="https://www.tamu.edu" target="_blank" rel="noreferrer">Texas A&amp;M</a>, I
-          researched reconstructing ECGs from PPG signals and predicting electrolyte levels from
-          ECGs.
+          I'm Andrew. I like hard problems and thinking them all the way through, and I care a lot
+          about design, performance, and algorithms.
         </p>
         <p>
-          I'm looking for infra, backend, systems, and ML roles, and I'm currently researching
-          mechanistic interpretability in LLMs.
-        </p>
-
-        <p>
-          At Dropbox, I built an agentic triage pipeline: LLM agents that triage, reproduce, and
-          route support issues. I also worked on a learning platform, with assessment workflows, a
-          content editor, Okta SSO, and a Slack integration.
+          I study computer science, math, and philosophy at{" "}
+          <a href="https://www.tamu.edu" target="_blank" rel="noreferrer">Texas A&amp;M</a>, where
+          I'm a teaching assistant and research interpretability in LLMs. I graduate in May 2028.
         </p>
         <p>
-          Before that, I built an AI note-taking app with streaming Whisper transcription at a
-          startup. I study computer science at Texas A&amp;M with minors in math and statistics,
-          where I'm also a teaching assistant, and I graduate in May 2028.
+          At <a href="https://www.dropbox.com" target="_blank" rel="noreferrer">Dropbox</a>, I
+          built a full-stack learning app end to end, now used by 2,000+ employees. I also worked
+          on an agentic pipeline that triages, reproduces, and routes support issues.
+        </p>
+        <p>
+          Before that, I did time-series ML research at A&amp;M on healthcare signals:
+          reconstructing ECGs from PPG and predicting electrolyte levels.
         </p>
       </section>
 
       <section>
-        <h2>Work</h2>
-        <div className="rows">
-          {jobs.map((job) => (
-            <div className="row" key={`${job.name}-${job.date}`}>
-              <span className="row-title">
-                {job.name}
-                {job.role && <span className="ui">{job.role}</span>}
-              </span>
-              <span className="row-date ui">{job.date}</span>
-              {job.description && <p className="row-desc">{job.description}</p>}
-            </div>
-          ))}
+        <div className="section-head">
+          <h2>Blog</h2>
+          <div className="filters ui" role="group" aria-label="Filter posts">
+            {filters.map((option) => (
+              <button
+                type="button"
+                key={option.value}
+                aria-pressed={filter === option.value}
+                onClick={() => setFilter(option.value)}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
         </div>
-      </section>
 
-      <section>
-        <h2>Projects</h2>
-        <div className="rows">
-          {projects.map((project) => (
-            <Link className="row" to={`/projects/${project.slug}`} key={project.slug}>
-              <span className="row-title">{project.name}</span>
-              <span className="row-date ui">{project.date}</span>
-              <p className="row-desc">{project.description}</p>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <section>
-        <h2>Hackathons</h2>
-        <div className="rows">
-          {hackathons.map((hackathon) => (
-            <div className="row" key={hackathon.name}>
-              <span className="row-title">
-                {hackathon.name}
-                {hackathon.event && <span className="ui">{hackathon.event}</span>}
-                {hackathon.award && <span className="ui">{hackathon.award}</span>}
-              </span>
-              <span className="row-date ui">{hackathon.date}</span>
-              <p className="row-desc">{hackathon.description}</p>
-              <RowLinks items={hackathon.links} />
-            </div>
-          ))}
-        </div>
+        {shown.length > 0 ? (
+          <div className="rows">
+            {shown.map((post) => (
+              <div className="row row-linked" key={post.slug}>
+                <Link className="row-title row-link" to={`/blog/${post.slug}`}>
+                  {post.title}
+                </Link>
+                <span className="row-date ui">{post.date}</span>
+                {post.summary && <p className="row-desc">{post.summary}</p>}
+                <RowLinks label={post.project ?? typeLabels[post.type]} items={post.links} />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="empty ui">Nothing here yet.</p>
+        )}
       </section>
 
       <section>
