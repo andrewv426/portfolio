@@ -1,4 +1,4 @@
-import { Link, NavLink, Outlet, ScrollRestoration } from "react-router-dom";
+import { NavLink, Outlet, ScrollRestoration } from "react-router-dom";
 import { handle } from "./data/site.js";
 
 function App() {
@@ -7,7 +7,9 @@ function App() {
       <article className="frame">
         <header className="site-header">
           <h1 className="site-title">
-            <Link to="/">@{handle}</Link>
+            <a href={`https://x.com/${handle}`} target="_blank" rel="noreferrer">
+              @{handle}
+            </a>
           </h1>
           <nav className="tabs ui" aria-label="Sections">
             <NavLink to="/" end>

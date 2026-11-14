@@ -17,8 +17,8 @@ function Home() {
     <>
       <section>
         <p>
-          I'm Andrew. I like hard problems and thinking them all the way through, and I care a lot
-          about design, performance, and algorithms.
+          I’m Andrew. I like hard problems and thinking them all the way through. I care most about
+          design, performance, and algorithms.
         </p>
         <p>
           I study computer science, math, and philosophy at{" "}
