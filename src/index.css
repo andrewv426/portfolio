@@ -1,0 +1,230 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+:root {
+  color-scheme: light dark;
+
+  --font-reading: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --font-ui: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --bg: #ffffff;
+  --text: #282828;
+  --heading: #282828;
+  --muted: #676767;
+  --line: #e2e2df;
+
+  --content-width: 600px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1b1a19;
+    --text: #e8e5df;
+    --heading: #f4f1eb;
+    --muted: #aaa59e;
+    --line: #34322f;
+  }
+}
+
+html {
+  background: var(--bg);
+  scrollbar-gutter: stable;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-reading);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.shell {
+  min-height: 100vh;
+  padding: clamp(1.25rem, 3.4vw, 3.25rem);
+}
+
+.frame {
+  width: min(100%, var(--content-width));
+  margin-inline: auto;
+  overflow-wrap: break-word;
+}
+
+h1, h2 {
+  color: var(--heading);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.site-title {
+  margin: 0 0 0.95em;
+  font-size: clamp(2.2rem, 3.5vw, 2.65rem);
+  line-height: 1.15;
+}
+.site-title a {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.site-title a:hover {
+  opacity: 0.72;
+}
+
+h2 {
+  margin: 3.1rem 0 1.2rem;
+  font-size: 1.45rem;
+  line-height: 1.4;
+}
+
+p {
+  margin: 0 0 1.45rem;
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--muted);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--muted) 30%, transparent);
+  text-underline-offset: 0.18em;
+  transition: color 0.16s, text-decoration-color 0.16s;
+}
+a:hover {
+  color: var(--text);
+  text-decoration-color: currentColor;
+}
+
+/* Small sans labels: dates, the bio toggle, tech lines, row links. */
+.ui {
+  color: var(--muted);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-variant-numeric: lining-nums tabular-nums;
+  line-height: 1.4;
+}
+
+.bio-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1.35rem;
+  padding-bottom: 0.55rem;
+  border-bottom: 1px solid var(--line);
+  letter-spacing: 0.01em;
+}
+.bio-toggle-options {
+  display: flex;
+  gap: 1rem;
+}
+.bio-toggle button {
+  position: relative;
+  padding: 0.2rem 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  transition: color 0.16s;
+}
+.bio-toggle button:hover,
+.bio-toggle button[aria-pressed="true"] {
+  color: var(--text);
+}
+.bio-toggle button[aria-pressed="true"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.62rem;
+  height: 1px;
+  background: var(--text);
+}
+
+.rows {
+  border-top: 1px solid var(--line);
+}
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 0.1rem 1.25rem;
+  padding: 0.72em 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--text);
+  text-decoration: none;
+}
+.row-title .ui {
+  margin-left: 0.35em;
+}
+.row-date {
+  white-space: nowrap;
+}
+.row-desc {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.5;
+}
+.row-links {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 0.9rem;
+  margin-top: 0.15rem;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  a.row {
+    transition: opacity 0.3s ease-in-out;
+  }
+  .rows:hover a.row {
+    opacity: 0.6;
+  }
+  .rows:hover a.row:hover {
+    opacity: 1;
+  }
+}
+
+.link-list {
+  columns: 2;
+  column-gap: 2.5rem;
+  margin: 0.8em 0 0;
+  padding-left: 1.1em;
+  list-style: square;
+}
+.link-list li {
+  break-inside: avoid;
+  margin-bottom: 0.2rem;
+  padding-left: 0.15em;
+}
+.link-list li::marker {
+  color: color-mix(in srgb, var(--muted) 70%, transparent);
+}
+
+.post-title {
+  margin: 0 0 12px;
+  font-size: 30px;
+  line-height: 1.1;
+}
+.post-meta {
+  display: flex;
+  gap: 0.4rem;
+  margin: 0 0 2.4rem;
+  font-size: 13px;
+}
+
+@media (max-width: 639px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+  .row-date {
+    font-size: 13px;
+  }
+  .link-list {
+    columns: 1;
+  }
+}
