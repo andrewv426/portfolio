@@ -107,43 +107,6 @@ a:hover {
   line-height: 1.4;
 }
 
-.bio-toggle {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 1.35rem;
-  padding-bottom: 0.55rem;
-  border-bottom: 1px solid var(--line);
-  letter-spacing: 0.01em;
-}
-.bio-toggle-options {
-  display: flex;
-  gap: 1rem;
-}
-.bio-toggle button {
-  position: relative;
-  padding: 0.2rem 0;
-  border: 0;
-  background: none;
-  color: inherit;
-  font: inherit;
-  cursor: pointer;
-  transition: color 0.16s;
-}
-.bio-toggle button:hover,
-.bio-toggle button[aria-pressed="true"] {
-  color: var(--text);
-}
-.bio-toggle button[aria-pressed="true"]::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -0.62rem;
-  height: 1px;
-  background: var(--text);
-}
-
 .rows {
   border-top: 1px solid var(--line);
 }

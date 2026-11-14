@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { handle, hackathons, jobs, links, projects } from "../data/site.js";
 
@@ -17,8 +16,6 @@ function RowLinks({ items }) {
 }
 
 function Home() {
-  const [bio, setBio] = useState("default");
-
   return (
     <>
       <h1 className="site-title">
@@ -26,18 +23,6 @@ function Home() {
       </h1>
 
       <section>
-        <div className="bio-toggle ui">
-          <span>Bio</span>
-          <div className="bio-toggle-options">
-            <button type="button" aria-pressed={bio === "default"} onClick={() => setBio("default")}>
-              Default
-            </button>
-            <button type="button" aria-pressed={bio === "long"} onClick={() => setBio("long")}>
-              Long
-            </button>
-          </div>
-        </div>
-
         <p>
           I'm Andrew, previously a software engineer at{" "}
           <a href="https://www.dropbox.com" target="_blank" rel="noreferrer">Dropbox</a>. At{" "}
@@ -50,20 +35,16 @@ function Home() {
           mechanistic interpretability in LLMs.
         </p>
 
-        {bio === "long" && (
-          <>
-            <p>
-              At Dropbox, I built an agentic triage pipeline: LLM agents that triage, reproduce,
-              and route support issues. I also worked on a learning platform, with assessment
-              workflows, a content editor, Okta SSO, and a Slack integration.
-            </p>
-            <p>
-              Before that, I built an AI note-taking app with streaming Whisper transcription at a
-              startup. I study computer science at Texas A&amp;M with minors in math and
-              statistics, where I'm also a teaching assistant, and I graduate in May 2028.
-            </p>
-          </>
-        )}
+        <p>
+          At Dropbox, I built an agentic triage pipeline: LLM agents that triage, reproduce, and
+          route support issues. I also worked on a learning platform, with assessment workflows, a
+          content editor, Okta SSO, and a Slack integration.
+        </p>
+        <p>
+          Before that, I built an AI note-taking app with streaming Whisper transcription at a
+          startup. I study computer science at Texas A&amp;M with minors in math and statistics,
+          where I'm also a teaching assistant, and I graduate in May 2028.
+        </p>
       </section>
 
       <section>
