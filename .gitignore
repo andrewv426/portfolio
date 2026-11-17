@@ -29,3 +29,6 @@ dist-ssr
 
 .vercel
 .env*
+
+# Feature worktrees (see CLAUDE.md)
+.worktrees/
