@@ -1,0 +1,347 @@
+<!doctype html>
+<!-- Exported from andrewv426/Flotion at 986f9ccd517f0d294e8ae0a18e04e85acd8bff04; regenerate with scripts/export-flotion-demo.py. --><html lang="en"><head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Interactive Flow request and response</title>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data: blob:; font-src data:; media-src data: blob:">
+<style>
+:root {
+  color-scheme: light dark;
+  --fl-bg: #FFFFFF; --fl-text: #37352F; --fl-muted: #787774; --fl-accent: #2383E2;
+  --fl-border: rgba(55,53,47,0.16); --fl-soft: rgba(55,53,47,0.06);
+  --fl-line: rgba(55,53,47,0.48); --fl-node-border: rgba(55,53,47,0.24); --fl-node: #FFFFFF; --fl-group: #F7F7F5;
+  --fl-good: #448361; --fl-warn: #D9730D; --fl-bad: #D44C47;
+  --fl-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --fl-bg: #191919; --fl-text: rgba(255,255,255,0.81); --fl-muted: rgba(255,255,255,0.46);
+          --fl-border: rgba(255,255,255,0.16); --fl-soft: rgba(255,255,255,0.06);
+          --fl-line: rgba(255,255,255,0.42); --fl-node-border: rgba(255,255,255,0.20); --fl-node: #262626; --fl-group: #202020;
+          --fl-accent: #4A9FF0; --fl-good: #5BB98C; --fl-warn: #F0A04B; --fl-bad: #F2766F; }
+}
+html, body { margin: 0; height: 100%; background: transparent; color: var(--fl-text);
+             font-family: var(--fl-font); font-size: 14px; -webkit-font-smoothing: antialiased; }
+</style><style>body { overflow: hidden; }
+.fig { outline: none; --motion-ease: cubic-bezier(.2,.7,.2,1); }
+.stage { display: block; margin: 0 auto; width: 100%; height: auto; overflow: visible; }
+.stage.no-anim, .stage.no-anim * { transition: none !important; }
+
+.group rect { fill: var(--fl-group); }
+.group text { fill: var(--fl-muted); font-size: 12px; font-weight: 500; }
+.group, .node, .edge, .elabel { transition: opacity .26s var(--motion-ease); }
+.dim { opacity: .28; }
+.off { opacity: 0; }
+
+.node .inner { transform-box: fill-box; transform-origin: center; transition: transform .32s var(--motion-ease); }
+.node.off .inner { transform: translateY(5px) scale(.96); }
+.shape { fill: var(--fl-node); stroke: var(--fl-node-border); stroke-width: 1.25; transition: fill .26s ease, stroke .26s ease; }
+.ring { fill: none; stroke: var(--tone, var(--fl-accent)); stroke-width: 1.5; opacity: 0; pointer-events: none; }
+.label { fill: var(--fl-text); font-size: 14px; font-weight: 500; transition: transform .26s var(--motion-ease), fill .26s ease; }
+.tag { fill: var(--fl-muted); font-size: 12px; transition: fill .26s ease; }
+.node[data-tone="accent"] { --tone: var(--fl-accent); }
+.node[data-tone="good"] { --tone: var(--fl-good); }
+.node[data-tone="warn"] { --tone: var(--fl-warn); }
+.node[data-tone="bad"] { --tone: var(--fl-bad); }
+.node[data-tone]:not([data-tone="muted"]) .shape { stroke: var(--tone); fill: color-mix(in srgb, var(--tone) 10%, var(--fl-node)); }
+.node[data-tone]:not([data-tone="muted"]) .tag { fill: var(--tone); }
+.node[data-tone="muted"] .shape { stroke-dasharray: 3 3; }
+.node[data-tone="muted"] .label { fill: var(--fl-muted); }
+
+.line { fill: none; stroke: var(--fl-line); stroke-width: 1.25; stroke-linecap: round;
+        transition: stroke .18s ease, stroke-width .18s ease, stroke-dashoffset .32s ease; }
+.edge.solid .line { stroke-dasharray: 1; stroke-dashoffset: 0; }
+.edge.solid.off .line { stroke-dashoffset: 1; }
+.edge.dashed .line { stroke-dasharray: 4 4; }
+.head { fill: var(--fl-line); stroke: var(--fl-line); stroke-width: 1; stroke-linejoin: round;
+        transition: fill .25s ease, stroke .25s ease; }
+.direction { opacity: 0; transition: opacity .26s var(--motion-ease); }
+.edge.at-hi .direction.hi, .edge.at-lo .direction.lo { opacity: 1; }
+.edge.live .line { stroke: var(--fl-accent); stroke-width: 1.6; }
+.edge.live .head { fill: var(--fl-accent); stroke: var(--fl-accent); }
+.elabel { fill: var(--fl-muted); font-size: 12.5px; font-weight: 500; paint-order: stroke; stroke: var(--fl-bg);
+          stroke-width: 6px; stroke-linejoin: round; }
+.elabel.in-group { stroke: var(--fl-group); }
+.elabel.live { fill: var(--fl-accent); }
+.token { fill: var(--fl-accent); }
+
+.cap { position: relative; height: 66px; text-align: center; overflow: hidden; }
+.cap-copy { position: absolute; inset: 8px 16px 0; }
+.cap-copy[aria-hidden] { pointer-events: none; user-select: none; }
+.cap-title { font-size: 14px; line-height: 18px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cap-text { margin-top: 2px; font-size: 13px; line-height: 18px; color: var(--fl-muted);
+            display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+.controls { display: flex; align-items: center; justify-content: center; gap: 8px; height: 34px; }
+.controls button { all: unset; cursor: pointer; }
+.controls .nav { width: 24px; height: 24px; border-radius: 5px; display: grid; place-items: center; color: var(--fl-muted);
+                 opacity: 0; transition: opacity .18s ease, background .12s ease; }
+.controls .nav svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.controls .nav.play svg { fill: currentColor; stroke: none; }
+.controls .nav:hover { background: var(--fl-soft); color: var(--fl-text); }
+.controls .nav[disabled] { visibility: hidden; }
+.fig:hover .controls .nav, .fig:focus-within .controls .nav { opacity: 1; }
+.dots { display: flex; gap: 5px; align-items: center; }
+.controls .dot { width: 6px; height: 6px; border-radius: 3px; background: var(--fl-node-border); transition: width .16s ease, background .16s ease; }
+.controls .dot.on { width: 16px; background: var(--fl-accent); }
+.static .cap, .static .controls { display: none; }
+@media (prefers-reduced-motion: reduce) { .stage, .stage *, .controls button { transition: none !important; } }</style><style>
+html, body { height: auto; }
+body { padding: 8px; }
+.controls { height: 48px; }
+.controls .nav { opacity: 1; width: 44px; height: 44px; }
+.controls .dot { position: relative; }
+.controls .dot::after { content: ''; position: absolute; inset: -16px -2px; }
+.controls button:focus-visible { outline: 2px solid var(--fl-accent); outline-offset: 4px; }
+.fig:focus-visible { outline: 2px solid var(--fl-accent); outline-offset: -2px; }
+</style></head>
+<body>
+<div class="fig" id="fig" tabindex="0">
+  <svg class="stage" id="stage" role="img" aria-label="Browser and API request and response diagram"></svg>
+  <div class="cap"><div class="cap-copy" id="caption" aria-live="polite" aria-atomic="true"><div class="cap-title" id="cap-title"></div><div class="cap-text" id="cap-text"></div></div></div>
+  <div class="controls">
+    <button class="nav" id="prev" aria-label="Previous step"><svg viewBox="0 0 16 16"><path d="M10 3.5 5.5 8l4.5 4.5"/></svg></button>
+    <div class="dots" id="dots"></div>
+    <button class="nav" id="next" aria-label="Next step"><svg viewBox="0 0 16 16"><path d="M6 3.5 10.5 8 6 12.5"/></svg></button>
+    <button class="nav play" id="play" aria-label="Play"><svg viewBox="0 0 16 16"><path id="play-icon" d=""/></svg></button>
+  </div>
+</div>
+<script type="application/json" id="scene">{"x":-70,"y":-43,"nodes":[{"sink":0,"y":0,"x":0,"d":"M-34,-22H34A22,22 0 0 1 56,0V0A22,22 0 0 1 34,22H-34A22,22 0 0 1 -56,0V0A22,22 0 0 1 -34,-22Z"},{"x":213,"d":"M-44,-29H44A8,8 0 0 1 52,-21V21A8,8 0 0 1 44,29H-44A8,8 0 0 1 -52,21V-21A8,8 0 0 1 -44,-29Z","y":0,"sink":0}],"edges":[{"anchor":"middle","headHi":"M158,0L150,-3.4L150,3.4Z","solid":true,"headLo":"M59,0L67,-3.4L67,3.4Z","lineHi":"M56,0C103.8,0 103.8,0 151.5,0","lineLo":"M65.5,0C113.3,0 113.3,0 161,0","ly":-10,"inGroup":false,"lx":108.5}],"h":86,"stepped":true,"groups":[],"steps":[{"edges":[{"dim":false,"on":true,"live":true,"hi":true,"label":"GET \/feed"}],"nodes":[{"dim":false,"on":true,"tag":"","label":"Browser"},{"dim":false,"on":true,"tag":"loading","label":"API"}],"groups":[],"sends":[{"to":1,"edge":0,"forward":true}],"title":"Request","caption":"The browser asks for its feed."},{"edges":[{"dim":false,"on":true,"live":true,"hi":false,"label":"200 OK"}],"nodes":[{"dim":false,"on":true,"tag":"","label":"Browser"},{"dim":false,"on":true,"tone":"good","tag":"ready","label":"API"}],"groups":[],"sends":[{"to":0,"edge":0,"forward":false}],"title":"Response","caption":"The API returns the feed."}],"w":349}</script>
+<script>(function () {
+  const S = JSON.parse(document.getElementById('scene').textContent);
+  const NS = 'http://www.w3.org/2000/svg';
+  const el = (name, attrs, text) => {
+    const e = document.createElementNS(NS, name);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (text != null) e.textContent = text;
+    return e;
+  };
+  const $ = id => document.getElementById(id);
+  const fig = $('fig'), stage = $('stage');
+  const caption = $('caption'), captionTitle = $('cap-title'), captionText = $('cap-text');
+  const ease = 'cubic-bezier(.2,.7,.2,1)';
+  stage.setAttribute('viewBox', [S.x, S.y, S.w, S.h].join(' '));
+  stage.style.maxWidth = S.w + 'px';
+  if (!S.stepped) fig.classList.add('static');
+  const layer = () => stage.appendChild(el('g', {}));
+  const gGroups = layer(), gEdges = layer(), gLabels = layer(), gNodes = layer(), gTokens = layer();
+
+  const groups = S.groups.map(g => {
+    const e = gGroups.appendChild(el('g', { class: 'group' }));
+    if (g.w) e.append(el('rect', { x: g.x, y: g.y, width: g.w, height: g.h, rx: 12 }), el('text', { x: g.x + 14, y: g.y + 20 }, g.title));
+    return e;
+  });
+  const edges = S.edges.map(d => {
+    const e = gEdges.appendChild(el('g', { class: 'edge ' + (d.solid ? 'solid' : 'dashed') }));
+    const direction = (side, linePath, headPath) => {
+      const group = e.appendChild(el('g', { class: 'direction ' + side }));
+      const line = group.appendChild(el('path', { class: 'line', d: linePath }));
+      if (d.solid) line.setAttribute('pathLength', 1);
+      group.appendChild(el('path', { class: 'head', d: headPath }));
+      return line;
+    };
+    const hi = direction('hi', d.lineHi, d.headHi), lo = direction('lo', d.lineLo, d.headLo);
+    const label = gLabels.appendChild(el('text', { class: 'elabel' + (d.inGroup ? ' in-group' : ''), x: d.lx, y: d.ly, dy: '.35em', 'text-anchor': d.anchor }));
+    return { e, hi, lo, label };
+  });
+  const nodes = S.nodes.map(d => {
+    const e = gNodes.appendChild(el('g', { class: 'node', transform: 'translate(' + d.x + ',' + d.y + ')' }));
+    const inner = e.appendChild(el('g', { class: 'inner' }));
+    const ring = el('path', { class: 'ring', d: d.d });
+    const label = el('text', { class: 'label', 'text-anchor': 'middle', dy: '.35em', y: d.sink });
+    const tag = el('text', { class: 'tag', 'text-anchor': 'middle', dy: '.35em', y: d.sink + 11 });
+    inner.append(el('path', { class: 'shape', d: d.d }), ring, label, tag);
+    return { e, ring, label, tag };
+  });
+  const dots = S.steps.map((_, i) => {
+    const dot = $('dots').appendChild(document.createElement('button'));
+    dot.className = 'dot';
+    dot.setAttribute('aria-label', 'Step ' + (i + 1));
+    dot.onclick = () => seek(i);
+    return dot;
+  });
+
+  const still = matchMedia('(prefers-reduced-motion: reduce)');
+  let index = 0, activeTokens = null, timer = null, captionMotion;
+  const textMotions = new WeakMap();
+  const pulses = new WeakMap();
+
+  function updateText(e, text, animate, offset) {
+    if (e.textContent === text) return;
+    textMotions.get(e)?.cancel();
+    e.textContent = text;
+    if (animate && text) {
+      textMotions.set(e, e.animate([{ translate: '0 ' + offset + 'px' }, { translate: '0 0' }], { duration: 260, easing: ease }));
+    }
+  }
+
+  function updateCaption(step, animate, direction) {
+    if (captionTitle.textContent === step.title && captionText.textContent === step.caption) return;
+    if (animate) {
+      const current = captionMotion?.playState === 'running' ? getComputedStyle(caption) : null;
+      const opacity = current ? Number(current.opacity) : 1;
+      if (opacity > .25 && (captionTitle.textContent || captionText.textContent)) {
+        const outgoing = caption.cloneNode(true);
+        outgoing.removeAttribute('id');
+        outgoing.querySelectorAll('[id]').forEach(e => e.removeAttribute('id'));
+        outgoing.setAttribute('aria-hidden', 'true');
+        caption.before(outgoing);
+        outgoing.animate([{ opacity, translate: current?.translate ?? 'none' },
+                          { opacity: 0, translate: '0 ' + (-direction * 8) + 'px' }],
+                         { duration: 180, easing: ease, fill: 'forwards' }).onfinish = () => outgoing.remove();
+      }
+    }
+    captionMotion?.cancel();
+    captionTitle.textContent = step.title;
+    captionText.textContent = step.caption;
+    if (animate) {
+      captionMotion = caption.animate([{ opacity: .2, translate: '0 ' + (direction * 8) + 'px' },
+                                       { opacity: 1, translate: '0 0' }], { duration: 260, easing: ease });
+    }
+  }
+
+  function pulse(ring, opacity) {
+    pulses.get(ring)?.cancel();
+    pulses.set(ring, ring.animate([{ opacity, strokeWidth: '2px' }, { opacity: 0, strokeWidth: '8px' }],
+                                  { duration: 440, easing: ease }));
+  }
+
+  function go(i, animate) {
+    const previous = S.steps[index], direction = i < index ? -1 : 1;
+    index = i;
+    animate = animate && !still.matches;
+    const step = S.steps[index];
+    updateCaption(step, animate, direction);
+    if (activeTokens) {
+      // Stop traveling on paths whose geometry is about to change. Fade the old dots in place.
+      const outgoing = activeTokens;
+      activeTokens = null;
+      if (animate && outgoing.firstChild) {
+        outgoing.animate([{ opacity: 1 }, { opacity: 0 }], 90).onfinish = () => outgoing.remove();
+      } else {
+        outgoing.remove();
+      }
+    }
+    step.groups.forEach((s, k) => { groups[k].classList.toggle('off', !s.on); groups[k].classList.toggle('dim', s.dim); });
+    const receivers = new Set(step.sends.map(send => send.to));
+    step.nodes.forEach((s, k) => {
+      const n = nodes[k], before = previous.nodes[k];
+      n.e.classList.toggle('off', !s.on);
+      n.e.classList.toggle('dim', s.dim);
+      if (s.tone) n.e.dataset.tone = s.tone; else delete n.e.dataset.tone;
+      updateText(n.label, s.label, animate, direction * 4);
+      updateText(n.tag, s.tag, animate, direction * 5);
+      n.label.style.transform = s.tag ? 'translateY(-10px)' : '';
+      if (animate && s.on && !s.dim && !receivers.has(k) &&
+          (s.label !== before.label || s.tag !== before.tag || s.tone !== before.tone)) {
+        pulse(n.ring, .28);
+      }
+    });
+    step.edges.forEach((s, k) => {
+      const e = edges[k];
+      e.e.classList.toggle('off', !s.on);
+      e.e.classList.toggle('dim', s.dim);
+      e.e.classList.toggle('live', s.live);
+      e.e.classList.toggle('at-hi', s.hi);
+      e.e.classList.toggle('at-lo', !s.hi);
+      e.label.classList.toggle('off', !s.on);
+      e.label.classList.toggle('dim', s.dim);
+      e.label.classList.toggle('live', s.live);
+      updateText(e.label, s.label, animate, direction * 4);
+    });
+    dots.forEach((dot, k) => dot.classList.toggle('on', k === index));
+    $('prev').disabled = index === 0;
+    $('next').disabled = index === S.steps.length - 1;
+    if (animate && step.sends.length) {
+      const tokens = activeTokens = gTokens.appendChild(el('g', {}));
+      step.sends.forEach((send, order) => travel(send, order, tokens, step.edges[send.edge].hi));
+    }
+  }
+
+  // A dot runs the edge from sender to receiver, then the receiver's outline pulses once.
+  function travel(send, order, tokens, hi) {
+    const edge = edges[send.edge], path = hi ? edge.hi : edge.lo;
+    const length = path.getTotalLength();
+    const dot = tokens.appendChild(el('circle', { class: 'token', r: 3.5, opacity: 0 }));
+    const startAt = performance.now() + order * 480;
+    const duration = Math.min(650, Math.max(320, length * 2.2));
+    const tick = now => {
+      if (tokens !== activeTokens) return;
+      const t = (now - startAt) / duration;
+      if (t >= 1) {
+        dot.remove();
+        pulse(nodes[send.to].ring, .55);
+        return;
+      }
+      if (t > 0) {
+        const u = t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+        const p = path.getPointAtLength((send.forward ? u : 1 - u) * length);
+        dot.setAttribute('cx', p.x);
+        dot.setAttribute('cy', p.y);
+        dot.setAttribute('opacity', Math.min(1, (1 - t) * 8));
+      }
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+
+  function icon(playing) {
+    $('play-icon').setAttribute('d', playing ? 'M4.5 3.5h2.4v9H4.5zM9.1 3.5h2.4v9H9.1z' : 'M5 3.2v9.6L12.6 8z');
+    $('play').setAttribute('aria-label', playing ? 'Pause' : 'Play');
+  }
+  function stop() {
+    if (timer === null) return;
+    clearTimeout(timer);
+    timer = null;
+    icon(false);
+  }
+  function seek(i) {
+    stop();
+    const target = Math.max(0, Math.min(S.steps.length - 1, i));
+    if (target !== index) go(target, true);
+  }
+  function start() {
+    if (index === S.steps.length - 1) go(0, true);
+    icon(true);
+    const wait = () => 2300 + S.steps[index].sends.length * 480;
+    const advance = () => {
+      if (index >= S.steps.length - 1) { stop(); return; }
+      go(index + 1, true);
+      timer = setTimeout(advance, wait());
+    };
+    timer = setTimeout(advance, wait());
+  }
+  $('prev').onclick = () => seek(index - 1);
+  $('next').onclick = () => seek(index + 1);
+  $('play').onclick = () => { timer ? stop() : start(); };
+  document.addEventListener('keydown', e => {
+    if (!S.stepped) return;
+    if (e.key === 'ArrowRight') { seek(index + 1); e.preventDefault(); }
+    if (e.key === 'ArrowLeft') { seek(index - 1); e.preventDefault(); }
+    if (e.key === ' ') { timer ? stop() : start(); e.preventDefault(); }
+  });
+
+  window.flotion = { count: S.steps.length, go: seek, index: () => index };
+  icon(false);
+  stage.classList.add('no-anim');
+  go(0, false);
+  stage.getBoundingClientRect();
+  stage.classList.remove('no-anim');
+})();</script>
+<script>
+// The parent validates the sending frame before accepting these height updates.
+const reportHeight = () => parent.postMessage({
+  type: 'flotion:resize', height: Math.ceil(document.body.getBoundingClientRect().height)
+}, '*');
+new ResizeObserver(reportHeight).observe(document.body);
+const updateStepLabels = () => {
+  document.querySelectorAll('.dot').forEach((dot, i) => {
+    dot.setAttribute('aria-label', 'Step ' + (i + 1) + ': ' +
+      JSON.parse(document.getElementById('scene').textContent).steps[i].title);
+    dot.setAttribute('aria-pressed', String(i === window.flotion.index()));
+  });
+};
+new MutationObserver(updateStepLabels).observe(document.getElementById('dots'), {
+  subtree: true, attributes: true, attributeFilter: ['class']
+});
+updateStepLabels();
+reportHeight();
+</script></body></html>

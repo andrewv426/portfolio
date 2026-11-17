@@ -12,13 +12,11 @@ So I started building Flotion: a native Mac notes app with a block editor, local
 
 ## AppKit vs. Electron
 
-[Electron](https://www.electronjs.org/docs/latest/) would've let me use web technologies and support multiple platforms. I went with SwiftUI and AppKit because I wanted to build a Mac app and have control over how the editor felt. SwiftUI handles the surrounding interface; the editor uses AppKit's text views inside a table.
+[Electron](https://www.electronjs.org/docs/latest/) lets you build a desktop app with web technologies and share the interface across Mac, Windows, and Linux. It bundles Chromium and Node.js, which adds runtime overhead, but also gives you access to web libraries for things like rich-text editing.
 
-There was still a lot to figure out. In an [early test](https://github.com/andrewv426/Flotion/blob/main/Spikes/ScrollSpike.swift), a page with 5,000 blocks took 236 ms to open. Just measuring the row heights took 162 ms.
+AppKit uses macOS's own controls. I went with it for Flotion's editor because most of the app is typing, selecting text, and scrolling through notes. I wanted those interactions to feel like a Mac app, with less runtime overhead around them. SwiftUI handles the rest of the interface.
 
-That test exposed a bottleneck in my AppKit implementation: I was measuring every row before showing the page. I didn't build an Electron version to compare. A [web-based editor also has to manage large lists and variable row heights](https://web.dev/articles/virtualize-long-lists-react-window), so changing frameworks wouldn't automatically remove that work.
-
-The editor now estimates heights and measures them in batches. Then I had to fix the page shifting as those estimates changed. Scrolling over embedded diagrams caused its own problems with trackpad momentum. These are things I barely notice in other apps until they stop working.
+The tradeoff is that Flotion's interface is tied to macOS, and I have to handle more of the block editor myself. Native controls also don't make an app fast automatically. I still have to manage how many views exist and when layout work happens. For Flotion, choosing AppKit gives me control over that work, while giving up Electron's easier route to other platforms.
 
 ## Flow, inspired by Mermaid
 
@@ -42,11 +40,11 @@ step "Response": The API returns the feed.
   mark api: good
 ```
 
-Here are two frames from a larger Flow diagram in Flotion: the cache miss, then the response.
+You can step through that example here:
 
-![Flow's cache-miss step: the API checks Redis, which is marked with a warning and a miss tag.](https://raw.githubusercontent.com/andrewv426/Flotion/main/docs/images/flow-cache-miss.png)
-
-![Flow's response step: a 200 OK message returns to the browser while Redis keeps its miss tag.](https://raw.githubusercontent.com/andrewv426/Flotion/main/docs/images/flow-cache-response.png)
+```flow-demo
+request-response
+```
 
 The nodes stay in place while messages animate between them. Tags carry over to the next step. Flotion handles positioning and colors, so the agent can edit the explanation without also writing the drawing code.
 
@@ -54,8 +52,10 @@ Parsing and layout happen in Swift. A small SVG player runs in an embedded web v
 
 ## Interesting Issues
 
-An agent might edit a page while I'm typing in it. The app and MCP server share the same storage code, and incoming changes get merged block by block. Unsaved local edits are preserved, and agent changes are logged so I can undo a turn.
+An agent might edit a page while I'm typing in it. The app and MCP server share the same storage code, and incoming changes get merged block by block. 
 
 With Flow, I also had to make errors useful. If an agent references a node that doesn't exist, it gets a line number and a suggestion where possible. It can use that context to fix the source directly, saving the cost of taking a screenshot and using vision to figure out what's wrong.
 
-A lot of this project has been working through details like those: what happens to my text during an agent edit, or why the page moves when a row gets taller. I wanted a faster notes app, and that ended up involving much more scrolling code than I'd have guessed.
+A lot of this project has been working through details like those. 
+
+I hope to combine my understanding of NLP to optimize tokens spent on tool calling and maximizing performance & accuracy of agent tasks. 

@@ -259,6 +259,45 @@ a:hover {
   font-size: 13px;
 }
 
+.post-body > h2:first-child {
+  margin-top: 0;
+}
+
+.post-body pre {
+  overflow-x: auto;
+  margin: 0 0 1.45rem;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.post-body code {
+  font-size: 0.85em;
+}
+
+.post-body pre code {
+  font-size: inherit;
+}
+
+.flow-demo {
+  margin: 1.5rem 0 2rem;
+}
+
+.flow-demo iframe {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin-bottom: 0.6rem;
+}
+
+.flow-demo figcaption {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
 @media (max-width: 639px) {
   .row {
     grid-template-columns: 1fr;
@@ -268,28 +307,5 @@ a:hover {
   }
   .link-list {
     columns: 1;
-  }
-}
-
-.snowdrift {
-  display: none;
-}
-
-@media (min-width: 960px) and (hover: hover) and (pointer: fine) {
-  .desktop-sidebar-layout {
-    display: grid;
-    grid-template-columns: minmax(0, var(--content-width)) 226px;
-    align-items: start;
-    justify-content: center;
-    column-gap: clamp(2rem, 5vw, 4rem);
-    margin-inline: auto;
-  }
-
-  .snowdrift {
-    display: block;
-    width: 100%;
-    aspect-ratio: 226 / 320;
-    margin-top: 3.75rem;
-    pointer-events: none;
   }
 }
