@@ -1,28 +1,26 @@
-# Designing a macOS-native Notion
+# Building Flotion
 
-## Why I built it
+## Why I started
 
-I wanted a faster Notion with notes that AI agents could navigate and edit easily. Google Docs with Gemini wasn't working well for me, and my Notion MCP workflow couldn't create the animated diagrams I wanted. I liked the interactive explanations in Claude and Codex artifacts and wanted them alongside my notes.
+I like Notion's nested pages and blocks. I wanted something faster, though, and I wanted AI agents to be able to edit my notes without much friction.
 
-Flotion keeps the nested pages and block editor I like, stores them locally in SQLite, and exposes them to agents through MCP. It's built with SwiftUI and AppKit.
+I wasn't happy with Google Docs and Gemini. I also tried working through Notion's MCP, but couldn't get the animated diagrams I wanted into my notes. Claude and Codex could make interactive artifacts, and I wanted that kind of explanation inside the document I was working on.
 
-## AppKit vs. Electron
+So I started building Flotion: a native Mac notes app with a block editor, local SQLite storage, and an MCP server.
 
-I used SwiftUI for the surrounding interface and AppKit for the editor: an NSTableView with reusable NSTextView cells. That gives me control over text input, focus, and layout.
+## Why AppKit?
 
-[Electron](https://www.electronjs.org/docs/latest/) offers a shared web codebase across macOS, Windows, and Linux. I accepted a Mac-only interface because I wanted to build around native text editing and scrolling. That choice still left plenty to fix.
+[Electron](https://www.electronjs.org/docs/latest/) would've let me use web technologies and support multiple platforms. I went with SwiftUI and AppKit because I wanted to build a Mac app and have control over how the editor felt. SwiftUI handles the surrounding interface; the editor uses AppKit's text views inside a table.
 
-In an [early experiment](https://github.com/andrewv426/Flotion/blob/main/Spikes/ScrollSpike.swift), opening 5,000 blocks took 236 ms. Measuring row heights accounted for 162 ms. The editor now starts with estimates where needed and refines them in small batches. I also had to keep those corrections from shifting the text on screen and get trackpad scrolling to behave over embedded diagrams.
+There was still a lot to figure out. In an [early test](https://github.com/andrewv426/Flotion/blob/main/Spikes/ScrollSpike.swift), a page with 5,000 blocks took 236 ms to open. Just measuring the row heights took 162 ms.
 
-## Editing alongside an agent
+The editor now estimates heights and measures them in batches. Then I had to fix the page shifting as those estimates changed. Scrolling over embedded diagrams caused its own problems with trackpad momentum. These are things I barely notice in other apps until they stop working.
 
-The app and MCP server use the same core for storage and editing operations. An agent can target a block or insert a diagram through a tool call.
+## Flow, inspired by Mermaid
 
-The awkward part is handling changes while I'm typing. External writes notify the app, which merges updates block by block and preserves unsaved local edits. Agent changes are logged by turn so they can be undone. An editing tool needs to account for overlapping work, too.
+The diagram part became its own project. I liked [Mermaid's](https://mermaid.js.org/intro/index.html) idea of describing a diagram in text. I wanted to add steps so I could follow something happening, like a request going from a browser to a server and back.
 
-## Flow: diagrams with steps
-
-[Mermaid](https://mermaid.js.org/intro/index.html) inspired Flow's text-based approach. I wanted an agent to describe a system and then walk through what happens inside it. Flow declares nodes and arrows, followed by steps:
+That's what Flow does:
 
 ```text
 flow right
@@ -40,14 +38,14 @@ step "Response": The API returns the feed.
   mark api: good
 ```
 
-Messages animate along the arrows. Tags and status marks persist between steps, while message animations and focus effects last one step. The layout accounts for every step in advance, so nodes stay put as the explanation progresses.
+The nodes stay in place while messages animate between them. Tags carry over to the next step. Flotion handles positioning and colors, so the agent can edit the explanation without also writing the drawing code.
 
-Flow leaves layout and styling to Flotion. An agent can write `mark api: warn` without picking a color or placing a box. Invalid source gets line-specific errors with suggested fixes where possible.
+Parsing and layout happen in Swift. A small SVG player runs in an embedded web view. I ended up using web rendering for this part even though the editor itself is native.
 
-Swift handles parsing and layout; a sandboxed WKWebView draws the SVG and plays transitions. Using AppKit for the editor still leaves room for web rendering where it's useful.
+## The parts I had to think through
 
-## What I learned
+An agent might edit a page while I'm typing in it. The app and MCP server share the same storage code, and incoming changes get merged block by block. Unsaved local edits are preserved, and agent changes are logged so I can undo a turn.
 
-Much of the editor work came down to details I usually take for granted: keeping a page still while rows resize, preserving text during an external edit, and handling scroll momentum.
+With Flow, I also had to make errors useful. If an agent references a node that doesn't exist, it gets a line number and a suggestion where possible. That gives it a way to fix the diagram.
 
-Flow taught me how useful a small language can be for agent editing. The app takes responsibility for presentation, so the agent can change the explanation directly. Adding a cache-miss step becomes an edit to a few lines of source stored with the notes.
+A lot of this project has been working through details like those: what happens to my text during an agent edit, or why the page moves when a row gets taller. I wanted a faster notes app, and that ended up involving much more scrolling code than I'd have guessed.
