@@ -11,19 +11,19 @@ export const links = [
 export const jobs = [
   {
     name: "Dropbox",
-    role: "Software engineering intern",
+    role: "Software Engineering Intern",
     date: "May – Aug 2026",
     description:
       "Built an agentic triage pipeline (LLM agents that triage, reproduce, and route support issues) and a learning platform with assessment workflows, a content editor, Okta SSO, and a Slack integration.",
   },
   {
     name: "Texas A&M University",
-    role: "Teaching assistant",
+    role: "Teaching Assistant",
     date: "Aug 2026 – present",
   },
   {
     name: "Texas A&M University",
-    role: "ML researcher, STMI Lab",
+    role: "ML Researcher, STMI Lab",
     date: "Mar – Aug 2026",
     description: "ECG and PPG waveform forecasting.",
   },
