@@ -9,6 +9,14 @@ function MarkdownPre({ children }) {
   if (isValidElement(code) && code.props.className === "language-flow-demo") {
     return <FlowDemo />;
   }
+  if (isValidElement(code) && code.props.className === "language-flow") {
+    return (
+      <details className="flow-source">
+        <summary className="ui">View Flow code</summary>
+        <pre>{children}</pre>
+      </details>
+    );
+  }
   return <pre>{children}</pre>;
 }
 

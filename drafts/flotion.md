@@ -24,7 +24,11 @@ The diagram part became its own project. I liked [Mermaid's](https://mermaid.js.
 
 Here's how Flotion shares storage between the app and an agent. Both use FlotionCore to access SQLite in [WAL mode](https://sqlite.org/wal.html):
 
-```text
+```flow-demo
+flotion-storage
+```
+
+```flow
 flow down
 app: Flotion app {shape: pill}
 mcp: MCP server
@@ -59,10 +63,6 @@ step "Checkpoint": SQLite copies committed WAL pages into the main database.
   send wal -> db: checkpoint
   tag db: checkpointed
   mark db: good
-```
-
-```flow-demo
-flotion-storage
 ```
 
 The nodes stay in place while messages animate between them. Tags carry over to the next step. Flotion handles positioning and colors, so the agent can edit the explanation without also writing the drawing code.

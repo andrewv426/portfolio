@@ -16,7 +16,7 @@ root = Path(__file__).resolve().parents[1]
 flotion = Path(sys.argv[1]).resolve()
 core = flotion / "Packages/FlotionKit/Sources/FlotionCore"
 post = (root / "drafts/flotion.md").read_text()
-source = re.search(r"```text\n(.*?)\n```", post, re.S).group(1)
+source = re.search(r"```(?:text|flow)\n(.*?)\n```", post, re.S).group(1)
 
 with tempfile.TemporaryDirectory(prefix="flotion-export-") as temp:
     temp = Path(temp)

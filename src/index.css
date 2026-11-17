@@ -282,7 +282,7 @@ a:hover {
 }
 
 .flow-demo {
-  margin: 1.5rem 0 2rem;
+  margin: 1.5rem 0 0.75rem;
 }
 
 .flow-demo iframe {
@@ -291,6 +291,25 @@ a:hover {
   border: 1px solid var(--line);
   border-radius: 8px;
   margin-bottom: 0.6rem;
+}
+
+.flow-source {
+  margin-bottom: 1.45rem;
+}
+
+.flow-source summary {
+  width: fit-content;
+  cursor: pointer;
+  padding: 0.25rem 0;
+}
+
+.flow-source summary:focus-visible {
+  outline: 2px solid var(--muted);
+  outline-offset: 4px;
+}
+
+.flow-source pre {
+  margin: 0.75rem 0 0;
 }
 
 @media (max-width: 639px) {
