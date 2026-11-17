@@ -23,13 +23,10 @@ export default function FlowDemo() {
       <iframe
         ref={frame}
         src="/demos/flotion-flow.html"
-        title="Interactive Flow diagram: browser request and API response"
+        title="Interactive Flow diagram: Flotion storage and SQLite write-ahead logging"
         sandbox="allow-scripts"
         style={{ height }}
       />
-      <figcaption className="ui">
-        Try the arrows or press play. You can also focus the diagram and use the arrow keys.
-      </figcaption>
     </figure>
   );
 }

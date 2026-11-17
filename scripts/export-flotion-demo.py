@@ -25,7 +25,9 @@ with tempfile.TemporaryDirectory(prefix="flotion-export-") as temp:
 import Foundation
 
 func encodeJSON<T: Encodable>(_ value: T) throws -> String {
-    String(decoding: try JSONEncoder().encode(value), as: UTF8.self)
+    let encoder = JSONEncoder()
+    encoder.outputFormatting = [.sortedKeys]
+    return String(decoding: try encoder.encode(value), as: UTF8.self)
 }
 func decodeJSON<T: Decodable>(_ type: T.Type, _ string: String) throws -> T {
     try JSONDecoder().decode(type, from: Data(string.utf8))
@@ -49,7 +51,7 @@ revision = subprocess.check_output(
 html = html.replace("<html>", '<html lang="en">', 1)
 html = html.replace("<head>", '''<head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Interactive Flow request and response</title>
+<title>Flotion storage and write-ahead logging</title>
 ''', 1)
 # Keep the app's scene and player; adapt the surrounding controls for a web page.
 html = html.replace("</head>", '''<style>
@@ -63,7 +65,7 @@ body { padding: 8px; }
 .fig:focus-visible { outline: 2px solid var(--fl-accent); outline-offset: -2px; }
 </style></head>''', 1)
 html = html.replace('<svg class="stage" id="stage" role="img">',
-                    '<svg class="stage" id="stage" role="img" aria-label="Browser and API request and response diagram">')
+                    '<svg class="stage" id="stage" role="img" aria-label="Flotion app and MCP server sharing SQLite storage through a write-ahead log">')
 html = html.replace('id="caption"', 'id="caption" aria-live="polite" aria-atomic="true"', 1)
 html = html.replace("</body>", '''<script>
 // The parent validates the sending frame before accepting these height updates.

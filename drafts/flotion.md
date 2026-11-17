@@ -20,30 +20,49 @@ The tradeoff is that Flotion's interface is tied to macOS, and I have to handle 
 
 ## Flow, inspired by Mermaid
 
-The diagram part became its own project. I liked [Mermaid's](https://mermaid.js.org/intro/index.html) idea of describing a diagram in text. I wanted to add steps so I could follow something happening, like a request going from a browser to a server and back.
+The diagram part became its own project. I liked [Mermaid's](https://mermaid.js.org/intro/index.html) idea of describing a diagram in text. I wanted to add steps so I could follow something happening, like an agent editing a note and the app picking up the change.
 
-That's what Flow does:
+Here's how Flotion shares storage between the app and an agent. Both use FlotionCore to access SQLite in [WAL mode](https://sqlite.org/wal.html):
 
 ```text
-flow right
-browser: Browser {shape: pill}
-api: API
-browser -> api
+flow down
+app: Flotion app {shape: pill}
+mcp: MCP server
+wal: Write-ahead log {shape: database}
+db: flotion.sqlite {shape: database}
 
-step "Request": The browser asks for its feed.
-  send browser -> api: GET /feed
-  tag api: loading
+app -> db
+app -> wal
+mcp -> wal
+mcp -> app {style: dashed}
+wal -> db
 
-step "Response": The API returns the feed.
-  send api -> browser: 200 OK
-  tag api: ready
-  mark api: good
+step "Read a page": SQLite reads a snapshot from the database and WAL.
+  focus app, wal, db
+  send app -> db: read page
+  send app -> wal: check WAL
+
+step "Agent edits": The MCP server commits the edit through FlotionCore.
+  focus mcp, wal
+  send mcp -> wal: commit edit
+  tag wal: committed
+  mark wal: good
+
+step "Refresh the app": A notification prompts Flotion to reload and merge the page.
+  send mcp -> app: workspace changed
+  send wal -> app: updated snapshot
+  tag app: page updated
+  mark app: good
+
+step "Checkpoint": SQLite copies committed WAL pages into the main database.
+  focus wal, db
+  send wal -> db: checkpoint
+  tag db: checkpointed
+  mark db: good
 ```
 
-You can step through that example here:
-
 ```flow-demo
-request-response
+flotion-storage
 ```
 
 The nodes stay in place while messages animate between them. Tags carry over to the next step. Flotion handles positioning and colors, so the agent can edit the explanation without also writing the drawing code.

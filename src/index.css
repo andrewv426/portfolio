@@ -293,11 +293,6 @@ a:hover {
   margin-bottom: 0.6rem;
 }
 
-.flow-demo figcaption {
-  font-size: 12px;
-  line-height: 1.5;
-}
-
 @media (max-width: 639px) {
   .row {
     grid-template-columns: 1fr;
@@ -307,5 +302,28 @@ a:hover {
   }
   .link-list {
     columns: 1;
+  }
+}
+
+.snowdrift {
+  display: none;
+}
+
+@media (min-width: 960px) and (hover: hover) and (pointer: fine) {
+  .desktop-sidebar-layout {
+    display: grid;
+    grid-template-columns: minmax(0, var(--content-width)) 226px;
+    align-items: start;
+    justify-content: center;
+    column-gap: clamp(2rem, 5vw, 4rem);
+    margin-inline: auto;
+  }
+
+  .snowdrift {
+    display: block;
+    width: 100%;
+    aspect-ratio: 226 / 320;
+    margin-top: 3.75rem;
+    pointer-events: none;
   }
 }
