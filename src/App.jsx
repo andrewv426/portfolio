@@ -4,10 +4,12 @@ import { handle } from "./data/site.js";
 
 function App() {
   const isHome = Boolean(useMatch("/"));
+  const isWork = Boolean(useMatch("/work"));
+  const hasSidebar = isHome || isWork;
 
   return (
     <main className="shell">
-      <div className={isHome ? "home-layout" : undefined}>
+      <div className={hasSidebar ? "desktop-sidebar-layout" : undefined}>
         <article className="frame">
           <header className="site-header">
             <h1 className="site-title">
@@ -24,7 +26,7 @@ function App() {
           </header>
           <Outlet />
         </article>
-        {isHome && <Snowdrift />}
+        {hasSidebar && <Snowdrift />}
       </div>
       <ScrollRestoration />
     </main>
