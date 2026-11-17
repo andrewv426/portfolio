@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { columns, rows, snowdriftFrame } from "./snowdrift.js";
 
 const desktopQuery = "(min-width: 960px) and (hover: hover) and (pointer: fine)";
@@ -18,8 +18,6 @@ const dark = {
 
 export default function Snowdrift() {
   const canvasRef = useRef(null);
-  const elapsed = useRef(0);
-  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -29,13 +27,14 @@ export default function Snowdrift() {
     const desktop = window.matchMedia(desktopQuery);
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const theme = window.matchMedia("(prefers-color-scheme: dark)");
+    let elapsed = 0;
     let frameId;
     let lastPaint;
 
     function paint() {
       const palette = theme.matches ? dark : light;
       context.clearRect(0, 0, width, height);
-      for (const [y, row] of snowdriftFrame(elapsed.current).entries()) {
+      for (const [y, row] of snowdriftFrame(elapsed).entries()) {
         for (const [x, cell] of row.entries()) {
           if (!cell) continue;
           context.fillStyle = palette[cell.tone];
@@ -48,7 +47,7 @@ export default function Snowdrift() {
       lastPaint ??= now;
       const delta = now - lastPaint;
       if (delta >= 50) {
-        elapsed.current += Math.min(delta, 100) / 1000;
+        elapsed += Math.min(delta, 100) / 1000;
         lastPaint = now;
         paint();
       }
@@ -73,7 +72,7 @@ export default function Snowdrift() {
       context.textBaseline = "middle";
       paint();
 
-      if (!paused && !reducedMotion.matches && !document.hidden) {
+      if (!reducedMotion.matches && !document.hidden) {
         frameId = requestAnimationFrame(animate);
       }
     }
@@ -86,14 +85,7 @@ export default function Snowdrift() {
       for (const query of [desktop, reducedMotion, theme]) query.removeEventListener("change", sync);
       document.removeEventListener("visibilitychange", sync);
     };
-  }, [paused]);
+  }, []);
 
-  return (
-    <div className="snowdrift">
-      <canvas ref={canvasRef} aria-hidden="true" />
-      <button className="snowdrift-toggle ui" type="button" onClick={() => setPaused(!paused)}>
-        {paused ? "Play tree animation" : "Pause tree animation"}
-      </button>
-    </div>
-  );
+  return <canvas className="snowdrift" ref={canvasRef} aria-hidden="true" />;
 }
