@@ -18,12 +18,12 @@ export const jobs = [
   },
   {
     name: "Texas A&M University",
-    role: "Teaching assistant",
+    role: "Teaching Assistant",
     date: "Aug 2026 – present",
   },
   {
     name: "Texas A&M University",
-    role: "ML researcher, STMI Lab",
+    role: "ML Researcher, STMI Lab",
     date: "Mar – Aug 2026",
     description: "ECG and PPG waveform forecasting.",
   },
