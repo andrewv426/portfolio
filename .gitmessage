@@ -1,0 +1,22 @@
+
+# type(scope): summary in the imperative, 72 characters at most, no full stop
+#
+# Body (optional): why the change was needed and what it does, wrapped at 72.
+# Say what a reader of the diff could not work out alone.
+#
+# Types
+#   feat      something a visitor can now see or do
+#   fix       a fix for behaviour that was wrong
+#   perf      faster or lighter, same behaviour
+#   refactor  restructuring with no behaviour change
+#   test      tests or checks only
+#   docs      documentation, templates, unlinked post drafts
+#   build     Vite, ESLint, dependencies, Vercel config, scripts
+#   chore     anything else that does not touch the shipped site
+#
+# Scopes (optional): home, work, blog, styles, deploy
+#
+# One logical change per commit. Each commit should pass
+# npm run lint and npm run build on its own.
+#
+# Enable this template once per clone:  git config commit.template .gitmessage

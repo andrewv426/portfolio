@@ -7,30 +7,39 @@ Example: feat(blog): add a project write-up
 
 ## What this changes
 
-<!-- Describe what a reader sees or can do after this change. -->
+<!-- Two to four plain sentences that someone new to the site could follow.
+     Say what a visitor now sees or can do, or what no longer goes wrong.
+     No file names here; that is the next section. -->
 
 ## Why
 
-<!-- Explain the problem or goal. Link the issue if there is one. -->
+<!-- The problem or goal behind it. Link the issue if there is one. -->
 
 ## Changes
 
-<!-- List the main changes. Group related files if that helps the reviewer. -->
+<!-- One row per file, or per group of trivial files. `git diff --stat main...HEAD` gives the line counts.
+     "Why" is the reason this file had to change, in a few words. -->
+
+| File | Lines | What changed and why |
+|---|---|---|
+| `path/to/file.jsx` | +40 −12 | |
 
 ## Visuals
 
-<!-- For visible changes, include before and after screenshots or a preview link.
-     Show desktop and mobile when the change affects the layout. Delete if unused. -->
+<!-- Delete this section if nothing visible changed.
+
+     Before and after screenshots, desktop and mobile when the layout is affected,
+     or the Vercel preview link. -->
 
 ## How it was checked
 
-- [ ] `npm run lint`
-- [ ] `npm run build`
-- [ ] Checked the affected routes and interactions in a browser, if applicable
+- [ ] `npm run lint` passes
+- [ ] `npm run build` passes
+- [ ] Checked the affected routes in a browser, at desktop and mobile widths if the layout changed
+- [ ] For routing changes, checked in-app navigation and a direct load or refresh
 
-<!-- For checks you skipped, say why or mark them as not applicable.
-     For routing changes, check in-app navigation and direct page loads. -->
+<!-- Say plainly what was not checked and why (see "What a local check cannot verify" in CLAUDE.md). -->
 
 ## Notes for the reviewer
 
-<!-- Include any tradeoffs, follow-ups, or decisions you want feedback on. Delete if unused. -->
+<!-- Risks, follow-ups, or a decision you want a second opinion on. Delete if empty. -->
