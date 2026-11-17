@@ -4,9 +4,11 @@
 
 I like Notion's nested pages and blocks. I wanted something faster, though, and I wanted AI agents to be able to edit my notes without much friction.
 
-I wasn't happy with Google Docs and Gemini. I also tried working through Notion's MCP, but couldn't get the animated diagrams I wanted into my notes. Claude and Codex could make interactive artifacts, and I wanted that kind of explanation inside the document I was working on.
+I wasn't happy with Google Docs and Gemini.
 
-So I started building Flotion: a native Mac notes app with a block editor, local SQLite storage, and an MCP server.
+I also tried working through Notion's MCP, but couldn't get the animated diagrams I wanted into my notes. Claude and Codex have the abiility to make interactive artifacts, but Notion supported mainly only mermaid/svg-style diagrams. I also tried having Claude/Codex generate images, the result ended up being ai-slop due to a lack of consistency/structure/scope. 
+
+So I started building Flotion: a native Mac notes app with a block editor, local SQLite storage, and an MCP server. Building an app yourself gives you the ability to constantly iterate and implement/test a variety of agentic capabilities. 
 
 ## Why AppKit?
 
@@ -40,12 +42,12 @@ step "Response": The API returns the feed.
 
 The nodes stay in place while messages animate between them. Tags carry over to the next step. Flotion handles positioning and colors, so the agent can edit the explanation without also writing the drawing code.
 
-Parsing and layout happen in Swift. A small SVG player runs in an embedded web view. I ended up using web rendering for this part even though the editor itself is native.
+Parsing and layout happen in Swift. A small SVG player runs in an embedded web view. I ended up using web rendering for this part even though the editor itself is native. 
 
-## The parts I had to think through
+## Interesting Issues
 
 An agent might edit a page while I'm typing in it. The app and MCP server share the same storage code, and incoming changes get merged block by block. Unsaved local edits are preserved, and agent changes are logged so I can undo a turn.
 
-With Flow, I also had to make errors useful. If an agent references a node that doesn't exist, it gets a line number and a suggestion where possible. That gives it a way to fix the diagram.
+With Flow, I also had to make errors useful. If an agent references a node that doesn't exist, it gets a line number and a suggestion where possible. It can use that context to fix the source directly, saving the cost of taking a screenshot and using vision to figure out what's wrong.
 
 A lot of this project has been working through details like those: what happens to my text during an agent edit, or why the page moves when a row gets taller. I wanted a faster notes app, and that ended up involving much more scrolling code than I'd have guessed.
