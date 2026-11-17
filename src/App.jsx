@@ -26,7 +26,7 @@ function App() {
           </header>
           <Outlet />
         </article>
-        {hasSidebar && <Snowdrift visible={isHome} />}
+        {hasSidebar && <Snowdrift />}
       </div>
       <ScrollRestoration />
     </main>

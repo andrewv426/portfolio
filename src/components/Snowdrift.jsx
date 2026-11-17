@@ -16,26 +16,24 @@ const dark = {
   ice: "#a1c5d2", wood: "#b6a087", flake: "#8ca5af", ground: "#4f6876",
 };
 
-export default function Snowdrift({ visible }) {
+export default function Snowdrift() {
   const canvasRef = useRef(null);
-  const elapsed = useRef(0);
 
   useEffect(() => {
-    if (!visible) return;
-
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
     if (!context) return;
 
     const desktop = window.matchMedia(desktopQuery);
     const theme = window.matchMedia("(prefers-color-scheme: dark)");
+    let elapsed = 0;
     let frameId;
     let lastPaint;
 
     function paint() {
       const palette = theme.matches ? dark : light;
       context.clearRect(0, 0, width, height);
-      for (const [y, row] of snowdriftFrame(elapsed.current).entries()) {
+      for (const [y, row] of snowdriftFrame(elapsed).entries()) {
         for (const [x, cell] of row.entries()) {
           if (!cell) continue;
           context.fillStyle = palette[cell.tone];
@@ -48,7 +46,7 @@ export default function Snowdrift({ visible }) {
       lastPaint ??= now;
       const delta = now - lastPaint;
       if (delta >= 50) {
-        elapsed.current += Math.min(delta, 100) / 1000;
+        elapsed += Math.min(delta, 100) / 1000;
         lastPaint = now;
         paint();
       }
@@ -86,14 +84,7 @@ export default function Snowdrift({ visible }) {
       for (const query of [desktop, theme]) query.removeEventListener("change", sync);
       document.removeEventListener("visibilitychange", sync);
     };
-  }, [visible]);
+  }, []);
 
-  return (
-    <canvas
-      className="snowdrift"
-      data-visible={visible ? "" : undefined}
-      ref={canvasRef}
-      aria-hidden="true"
-    />
-  );
+  return <canvas className="snowdrift" ref={canvasRef} aria-hidden="true" />;
 }

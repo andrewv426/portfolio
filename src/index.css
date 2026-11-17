@@ -290,12 +290,6 @@ a:hover {
     width: 100%;
     aspect-ratio: 226 / 320;
     margin-top: 3.75rem;
-    opacity: 0;
     pointer-events: none;
-    transition: opacity 150ms ease;
-  }
-
-  .snowdrift[data-visible] {
-    opacity: 1;
   }
 }
