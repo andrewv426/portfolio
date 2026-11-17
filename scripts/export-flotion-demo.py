@@ -54,9 +54,14 @@ html = html.replace("<head>", '''<head>
 <title>Flotion storage and write-ahead logging</title>
 ''', 1)
 # Keep the app's scene and player; adapt the surrounding controls for a web page.
+html = html.replace('<svg class="stage" id="stage" role="img"></svg>',
+                    '<div class="stage-scroll"><svg class="stage" id="stage" role="img"></svg></div>', 1)
+html = html.replace("stage.style.maxWidth = S.w + 'px';",
+                    "stage.style.maxWidth = S.w + 'px'; stage.style.minWidth = Math.min(S.w, 560) + 'px';", 1)
 html = html.replace("</head>", '''<style>
 html, body { height: auto; }
 body { padding: 8px; }
+.stage-scroll { overflow-x: auto; scrollbar-width: thin; }
 .controls { height: 48px; }
 .controls .nav { opacity: 1; width: 44px; height: 44px; }
 .controls .dot { position: relative; }
