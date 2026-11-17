@@ -276,7 +276,7 @@ a:hover {
 }
 
 @media (min-width: 960px) and (hover: hover) and (pointer: fine) {
-  .home-layout {
+  .desktop-sidebar-layout {
     display: grid;
     grid-template-columns: minmax(0, var(--content-width)) 226px;
     align-items: start;
@@ -290,5 +290,12 @@ a:hover {
     width: 100%;
     aspect-ratio: 226 / 320;
     margin-top: 3.75rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 150ms ease;
+  }
+
+  .snowdrift[data-visible] {
+    opacity: 1;
   }
 }
