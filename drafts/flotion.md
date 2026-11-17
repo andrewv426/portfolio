@@ -1,6 +1,6 @@
 # Building Flotion
 
-## Why I started
+## Motivation
 
 I like Notion's nested pages and blocks. I wanted something faster, though, and I wanted AI agents to be able to edit my notes without much friction.
 
@@ -10,7 +10,7 @@ I also tried working through Notion's MCP, but couldn't get the animated diagram
 
 So I started building Flotion: a native Mac notes app with a block editor, local SQLite storage, and an MCP server. Building an app yourself gives you the ability to constantly iterate and implement/test a variety of agentic capabilities. 
 
-## Why AppKit?
+## AppKit vs. Electron
 
 [Electron](https://www.electronjs.org/docs/latest/) would've let me use web technologies and support multiple platforms. I went with SwiftUI and AppKit because I wanted to build a Mac app and have control over how the editor felt. SwiftUI handles the surrounding interface; the editor uses AppKit's text views inside a table.
 
@@ -41,6 +41,12 @@ step "Response": The API returns the feed.
   tag api: ready
   mark api: good
 ```
+
+Here are two frames from a larger Flow diagram in Flotion: the cache miss, then the response.
+
+![Flow's cache-miss step: the API checks Redis, which is marked with a warning and a miss tag.](https://raw.githubusercontent.com/andrewv426/Flotion/main/docs/images/flow-cache-miss.png)
+
+![Flow's response step: a 200 OK message returns to the browser while Redis keeps its miss tag.](https://raw.githubusercontent.com/andrewv426/Flotion/main/docs/images/flow-cache-response.png)
 
 The nodes stay in place while messages animate between them. Tags carry over to the next step. Flotion handles positioning and colors, so the agent can edit the explanation without also writing the drawing code.
 
