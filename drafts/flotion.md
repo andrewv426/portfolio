@@ -1,26 +1,28 @@
 # Designing a macOS-native Notion
 
-I started Flotion because I wanted a faster alternative to Notion that AI agents could move around and edit easily. I liked organizing notes into nested pages and blocks, and I wanted that structure in a small native Mac app.
+## Why I built it
 
-I was also frustrated with the AI tools around my documents. Google Docs with Gemini wasn't giving me the editing experience I wanted. My Notion MCP workflow let an agent interact with notes, but I couldn't get it to create the animated diagrams I wanted inside a page. I liked the interactive explanations I could get through artifacts in Claude and Codex. I wanted something like that to live alongside the notes it explained.
+I wanted a faster Notion with notes that AI agents could navigate and edit easily. Google Docs with Gemini wasn't working well for me, and my Notion MCP workflow couldn't create the animated diagrams I wanted. I liked the interactive explanations in Claude and Codex artifacts and wanted them alongside my notes.
 
-Those frustrations shaped Flotion: a block editor built with SwiftUI and AppKit, a local SQLite workspace, and an MCP server that gives agents access to the same data operations as the app. Along the way, I built Flow, a small diagram language inspired by Mermaid, with steps for showing how a system changes over time.
+Flotion keeps the nested pages and block editor I like, stores them locally in SQLite, and exposes them to agents through MCP. It's built with SwiftUI and AppKit.
 
-The agent interface affected the architecture from the beginning. Pages, blocks, search, and diagram validation live in a shared Swift package called FlotionCore. The app and the MCP server both call into it. An agent can edit a particular block or insert a diagram through a structured tool call, and those changes go through the same storage code the app uses.
+## AppKit vs. Electron
 
-That arrangement also exposed a problem I had to handle: an agent can change the page while I'm typing. The app and MCP server share a SQLite database in WAL mode. After an external write, the server notifies the app, which merges the updated page block by block. Blocks with unsaved local edits keep their local version. Agent writes also go into a change log grouped by turn, so a turn can be undone. Giving an agent write access meant thinking through what happens when its work overlaps with mine.
+I used SwiftUI for the surrounding interface and AppKit for the editor: an NSTableView with reusable NSTextView cells. That gives me control over text input, focus, and layout.
 
-For the interface, I chose SwiftUI for the app's surrounding views and AppKit for the editor. The editor uses an NSTableView with reusable NSTextView cells for text blocks. That gives me direct control over text input, focus, and row layout, which became useful as the editor grew.
+[Electron](https://www.electronjs.org/docs/latest/) offers a shared web codebase across macOS, Windows, and Linux. I accepted a Mac-only interface because I wanted to build around native text editing and scrolling. That choice still left plenty to fix.
 
-[Electron](https://www.electronjs.org/docs/latest/) would have given me a web UI and a route to Windows and Linux from one JavaScript codebase. It embeds Chromium and Node.js; choosing AppKit meant committing the interface to macOS. For this project, I cared enough about how typing and scrolling felt on my Mac to accept that tradeoff.
+In an [early experiment](https://github.com/andrewv426/Flotion/blob/main/Spikes/ScrollSpike.swift), opening 5,000 blocks took 236 ms. Measuring row heights accounted for 162 ms. The editor now starts with estimates where needed and refines them in small batches. I also had to keep those corrections from shifting the text on screen and get trackpad scrolling to behave over embedded diagrams.
 
-AppKit still required a lot of work. An [early experiment](https://github.com/andrewv426/Flotion/blob/main/Spikes/ScrollSpike.swift) tested a page with 5,000 blocks. Its recorded p95 keystroke time was about 0.7 ms, including measuring the edited row and drawing it, but opening the page took 236 ms. Measuring all the row heights up front accounted for 162 ms of that. The text views were responsive; preparing the whole document was delaying the first paint.
+## Editing alongside an agent
 
-The editor now uses estimated heights where needed and refines them in small batches, prioritizing rows near the screen. That introduced another issue: changing a row's height above the viewport moves the text you're reading. I had to preserve the visible position as measurements settled. Later fixes dealt with cell reuse and trackpad momentum over diagrams. Working on Flotion made me pay much closer attention to these ordinary interactions. A notes app can have the right features and still feel unpleasant if the page jumps while you're reading.
+The app and MCP server use the same core for storage and editing operations. An agent can target a block or insert a diagram through a tool call.
 
-The diagram system grew out of the same concern for the editing experience. [Mermaid](https://mermaid.js.org/intro/index.html) was the inspiration for describing diagrams in text. A text representation fits naturally into notes and gives an agent something it can read and revise. With Flow, I wanted to keep that approach and add a way to walk through events on the diagram.
+The awkward part is handling changes while I'm typing. External writes notify the app, which merges updates block by block and preserves unsaved local edits. Agent changes are logged by turn so they can be undone. An editing tool needs to account for overlapping work, too.
 
-A picture of a browser connected to an API tells you which components exist. To explain a request, I also want to show the message going out, the server doing work, and the response coming back. Flow declares the structure first, then uses steps to describe those changes:
+## Flow: diagrams with steps
+
+[Mermaid](https://mermaid.js.org/intro/index.html) inspired Flow's text-based approach. I wanted an agent to describe a system and then walk through what happens inside it. Flow declares nodes and arrows, followed by steps:
 
 ```text
 flow right
@@ -38,12 +40,14 @@ step "Response": The API returns the feed.
   mark api: good
 ```
 
-The arrow is declared once, and a message can travel along it in either direction. Tags and status marks carry forward between steps; a message animation or a focus effect belongs to one step. That distinction lets the source describe both lasting state and events that happen along the way.
+Messages animate along the arrows. Tags and status marks persist between steps, while message animations and focus effects last one step. The layout accounts for every step in advance, so nodes stay put as the explanation progresses.
 
-Flow deliberately leaves coordinates, sizes, and arbitrary colors out of the language. The source describes the components and their behavior; Flotion handles their appearance. An agent can ask for a warning state with `mark api: warn` without choosing a color or writing rendering code. The parser reports problems by line and suggests fixes where it can, so an invalid tool call gives the agent something specific to correct.
+Flow leaves layout and styling to Flotion. An agent can write `mark api: warn` without picking a color or placing a box. Invalid source gets line-specific errors with suggested fixes where possible.
 
-The layout also has to account for later steps. Flotion computes it once across everything the diagram will show, including later labels and status tags. Nodes keep their positions as you move between steps. That leaves the reader free to follow the changing state without having to find the same component again after every transition.
+Swift handles parsing and layout; a sandboxed WKWebView draws the SVG and plays transitions. Using AppKit for the editor still leaves room for web rendering where it's useful.
 
-The parser, state calculation, and layout all run in Swift. The resulting scene goes to a small SVG player in a sandboxed WKWebView. I found that combination useful: AppKit handles the document editor, while an embedded web view handles diagram drawing and transitions. Flow source stays data, and Flotion supplies the rendering code. The web view blocks network requests and navigation.
+## What I learned
 
-Building Flow changed how I think about designing tools for agents. A constrained format gives the app more responsibility: it has to choose the layout, define useful operations, and explain errors clearly. In return, an agent can work at the level of the explanation. It can add a cache-miss step or change a response label without rebuilding a whole interactive artifact. The source for that explanation stays stored with the diagram in the same workspace as the surrounding notes.
+Much of the editor work came down to details I usually take for granted: keeping a page still while rows resize, preserving text during an external edit, and handling scroll momentum.
+
+Flow taught me how useful a small language can be for agent editing. The app takes responsibility for presentation, so the agent can change the explanation directly. Adding a cache-miss step becomes an edit to a few lines of source stored with the notes.
