@@ -25,7 +25,6 @@ export default function Snowdrift() {
     if (!context) return;
 
     const desktop = window.matchMedia(desktopQuery);
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const theme = window.matchMedia("(prefers-color-scheme: dark)");
     let elapsed = 0;
     let frameId;
@@ -72,17 +71,17 @@ export default function Snowdrift() {
       context.textBaseline = "middle";
       paint();
 
-      if (!reducedMotion.matches && !document.hidden) {
+      if (!document.hidden) {
         frameId = requestAnimationFrame(animate);
       }
     }
 
-    for (const query of [desktop, reducedMotion, theme]) query.addEventListener("change", sync);
+    for (const query of [desktop, theme]) query.addEventListener("change", sync);
     document.addEventListener("visibilitychange", sync);
     sync();
     return () => {
       cancelAnimationFrame(frameId);
-      for (const query of [desktop, reducedMotion, theme]) query.removeEventListener("change", sync);
+      for (const query of [desktop, theme]) query.removeEventListener("change", sync);
       document.removeEventListener("visibilitychange", sync);
     };
   }, []);
