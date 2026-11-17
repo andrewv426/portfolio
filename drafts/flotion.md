@@ -29,11 +29,11 @@ flotion-storage
 ```
 
 ```flow
-flow down
-app: Flotion app {shape: pill}
+flow right
+app: Flotion {shape: pill}
 mcp: MCP server
-wal: Write-ahead log {shape: database}
-db: flotion.sqlite {shape: database}
+wal: WAL {shape: database}
+db: SQLite {shape: database}
 
 app -> db
 app -> wal
@@ -43,25 +43,25 @@ wal -> db
 
 step "Read a page": SQLite reads a snapshot from the database and WAL.
   focus app, wal, db
-  send app -> db: read page
-  send app -> wal: check WAL
+  send app -> db: read
+  send app -> wal: lookup
 
 step "Agent edits": The MCP server commits the edit through FlotionCore.
   focus mcp, wal
-  send mcp -> wal: commit edit
+  send mcp -> wal: commit
   tag wal: committed
   mark wal: good
 
 step "Refresh the app": A notification prompts Flotion to reload and merge the page.
-  send mcp -> app: workspace changed
-  send wal -> app: updated snapshot
-  tag app: page updated
+  send mcp -> app: notify
+  send wal -> app: reload
+  tag app: updated
   mark app: good
 
 step "Checkpoint": SQLite copies committed WAL pages into the main database.
   focus wal, db
   send wal -> db: checkpoint
-  tag db: checkpointed
+  tag db: synced
   mark db: good
 ```
 

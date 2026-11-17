@@ -1,15 +1,11 @@
-import { NavLink, Outlet, ScrollRestoration, useMatch } from "react-router-dom";
+import { NavLink, Outlet, ScrollRestoration } from "react-router-dom";
 import Snowdrift from "./components/Snowdrift.jsx";
 import { handle } from "./data/site.js";
 
 function App() {
-  const isHome = Boolean(useMatch("/"));
-  const isWork = Boolean(useMatch("/work"));
-  const hasSidebar = isHome || isWork;
-
   return (
     <main className="shell">
-      <div className={hasSidebar ? "desktop-sidebar-layout" : undefined}>
+      <div className="desktop-sidebar-layout">
         <article className="frame">
           <header className="site-header">
             <h1 className="site-title">
@@ -26,7 +22,7 @@ function App() {
           </header>
           <Outlet />
         </article>
-        {hasSidebar && <Snowdrift />}
+        <Snowdrift />
       </div>
       <ScrollRestoration />
     </main>
