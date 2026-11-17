@@ -4,7 +4,9 @@
 
 I like Notion's nested pages and blocks. I wanted something faster, though, and I wanted AI agents to be able to edit my notes without much friction.
 
-I wasn't happy with Google Docs and Gemini.
+I wasn't happy with Google Docs and Gemini. I wanted more control over where an agent edited and what it changed. A [small study comparing Docs + Gemini with a structured editor](https://arxiv.org/html/2601.12740v1#S5.SS5.SSS3) reported some of that friction: generated text landing in the wrong place, or whole paragraphs becoming headings. Those are problems with applying edits inside a document, even when the generated text is useful.
+
+Google has [since expanded editing and formatting in Docs](https://workspaceupdates.googleblog.com/2026/04/new-gemini-capabilities-in-google-docs-help-you-go-from-blank-page-to-brilliance.html). I wanted to try a block-based approach where agents could target specific pieces of my notes, and I could change how the editing worked myself.
 
 I also tried working through Notion's MCP, but couldn't get the animated diagrams I wanted into my notes. Claude and Codex have the abiility to make interactive artifacts, but Notion supported mainly only mermaid/svg-style diagrams. I also tried having Claude/Codex generate images, the result ended up being ai-slop due to a lack of consistency/structure/scope. 
 
@@ -15,6 +17,8 @@ So I started building Flotion: a native Mac notes app with a block editor, local
 [Electron](https://www.electronjs.org/docs/latest/) would've let me use web technologies and support multiple platforms. I went with SwiftUI and AppKit because I wanted to build a Mac app and have control over how the editor felt. SwiftUI handles the surrounding interface; the editor uses AppKit's text views inside a table.
 
 There was still a lot to figure out. In an [early test](https://github.com/andrewv426/Flotion/blob/main/Spikes/ScrollSpike.swift), a page with 5,000 blocks took 236 ms to open. Just measuring the row heights took 162 ms.
+
+That test exposed a bottleneck in my AppKit implementation: I was measuring every row before showing the page. I didn't build an Electron version to compare. A [web-based editor also has to manage large lists and variable row heights](https://web.dev/articles/virtualize-long-lists-react-window), so changing frameworks wouldn't automatically remove that work.
 
 The editor now estimates heights and measures them in batches. Then I had to fix the page shifting as those estimates changed. Scrolling over embedded diagrams caused its own problems with trackpad momentum. These are things I barely notice in other apps until they stop working.
 
