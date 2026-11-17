@@ -1,5 +1,26 @@
+import { Children, isValidElement } from "react";
+import Markdown from "react-markdown";
 import { Link, Navigate, useParams } from "react-router-dom";
+import FlowDemo from "../components/FlowDemo.jsx";
 import { posts, typeLabels } from "../data/site.js";
+
+function MarkdownPre({ children }) {
+  const code = Children.toArray(children)[0];
+  if (isValidElement(code) && code.props.className === "language-flow-demo") {
+    return <FlowDemo />;
+  }
+  if (isValidElement(code) && code.props.className === "language-flow") {
+    return (
+      <details className="flow-source">
+        <summary className="ui">View Flow code</summary>
+        <pre>{children}</pre>
+      </details>
+    );
+  }
+  return <pre>{children}</pre>;
+}
+
+const markdownComponents = { pre: MarkdownPre };
 
 function Post() {
   const { slug } = useParams();
@@ -20,7 +41,13 @@ function Post() {
         <time>{post.date}</time>
       </p>
 
-      {post.body?.length > 0 ? (
+      {post.markdown ? (
+        <div className="post-body">
+          <Markdown components={markdownComponents}>
+            {post.markdown.replace(/^# .*\n/, "")}
+          </Markdown>
+        </div>
+      ) : post.body?.length > 0 ? (
         post.body.map((paragraph, i) => <p key={i}>{paragraph}</p>)
       ) : post.summary ? (
         <p>{post.summary}</p>

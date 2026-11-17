@@ -1,3 +1,5 @@
+import flotionPost from "../../drafts/flotion.md?raw";
+
 export const handle = "andrewvong6";
 
 export const links = [
@@ -91,10 +93,11 @@ export const posts = [
   {
     slug: "flotion",
     type: "project",
-    title: "Designing a macOS-native Notion",
+    title: "Building Flotion",
     project: "Flotion",
     date: "2026",
     summary: "",
+    markdown: flotionPost,
     body: [],
     links: [],
   },
