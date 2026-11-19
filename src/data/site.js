@@ -93,7 +93,7 @@ export const posts = [
   {
     slug: "flotion",
     type: "project",
-    title: "Building Flotion",
+    title: "Building a fast, native, agent-friendly Notion for macOS",
     project: "Flotion",
     date: "2026",
     summary: "",

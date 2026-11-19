@@ -1,4 +1,4 @@
-# Building Flotion
+# Building a fast, native, agent-friendly Notion for macOS
 
 ## Motivation
 

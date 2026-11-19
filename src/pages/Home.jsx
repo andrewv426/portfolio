@@ -67,12 +67,12 @@ function Home() {
             ))}
           </div>
         ) : (
-          <p className="empty ui">Nothing here yet.</p>
+          <p className="empty ui"></p>
         )}
       </section>
 
       <section>
-        <h2>Elsewhere</h2>
+        <h2>More</h2>
         <ul className="link-list">
           {links.map((link) => (
             <li key={link.label}>
